@@ -35,6 +35,20 @@ class StundenController extends Controller
      * @return void
      */
 
+    /**
+     * Wandelt 12:00 in 12,00 um
+     *
+     * TODO: Besseren Ort suchen
+     *
+     * @param Zeit $time
+     * @return double
+     */
+
+    public function decimalHours($time){
+        $hms = explode(":", $time);
+        return ($hms[0] + ($hms[1]/60));
+    }
+
     public function store(Request $request)
     {
 
@@ -50,12 +64,12 @@ class StundenController extends Controller
         $day = new Day;
         $day->Dat_Kuerz = 'test';
         $day->Datum = $validated['datum'];
-        $day->Von = $validated['von'];
-        $day->Bis = $validated['bis'];
+        $day->Von = $this->decimalHours($validated['von']);
+        $day->Bis = $this->decimalHours($validated['bis']);
         $day->Pause = $validated['pause'];
         $day->Std_gesamt = (strtotime($validated['bis'])  - strtotime($validated['von'])- strtotime($validated['pause'])) / 3600; // In Stunden konvertieren
         $day->PersNr = auth()->user()->PersNr;
-        $day->Eingabedatum = Carbon\Carbon::now();
+        // $day->Eingabedatum = Carbon\Carbon::now();
 
         $day->save();
 

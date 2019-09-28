@@ -74,7 +74,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="pause">Pause (h)</label>
-                                                <input name="pause" type="text" class="form-control" id="pause" value="0,00">
+                                                <input name="pause" type="number" step="0.01" min="0" class="form-control" id="pause" value="0.0">
                                             </div>
                                         </div>
                                     </div>
