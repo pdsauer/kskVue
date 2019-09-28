@@ -14,7 +14,16 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <div>
+                        <h3>Stundeneingabe</h3>
+                        <p>Gelangen Sie hier zur <a href="/stunden">Stundeneingabe</a></p>
+
+
+                    </div>
+
+                        <div>
+                            <h3>Neuigkeiten</h3>
+                        </div>
                 </div>
             </div>
         </div>
