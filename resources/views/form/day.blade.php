@@ -96,8 +96,8 @@
                                 </div>
 
                                 <input class="btn btn-success" type="submit" value="Tag Speichern">
-                            </form>
 
+                            </form>
 
                         </div>
 

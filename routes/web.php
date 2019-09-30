@@ -29,3 +29,8 @@ Route::Post('/stunden', 'StundenController@store');
 Route::get('/stunden/list', 'StundenController@showList')->name('list');
 
 Route::get('/stunden/{day}', 'StundenController@show');
+
+Route::delete('/stunden/{day}', 'StundenController@destroy');
+
+Route::patch('/stunden/{day}/edit', 'StundenController@update');
+

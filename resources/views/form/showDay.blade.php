@@ -43,8 +43,8 @@
                         <div class="container bg-white">
 
                             <!-- Allgemeine-Tagesdaten-Eingbae   -->
-                            <form method="POST" action="{{ route('stunden') }}">
-
+                            <form method="POST" action="/stunden/{{ $day->Std_ID }}/edit">
+                                @method('PATCH')
                                 @csrf
 
                                 <div class="row">
@@ -200,7 +200,12 @@
                             </div>
 
                             <div class="col-lg-2 col-md-2">
-                                <button class="btn btn-outline-danger">Tag löschen</button>
+                                <form method="POST" action="/stunden/{{ $day->Std_ID }}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <input class="btn btn-outline-danger" type="submit" value="Tag löschen">
+                                </form>
+
                             </div>
 
                         </div>
@@ -209,6 +214,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="mt-5">
+
     </div>
     @dump($errors)
 @endsection

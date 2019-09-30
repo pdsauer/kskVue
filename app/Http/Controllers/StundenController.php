@@ -18,7 +18,42 @@ class StundenController extends Controller
     {
         $this->middleware('auth');
     }
+    /**
+     * Wandelt normale Uhrzeiten in Decimale STunden um
+     *
+     * TODO: Besseren Ort suchen
+     *
+     * @param Zeit $time
+     * @return double
+     */
 
+    public function decimalHours($time){
+        $hms = explode(":", $time);
+        return ($hms[0].'.'.($hms[1]) * (10/6) );
+    }
+
+    /**
+     * Wandelt decimale Uhrzeiten in normale STunden um
+     *
+     * TODO: Besseren Ort suchen
+     *
+     * @param string $time
+     * @return double
+     */
+
+    public function normalHours($time){
+
+        // Credit: https://stackoverflow.com/questions/9102680/how-to-convert-a-decimal-into-time-eg-hhmmss
+        $h = intval($time);
+        $m = round((((($time - $h) / 100.0) * 60.0) * 100), 0);
+        if ($m == 60)
+        {
+            $h++;
+            $m = 0;
+        }
+        $retval = sprintf("%02d:%02d", $h, $m);
+        return $retval;
+    }
     /**
      * Show Stundeneingabe.
      *
@@ -41,19 +76,7 @@ class StundenController extends Controller
      * @return void
      */
 
-    /**
-     * Wandelt 12:00 in 12,00 um
-     *
-     * TODO: Besseren Ort suchen
-     *
-     * @param Zeit $time
-     * @return double
-     */
 
-    public function decimalHours($time){
-        $hms = explode(":", $time);
-        return ($hms[0].'.'.($hms[1]) * (1/6) );
-    }
 
     /**
      * Store Day in DB via requset
@@ -86,7 +109,7 @@ class StundenController extends Controller
 
         $day->save();
 
-        return redirect('/home');
+        return redirect('/stunden/'.$day->Std_ID);
     }
     /**
      * Show Day in DB via requset
@@ -98,6 +121,10 @@ class StundenController extends Controller
     {
 
         $day = Day::where('Std_ID', $day->Std_ID)->first(['Std_ID', 'Datum', 'Von', 'Bis', 'Pause', 'PersNr']);
+        // uhrzeiten zur Anzeige umwandeln
+        $day->Von = $this->normalHours($day->Von);
+        $day->Bis = $this->normalHours($day->Bis);
+        $day->Pause = $this->normalHours($day->Pause);
         // Check if User is allowed
         if($day->PersNr == auth()->user()->PersNr){
 
@@ -126,4 +153,39 @@ class StundenController extends Controller
         return $days;
     }
 
+    /**
+     * Tag aus DB löschen
+     * TODO: Add description und Tötigkeiten auch löschen
+     * @return Array $days Alle eingetragenen Tage des Users
+     */
+    public function destroy($Std_ID){
+        Day::find($Std_ID)->delete();
+        return redirect('/stunden');
+    }
+
+    /**
+     * Tag aus DB löschen
+     * TODO: Add description und Tötigkeiten auch löschen
+     * @return Array $days Alle eingetragenen Tage des Users
+     */
+    public function update($Std_ID){
+
+        $validated = request()->validate([
+            'datum' => ['required', 'Date'],
+            'von' => ['required', 'date_format:H:i', 'before:bis'],
+            'bis' => ['required', 'date_format:H:i'],
+            'pause' => ['required', ],
+        ]);
+
+        $day =Day::find($Std_ID);
+
+        $day->Von = $this->decimalHours($validated['von']);
+        $day->Bis = $this->decimalHours($validated['bis']);
+        $day->Pause = $this->decimalHours($validated['pause']);
+        $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause)); // In Stunden konvertieren  - strtotime($day->Pause)
+
+        $day->save();
+
+        return redirect('/stunden/'.$day->Std_ID);
+    }
 }
