@@ -17,8 +17,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::get('/stunden', 'StundenController@index')->name('stunden');
 
+
 Route::Post('/stunden', 'StundenController@store');
+
+Route::get('/stunden/list', 'StundenController@showList')->name('list');
