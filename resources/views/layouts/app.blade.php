@@ -10,8 +10,8 @@
     <title>{{ config('app.name', 'KSK-Ing') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/ksk.js') }}"></script>
+    <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
+    <script src="{{ asset('js/ksk.js') }}" defer></script>
 
 
     <!-- Fonts -->

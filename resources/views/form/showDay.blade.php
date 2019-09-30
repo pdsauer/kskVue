@@ -20,7 +20,7 @@
                                         <option disabled selected value> Datum auswählen </option>
 
                                         @foreach($days as $day)
-                                        <option value="{{ $day->Std_ID }}">{{ \Carbon\Carbon::parse($day->Datum)->format('d.m.Y') }}</option>
+                                            <option value="{{ $day->Std_ID }}">{{ \Carbon\Carbon::parse($day->Datum)->format('d.m.Y') }}</option>
                                         @endforeach()
 
                                     </select>
@@ -53,7 +53,7 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="datum">Datum</label>
-                                                <input name="datum" type="date" class="form-control" id="datum" value="{{ old('datum') }}">
+                                                <input name="datum" type="date" class="form-control" id="datum" value="{{ \Carbon\Carbon::parse($showDay->Datum)->format('Y-m-d') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -63,14 +63,14 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="start">Von</label>
-                                                <input name="von" type="time" class="form-control" id="start" value="{{ old('von') }}">
+                                                <input name="von" type="time" class="form-control" id="start" value="{{ $showDay->Von }}">
                                             </div>
                                         </div>
 
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="ende">Bis</label>
-                                                <input name="bis" type="time" class="form-control" id="ende" value="{{ old('bis') }}">
+                                                <input name="bis" type="time" class="form-control" id="ende" value="{{ $showDay->Bis }}">
                                             </div>
                                         </div>
 
@@ -78,8 +78,8 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="pause">Pause (h)</label>
-                                                <input name="pause" type="time" class="form-control" id="pause" value="{{ old('pause') }}">
-                                               <!-- <input name="pause" type="number" step="0.01" min="0" class="form-control" id="pause" value="0.0"> -->
+                                                <input name="pause" type="time" class="form-control" id="pause" value="{{ $showDay->Pause }}">
+                                                <!-- <input name="pause" type="number" step="0.01" min="0" class="form-control" id="pause" value="0.0"> -->
                                             </div>
                                         </div>
                                     </div>

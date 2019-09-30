@@ -27,3 +27,5 @@ Route::get('/stunden', 'StundenController@index')->name('stunden');
 Route::Post('/stunden', 'StundenController@store');
 
 Route::get('/stunden/list', 'StundenController@showList')->name('list');
+
+Route::get('/stunden/{day}', 'StundenController@show');

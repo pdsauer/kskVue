@@ -26,7 +26,12 @@ class StundenController extends Controller
      */
     public function index()
     {
-        return view('form.day');
+
+        // Fill DayList
+        $days = Day::where('PersNr', auth()->user()->PersNr)->get(['Std_ID', 'Datum']);
+        return view('form.day', [
+            'days' => $days
+        ]);
     }
 
     /**
@@ -84,14 +89,28 @@ class StundenController extends Controller
         return redirect('/home');
     }
     /**
-     * Store Day in DB via requset
+     * Show Day in DB via requset
      * TODO: Add description
      * @param
      * @return
      */
-    public function show($Std_ID)
+    public function show(Day $day)
     {
-        $day = Day::where('Std_ID', $Std_ID)->firstOrFail();
+
+        $day = Day::where('Std_ID', $day->Std_ID)->first(['Std_ID', 'Datum', 'Von', 'Bis', 'Pause', 'PersNr']);
+        // Check if User is allowed
+        if($day->PersNr == auth()->user()->PersNr){
+
+            // return $day;
+            return view('form.showDay', [
+                'showDay' => $day,
+                'days' => $days = Day::where('PersNr', auth()->user()->PersNr)->get(['Std_ID', 'Datum'])
+            ]);
+        } else {
+
+            return "Du darfst hier nicht hin!";
+        }
+
     }
 
     /**
@@ -101,17 +120,10 @@ class StundenController extends Controller
      */
     public function showList()
     {
-
-
         // List of days for the current user
         $days = Day::where('PersNr', auth()->user()->PersNr)->get(['Std_ID', 'Datum']);
-        /*
-        $days = Day::where('PersNr', 123)->get();
-        $doys = [];
-        foreach ($days as $day){
-            array_push($doys, $day);
-        }
-        */
+
         return $days;
     }
+
 }
