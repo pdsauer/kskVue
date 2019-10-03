@@ -31,7 +31,7 @@
 
                                 </article>
 
-                                <a href="/home">zurück</a>
+                                <a href="/post">zurück</a>
                             </div>
 
                         </div>

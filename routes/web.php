@@ -35,6 +35,8 @@ Route::delete('/stunden/{day}', 'StundenController@destroy');
 Route::patch('/stunden/{day}/edit', 'StundenController@update');
 
 // Routen für das Schwarzebrett
-Route::get('post/create', 'postController@create');
+Route::get('/post/create', 'postController@create');
 
-Route::get('post/{post}', 'postController@show');
+Route::get('/post/{post}', 'postController@show');
+
+Route::get('/post', 'postController@index');

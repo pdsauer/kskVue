@@ -14,63 +14,40 @@
                         </div>
                     @endif
 
-                    <div>
-                        <h3>Stundeneingabe</h3>
-                        <p>Gelangen Sie hier zur <a href="/stunden">Stundeneingabe</a></p>
 
+
+
+                    <div class="row">
+
+                        <div class="col">
+
+                            <div class="jumbotron">
+                                <h1 class="display-4">Stundeneingabe</h1>
+                                <hr class="my-4">
+
+                                <p class="lead">
+                                    <a class="btn btn-primary btn-lg" href="/stunden" role="button"> <i class="fas fa-calendar-alt"></i> &nbsp; Stunden eingeben</a>
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="col">
+
+                            <div class="jumbotron">
+                                <h1 class="display-4">Schwarzes Brett</h1>
+                                <hr class="my-4">
+
+                                <p class="lead">
+                                    <a class="btn btn-primary btn-lg" href="/post" role="button"><i class="far fa-sticky-note"></i> &nbsp; Nachrichten ansehen</a>
+                                </p>
+                            </div>
+
+
+                        </div>
 
                     </div>
 
-                        <div class="mt-4">
-
-                            <h2>Neuigkeiten</h2>
-
-                                <article class="">
-                                    <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
-
-                                    <p>
-                                        60% of organizations were exposed to actual or attempted fraud loss last year.
-                                        As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                        <a class="ml-1" href="/post/4">Mehr lesen</a>
-                                    </p>
-                                    <p class="text-muted">
-                                        <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                        <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
-                                    </p>
-
-                                </article>
-
-                                <article class="">
-                                    <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
-
-                                    <p>
-                                        60% of organizations were exposed to actual or attempted fraud loss last year.
-                                        As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                        <a class="ml-1" href="#">Mehr lesen</a>
-                                    </p>
-                                    <p class="text-muted">
-                                        <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                        <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
-                                    </p>
-
-                                </article>
-
-                                <article class="">
-                                    <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
-
-                                    <p>
-                                        60% of organizations were exposed to actual or attempted fraud loss last year.
-                                        As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                        <a class="ml-1" href="#">Mehr lesen</a>
-                                    </p>
-                                    <p class="text-muted">
-                                        <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                        <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
-                                    </p>
-
-                                </article>
-
-                        </div>
                 </div>
             </div>
         </div>

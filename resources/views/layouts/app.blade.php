@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    @yield('refresher')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -37,6 +39,8 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
+
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -52,6 +56,10 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item mr-3">
+                                <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Hallo {{ Auth::user()->Vorname }} <span class="caret"></span>
