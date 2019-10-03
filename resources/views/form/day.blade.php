@@ -108,7 +108,7 @@
                             </div>
                             <div class="col-lg-1 col-md-4">
                                 <button class="btn btn-light">
-                                    <i class="fas fa-plus"></i>
+                                    <i class="fa fa-plus" title="Edit"></i>
                                 </button>
                             </div>
                         </div>
@@ -210,5 +210,5 @@
             </div>
         </div>
     </div>
-    @dump($errors)
+
 @endsection

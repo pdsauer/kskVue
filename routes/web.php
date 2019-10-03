@@ -21,8 +21,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
+// Routen für die Stunden-Eingabe
 Route::get('/stunden', 'StundenController@index')->name('stunden');
-
 
 Route::Post('/stunden', 'StundenController@store');
 
@@ -34,3 +34,7 @@ Route::delete('/stunden/{day}', 'StundenController@destroy');
 
 Route::patch('/stunden/{day}/edit', 'StundenController@update');
 
+// Routen für das Schwarzebrett
+Route::get('post/create', 'postController@create');
+
+Route::get('post/{post}', 'postController@show');

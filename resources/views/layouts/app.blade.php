@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'KSK-Ing') }}</title>
 
     <!-- Scripts -->
-    <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/ksk.js') }}" defer></script>
 
 
@@ -20,6 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fontawesome.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
