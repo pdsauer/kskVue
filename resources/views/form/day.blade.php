@@ -95,7 +95,7 @@
                                     </div>
                                 </div>
 
-                                <input class="btn btn-success" type="submit" value="Tag Speichern">
+                                <!-- <input class="btn btn-success" type="submit" value="Tag Speichern"> -->
 
                             </form>
 
@@ -191,9 +191,9 @@
 
                             <div class="col-lg-8 col-md-">
                                 <div class="form-group row">
-                                    <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Stundensumme</label>
-                                    <div class="col-sm-3">
-                                        <input type="number" class="form-control form-control-sm" id="colFormLabelSm" placeholder="col-form-label-sm">
+                                    <label for="colFormLabelSm" class="col-sm-2 col-form-label col-form-label-sm">Stundensumme</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="0" disabled>
                                     </div>
                                 </div>
 
