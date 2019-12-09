@@ -40,19 +40,29 @@
                             <form method="POST" action ="/post/create">
 
                                 @csrf
+                                <div class="row">
 
-                                <div class="form-group">
-                                    <label for="postTitle">Titel</label>
-                                    <input type="text" class="form-control" name="postTitle" id="postTitle" placeholder="Titel eingeben" value {{ old('postTitle') }}>
+                                    <div class="form-group col-lg-8 col-sm-12">
+                                        <label for="postTitle">Titel</label>
+                                        <input type="text" class="form-control" name="postTitle" id="postTitle" placeholder="Titel eingeben" value {{ old('postTitle') }}>
+                                    </div>
+
+                                    <div class="form-group col-lg-4 col-sm-12">
+                                        <label for="exampleFormControlSelect2">Für Büro</label>
+                                        <select class="form-control" id="exampleFormControlSelect2">
+                                            <option selected value="0">alle</option>
+                                            <option value="1">Ascheberg</option>
+                                            <option value="2">Eutin</option>
+                                            <option value="3">Norderstedt</option>
+                                        </select>
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
                                     <label for="postContent">Eintragstext</label>
                                     <textarea class="form-control" id="postContent" name="postContent" rows="7" placeholder="Text eingeben">{{ old('postContent') }}</textarea>
                                 </div>
-
-
-
 
 
                                 <!-- Bedienungsleiste -->
@@ -64,7 +74,7 @@
                                     <div class="col"></div>
 
                                     <div class="col mt-3">
-                                        <a class="text-danger" href="#">Abbrechen</a>
+                                        <a class="text-danger" href="/home">Abbrechen</a>
                                     </div>
 
                                 </div>

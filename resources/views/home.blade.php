@@ -32,21 +32,56 @@
 
                         </div>
 
+
                         <div class="col">
+
+
 
                             <div class="jumbotron">
                                 <h1 class="display-4">Schwarzes Brett</h1>
                                 <hr class="my-4">
 
                                 <p class="lead">
-                                    <a class="btn btn-primary btn-lg" href="/post" role="button"><i class="far fa-sticky-note"></i> &nbsp; Nachrichten ansehen</a>
+                                    <a class="btn btn-primary btn-lg" href="/post" role="button"><i class="far fa-sticky-note"></i> &nbsp; Alle Nachrichten ansehen</a>
                                 </p>
                             </div>
+
 
 
                         </div>
 
                     </div>
+
+                        <div class="card-body">
+
+                            @for($i = 0; $i < 2; $i++)
+                            <div class="row">
+
+
+                                <article class="">
+                                    <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
+
+                                    <p>
+                                        60% of organizations were exposed to actual or attempted fraud loss last year.
+                                        As fraud and risk increases year over year, the amount of data being collected increases as well.
+                                        <a href="/post/4">Mehr Lesen</a>
+                                    </p>
+                                    <p class="text-muted">
+                                        <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
+                                        <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
+                                    </p>
+
+                                </article>
+
+
+                            </div>
+
+                            @endfor
+                        </div>
+
+
+
+
 
                 </div>
             </div>
