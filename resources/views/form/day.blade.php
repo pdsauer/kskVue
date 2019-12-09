@@ -138,12 +138,20 @@
                                 </div>
 
 
-                                <div class="col-lg-3 col-sm-12 col-md-6">
+                                <div class="col-lg-2 col-sm-12 col-md-6">
                                     <div class="form-group">
                                         <label for="bezeichnung">Bezeichnung</label>
                                         <input type="text" class="form-control" id="bezeichnung" disabled>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-1 col-sm-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="stundenanzahl">Std</label>
+                                        <input type="text" class="form-control" id="stundenanzahl">
+                                    </div>
+                                </div>
+
 
                                 <div class="col-lg-3 col-sm-12 col-md-6">
                                     <div class="form-group">
@@ -170,12 +178,6 @@
                                     <div class="form-group">
                                         <label for="bemerkung">Bemerkung</label>
                                         <input type="text" class="form-control" id="bemerkung">
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-12 col-md-6">
-                                    <div class="form-group">
-                                        <label for="stundenanzahl">Stundenanzahl</label>
-                                        <input type="text" class="form-control" id="stundenanzahl">
                                     </div>
                                 </div>
                             </div>
