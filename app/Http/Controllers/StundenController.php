@@ -69,6 +69,18 @@ class StundenController extends Controller
         ]);
     }
 
+
+    /**
+     * Show Stundeneingabe.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    
+    public function vue(){
+
+        return view('form.activities');
+    }
+
     /**
      * Speichert den ausgewählten Tag
      *
