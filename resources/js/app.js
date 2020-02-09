@@ -19,11 +19,8 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('activity-fields', require('./components/ActivityFields.vue').default);
-Vue.component('day-selector', require('./components/DaySelect.vue').default);
-Vue.component('day-data', require('./components/DayData.vue').default);
-Vue.component('control-bar', require('./components/ControlBar.vue').default);
 
+Vue.component('hours-form', require('./components/HoursForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
