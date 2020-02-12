@@ -2,7 +2,7 @@
 
     <div class="row mt-4">
         <div class="col-lg-2 col-md-2">
-            <input class="btn btn-success" type="submit" value="Tag Speichern">
+            <button class="btn btn-success" @click="$emit('day-save')">Tag speichern</button>
         </div>
 
         <div class="col-lg-8 col-md-">
@@ -15,10 +15,16 @@
         </div>
 
         <div class="col-lg-2 col-md-2">
-            <form method="POST">
-                <input class="btn btn-outline-danger" type="submit" value="Tag löschen">
-            </form>
+                <button class="btn btn-outline-danger" @click="$emit('day-delete')">Tag löschen</button>
         </div>
 
     </div>
 </template>
+
+
+<script>
+
+
+
+
+</script>

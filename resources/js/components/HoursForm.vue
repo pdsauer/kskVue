@@ -9,30 +9,26 @@
                     <div class="card">
                         <div class="card-header">
 
-
                             <DaySelector></DaySelector>
-
 
                         </div>
 
                         <div class="card-body">
                             <!-- Suche eines Tages  -->
-
                             <div class="container bg-white">
 
                                 <!-- Allgemeine-Tagesdaten-Eingbae   -->
                                 <DayData></DayData>
 
-
                             </div>
 
                             <!-- Tätigkeiten-Eingabe   -->
-                            <activity></activity>
+                            <activityFields @activity-add="say('Activity Added!')"></activityFields>
 
                             <!-- Bedienungsleiste -->
-                            <ControlBar></ControlBar>
-                        </div>
+                            <ControlBar @day-save="say('Day saved!')" @day-delete="say('Day deleted!')"></ControlBar>
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,31 +37,16 @@
 
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
 </template>
 
 <script>
 
 
-    import activity from './ActivityFields.vue';
-    import DaySelector from './DaySelect';
-    import DayData from './DayData.vue';
-    import ControlBar from './ControlBar.vue';
+    import activityFields from './HoursForm/ActivityFields.vue';
+    import DaySelector from './HoursForm/DaySelect';
+    import DayData from './HoursForm/DayData.vue';
+    import ControlBar from './HoursForm/ControlBar.vue';
 
 
     export default {
@@ -74,12 +55,23 @@
                 parent_msg: 'Hello From the Parent!'
             }
         },
-        components: {activity: activity,
+
+        components: {activityFields: activityFields,
                      DaySelector: DaySelector,
                      DayData: DayData,
                      ControlBar: ControlBar
+        },
+
+        methods: {
+            say: function (msg) {
+                alert(msg);
+            }
         }
     }
+
+
+
+
 </script>
 
 <style scoped>

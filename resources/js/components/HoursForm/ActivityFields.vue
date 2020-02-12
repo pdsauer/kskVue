@@ -5,7 +5,7 @@
                                     <h4 class="pl-3">Tätigkeiten</h4>
                                 </div>
                                 <div class="col-lg-1 col-md-4">
-                                    <button class="btn btn-light">
+                                    <button class="btn btn-light" @click="$emit('activity-add')">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>

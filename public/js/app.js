@@ -1829,10 +1829,90 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ActivityFields.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ActivityFields.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HoursForm_ActivityFields_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HoursForm/ActivityFields.vue */ "./resources/js/components/HoursForm/ActivityFields.vue");
+/* harmony import */ var _HoursForm_DaySelect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HoursForm/DaySelect */ "./resources/js/components/HoursForm/DaySelect.vue");
+/* harmony import */ var _HoursForm_DayData_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HoursForm/DayData.vue */ "./resources/js/components/HoursForm/DayData.vue");
+/* harmony import */ var _HoursForm_ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HoursForm/ControlBar.vue */ "./resources/js/components/HoursForm/ControlBar.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      parent_msg: 'Hello From the Parent!'
+    };
+  },
+  components: {
+    activityFields: _HoursForm_ActivityFields_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    DaySelector: _HoursForm_DaySelect__WEBPACK_IMPORTED_MODULE_1__["default"],
+    DayData: _HoursForm_DayData_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ControlBar: _HoursForm_ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
+  methods: {
+    say: function say(msg) {
+      alert(msg);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1931,10 +2011,44 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DaySelect.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DaySelect.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1964,100 +2078,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ActivityFields_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivityFields.vue */ "./resources/js/components/ActivityFields.vue");
-/* harmony import */ var _DaySelect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DaySelect */ "./resources/js/components/DaySelect.vue");
-/* harmony import */ var _DayData_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DayData.vue */ "./resources/js/components/DayData.vue");
-/* harmony import */ var _ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ControlBar.vue */ "./resources/js/components/ControlBar.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      parent_msg: 'Hello From the Parent!'
-    };
-  },
-  components: {
-    activity: _ActivityFields_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    DaySelector: _DaySelect__WEBPACK_IMPORTED_MODULE_1__["default"],
-    DayData: _DayData_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    ControlBar: _ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
-  }
-});
 
 /***/ }),
 
@@ -37340,10 +37360,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ActivityFields.vue?vue&type=template&id=4b7e6dd3&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ActivityFields.vue?vue&type=template&id=4b7e6dd3& ***!
-  \*****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37355,147 +37375,225 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [_c("DaySelector")], 1),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c(
+                  "div",
+                  { staticClass: "container bg-white" },
+                  [_c("DayData")],
+                  1
+                ),
+                _vm._v(" "),
+                _c("activityFields", {
+                  on: {
+                    "activity-add": function($event) {
+                      return _vm.say("Activity Added!")
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("ControlBar", {
+                  on: {
+                    "day-save": function($event) {
+                      return _vm.say("Day saved!")
+                    },
+                    "day-delete": function($event) {
+                      return _vm.say("Day deleted!")
+                    }
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "mt-5" })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-1 col-md-4" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-light",
+            on: {
+              click: function($event) {
+                return _vm.$emit("activity-add")
+              }
+            }
+          },
+          [_c("i", { staticClass: "fas fa-plus" })]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(1)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-11 col-md-8" }, [
-          _c("h4", { staticClass: "pl-3" }, [_vm._v("Tätigkeiten")])
+    return _c("div", { staticClass: "col-lg-11 col-md-8" }, [
+      _c("h4", { staticClass: "pl-3" }, [_vm._v("Tätigkeiten")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container bg-light p-3" }, [
+      _c("div", { staticClass: "form-row" }, [
+        _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "auftrags_id" } }, [
+              _vm._v("Auftragsnummer")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              { staticClass: "form-control", attrs: { id: "auftrags_id" } },
+              [
+                _c(
+                  "option",
+                  { attrs: { disabled: "", selected: "", value: "" } },
+                  [_vm._v(" Auftrag auswählen ")]
+                ),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "test123" } }, [
+                  _vm._v("2202/15")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "test234" } }, [
+                  _vm._v("2205/49")
+                ])
+              ]
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-1 col-md-4" }, [
-          _c("button", { staticClass: "btn btn-light" }, [
-            _c("i", { staticClass: "fas fa-plus" })
+        _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "bauherr" } }, [_vm._v("Bauherr")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", id: "bauherr", disabled: "" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "bezeichnung" } }, [
+              _vm._v("Bezeichnung")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", id: "bezeichnung", disabled: "" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "tätigkeit" } }, [_vm._v("Tätigkeit")]),
+            _vm._v(" "),
+            _c(
+              "select",
+              { staticClass: "form-control", attrs: { id: "tätigkeit" } },
+              [
+                _c(
+                  "option",
+                  { attrs: { disabled: "", selected: "", value: "" } },
+                  [_vm._v(" Tätigkeit auswählen ")]
+                ),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "test123" } }, [
+                  _vm._v("Drucken")
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "test234" } }, [
+                  _vm._v("Kopieren")
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-1 col-sm-12 col-md-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "kilometer" } }, [_vm._v("Kilometer")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "number", id: "kilometer" }
+            })
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "container bg-light p-3" }, [
-        _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "auftrags_id" } }, [
-                _vm._v("Auftragsnummer")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                { staticClass: "form-control", attrs: { id: "auftrags_id" } },
-                [
-                  _c(
-                    "option",
-                    { attrs: { disabled: "", selected: "", value: "" } },
-                    [_vm._v(" Auftrag auswählen ")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "test123" } }, [
-                    _vm._v("2202/15")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "test234" } }, [
-                    _vm._v("2205/49")
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "bauherr" } }, [_vm._v("Bauherr")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", id: "bauherr", disabled: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "bezeichnung" } }, [
-                _vm._v("Bezeichnung")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", id: "bezeichnung", disabled: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "tätigkeit" } }, [
-                _vm._v("Tätigkeit")
-              ]),
-              _vm._v(" "),
-              _c(
-                "select",
-                { staticClass: "form-control", attrs: { id: "tätigkeit" } },
-                [
-                  _c(
-                    "option",
-                    { attrs: { disabled: "", selected: "", value: "" } },
-                    [_vm._v(" Tätigkeit auswählen ")]
-                  ),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "test123" } }, [
-                    _vm._v("Drucken")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "test234" } }, [
-                    _vm._v("Kopieren")
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-1 col-sm-12 col-md-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "kilometer" } }, [
-                _vm._v("Kilometer")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "number", id: "kilometer" }
-              })
-            ])
+      _c("div", { staticClass: "form-row" }, [
+        _c("div", { staticClass: "col" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "bemerkung" } }, [_vm._v("Bemerkung")]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", id: "bemerkung" }
+            })
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "col" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "bemerkung" } }, [
-                _vm._v("Bemerkung")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", id: "bemerkung" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "stundenanzahl" } }, [
-                _vm._v("Stundenanzahl")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", id: "stundenanzahl" }
-              })
-            ])
+        _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "stundenanzahl" } }, [
+              _vm._v("Stundenanzahl")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: { type: "text", id: "stundenanzahl" }
+            })
           ])
         ])
       ])
@@ -37508,10 +37606,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ControlBar.vue?vue&type=template&id=49dbc721&":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ControlBar.vue?vue&type=template&id=49dbc721& ***!
-  \*************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ControlBar.vue?vue&type=template&id=cbc346c6&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ControlBar.vue?vue&type=template&id=cbc346c6& ***!
+  \***********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37523,51 +37621,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row mt-4" }, [
+    _c("div", { staticClass: "col-lg-2 col-md-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          on: {
+            click: function($event) {
+              return _vm.$emit("day-save")
+            }
+          }
+        },
+        [_vm._v("Tag speichern")]
+      )
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-2 col-md-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-danger",
+          on: {
+            click: function($event) {
+              return _vm.$emit("day-delete")
+            }
+          }
+        },
+        [_vm._v("Tag löschen")]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-4" }, [
-      _c("div", { staticClass: "col-lg-2 col-md-2" }, [
-        _c("input", {
-          staticClass: "btn btn-success",
-          attrs: { type: "submit", value: "Tag Speichern" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-8 col-md-" }, [
-        _c("div", { staticClass: "form-group row" }, [
-          _c(
-            "label",
-            {
-              staticClass: "col-sm-2 col-form-label col-form-label-sm",
-              attrs: { for: "colFormLabelSm" }
-            },
-            [_vm._v("Stundensumme")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-sm-2" }, [
-            _c("input", {
-              staticClass: "form-control form-control-sm",
-              attrs: {
-                type: "text",
-                id: "colFormLabelSm",
-                placeholder: "0",
-                disabled: ""
-              }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-2 col-md-2" }, [
-        _c("form", { attrs: { method: "POST" } }, [
+    return _c("div", { staticClass: "col-lg-8 col-md-" }, [
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass: "col-sm-2 col-form-label col-form-label-sm",
+            attrs: { for: "colFormLabelSm" }
+          },
+          [_vm._v("Stundensumme")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-2" }, [
           _c("input", {
-            staticClass: "btn btn-outline-danger",
-            attrs: { type: "submit", value: "Tag löschen" }
+            staticClass: "form-control form-control-sm",
+            attrs: {
+              type: "text",
+              id: "colFormLabelSm",
+              placeholder: "0",
+              disabled: ""
+            }
           })
         ])
       ])
@@ -37580,10 +37692,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DayData.vue?vue&type=template&id=137cbfcb&":
-/*!**********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DayData.vue?vue&type=template&id=137cbfcb& ***!
-  \**********************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf& ***!
+  \********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37692,10 +37804,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DaySelect.vue?vue&type=template&id=9120e446&":
-/*!************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DaySelect.vue?vue&type=template&id=9120e446& ***!
-  \************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DaySelect.vue?vue&type=template&id=8bf34e3e&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/DaySelect.vue?vue&type=template&id=8bf34e3e& ***!
+  \**********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37751,60 +37863,6 @@ var staticRenderFns = [
     ])
   }
 ]
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true&":
-/*!************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true& ***!
-  \************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [_c("DaySelector")], 1),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _c(
-                  "div",
-                  { staticClass: "container bg-white" },
-                  [_c("DayData")],
-                  1
-                ),
-                _vm._v(" "),
-                _c("activity"),
-                _vm._v(" "),
-                _c("ControlBar")
-              ],
-              1
-            )
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "mt-5" })
-  ])
-}
-var staticRenderFns = []
 render._withStripped = true
 
 
@@ -50043,250 +50101,6 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/js/components/ActivityFields.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/ActivityFields.vue ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ActivityFields_vue_vue_type_template_id_4b7e6dd3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=template&id=4b7e6dd3& */ "./resources/js/components/ActivityFields.vue?vue&type=template&id=4b7e6dd3&");
-/* harmony import */ var _ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=script&lang=js& */ "./resources/js/components/ActivityFields.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ActivityFields_vue_vue_type_template_id_4b7e6dd3___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ActivityFields_vue_vue_type_template_id_4b7e6dd3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ActivityFields.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ActivityFields.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/ActivityFields.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ActivityFields.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ActivityFields.vue?vue&type=template&id=4b7e6dd3&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/ActivityFields.vue?vue&type=template&id=4b7e6dd3& ***!
-  \***********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_4b7e6dd3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=template&id=4b7e6dd3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ActivityFields.vue?vue&type=template&id=4b7e6dd3&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_4b7e6dd3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_4b7e6dd3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/ControlBar.vue":
-/*!************************************************!*\
-  !*** ./resources/js/components/ControlBar.vue ***!
-  \************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ControlBar_vue_vue_type_template_id_49dbc721___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ControlBar.vue?vue&type=template&id=49dbc721& */ "./resources/js/components/ControlBar.vue?vue&type=template&id=49dbc721&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-var script = {}
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
-  _ControlBar_vue_vue_type_template_id_49dbc721___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ControlBar_vue_vue_type_template_id_49dbc721___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ControlBar.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ControlBar.vue?vue&type=template&id=49dbc721&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/ControlBar.vue?vue&type=template&id=49dbc721& ***!
-  \*******************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_template_id_49dbc721___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ControlBar.vue?vue&type=template&id=49dbc721& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ControlBar.vue?vue&type=template&id=49dbc721&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_template_id_49dbc721___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_template_id_49dbc721___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/DayData.vue":
-/*!*********************************************!*\
-  !*** ./resources/js/components/DayData.vue ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DayData_vue_vue_type_template_id_137cbfcb___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DayData.vue?vue&type=template&id=137cbfcb& */ "./resources/js/components/DayData.vue?vue&type=template&id=137cbfcb&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-var script = {}
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
-  _DayData_vue_vue_type_template_id_137cbfcb___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _DayData_vue_vue_type_template_id_137cbfcb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/DayData.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/DayData.vue?vue&type=template&id=137cbfcb&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/components/DayData.vue?vue&type=template&id=137cbfcb& ***!
-  \****************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_template_id_137cbfcb___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DayData.vue?vue&type=template&id=137cbfcb& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DayData.vue?vue&type=template&id=137cbfcb&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_template_id_137cbfcb___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_template_id_137cbfcb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/DaySelect.vue":
-/*!***********************************************!*\
-  !*** ./resources/js/components/DaySelect.vue ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DaySelect_vue_vue_type_template_id_9120e446___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DaySelect.vue?vue&type=template&id=9120e446& */ "./resources/js/components/DaySelect.vue?vue&type=template&id=9120e446&");
-/* harmony import */ var _DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DaySelect.vue?vue&type=script&lang=js& */ "./resources/js/components/DaySelect.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DaySelect_vue_vue_type_template_id_9120e446___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _DaySelect_vue_vue_type_template_id_9120e446___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/DaySelect.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/DaySelect.vue?vue&type=script&lang=js&":
-/*!************************************************************************!*\
-  !*** ./resources/js/components/DaySelect.vue?vue&type=script&lang=js& ***!
-  \************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DaySelect.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DaySelect.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/DaySelect.vue?vue&type=template&id=9120e446&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/DaySelect.vue?vue&type=template&id=9120e446& ***!
-  \******************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_template_id_9120e446___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DaySelect.vue?vue&type=template&id=9120e446& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DaySelect.vue?vue&type=template&id=9120e446&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_template_id_9120e446___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_template_id_9120e446___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/HoursForm.vue":
 /*!***********************************************!*\
   !*** ./resources/js/components/HoursForm.vue ***!
@@ -50351,6 +50165,269 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HoursForm_vue_vue_type_template_id_0deb3dd0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HoursForm_vue_vue_type_template_id_0deb3dd0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/ActivityFields.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/HoursForm/ActivityFields.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=template&id=357c3562& */ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&");
+/* harmony import */ var _ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/HoursForm/ActivityFields.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/ActivityFields.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=template&id=357c3562& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/ControlBar.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/HoursForm/ControlBar.vue ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ControlBar_vue_vue_type_template_id_cbc346c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ControlBar.vue?vue&type=template&id=cbc346c6& */ "./resources/js/components/HoursForm/ControlBar.vue?vue&type=template&id=cbc346c6&");
+/* harmony import */ var _ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ControlBar.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ControlBar_vue_vue_type_template_id_cbc346c6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ControlBar_vue_vue_type_template_id_cbc346c6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/HoursForm/ControlBar.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ControlBar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/ControlBar.vue?vue&type=template&id=cbc346c6&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/ControlBar.vue?vue&type=template&id=cbc346c6& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_template_id_cbc346c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ControlBar.vue?vue&type=template&id=cbc346c6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ControlBar.vue?vue&type=template&id=cbc346c6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_template_id_cbc346c6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_template_id_cbc346c6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/DayData.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/HoursForm/DayData.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DayData.vue?vue&type=template&id=04927bcf& */ "./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/HoursForm/DayData.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DayData.vue?vue&type=template&id=04927bcf& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/DaySelect.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/HoursForm/DaySelect.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DaySelect_vue_vue_type_template_id_8bf34e3e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DaySelect.vue?vue&type=template&id=8bf34e3e& */ "./resources/js/components/HoursForm/DaySelect.vue?vue&type=template&id=8bf34e3e&");
+/* harmony import */ var _DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DaySelect.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DaySelect_vue_vue_type_template_id_8bf34e3e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _DaySelect_vue_vue_type_template_id_8bf34e3e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/HoursForm/DaySelect.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DaySelect.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/DaySelect.vue?vue&type=template&id=8bf34e3e&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/DaySelect.vue?vue&type=template&id=8bf34e3e& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_template_id_8bf34e3e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./DaySelect.vue?vue&type=template&id=8bf34e3e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DaySelect.vue?vue&type=template&id=8bf34e3e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_template_id_8bf34e3e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DaySelect_vue_vue_type_template_id_8bf34e3e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
