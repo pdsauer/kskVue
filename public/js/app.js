@@ -1842,6 +1842,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HoursForm_DaySelect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HoursForm/DaySelect */ "./resources/js/components/HoursForm/DaySelect.vue");
 /* harmony import */ var _HoursForm_DayData_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HoursForm/DayData.vue */ "./resources/js/components/HoursForm/DayData.vue");
 /* harmony import */ var _HoursForm_ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HoursForm/ControlBar.vue */ "./resources/js/components/HoursForm/ControlBar.vue");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1891,7 +1899,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      parent_msg: 'Hello From the Parent!'
+      activities: []
     };
   },
   components: {
@@ -1901,11 +1909,23 @@ __webpack_require__.r(__webpack_exports__);
     ControlBar: _HoursForm_ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   methods: {
-    say: function say(msg) {
-      alert(msg);
+    addActivity: function addActivity(id, projectNumber, action, km, comment, hours) {
+      this.activities.push(new Activity(id, projectNumber, action, km, comment, hours));
+      console.log('Activity added');
     }
   }
 });
+
+var Activity = function Activity(id, projectNumber, action, km, comment, hours) {
+  _classCallCheck(this, Activity);
+
+  this.id = id;
+  this.projectNumber = projectNumber;
+  this.action = action;
+  this.km = km;
+  this.comment = comment;
+  this.hours = hours;
+};
 
 /***/ }),
 
@@ -1992,20 +2012,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('activity mounted.');
+  props: {
+    activity: {
+      type: Object
+    }
   }
 });
 
@@ -37493,12 +37504,37 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("activityFields", {
-                  on: {
-                    "activity-add": function($event) {
-                      return _vm.say("Activity Added!")
-                    }
-                  }
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-1 col-md-4" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light",
+                        on: {
+                          click: function($event) {
+                            return _vm.addActivity(
+                              10,
+                              "2045/18",
+                              "Telefonieren",
+                              20,
+                              "alles normal",
+                              2
+                            )
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-plus" })]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.activities, function(activity) {
+                  return _c("activityFields", {
+                    key: activity.id,
+                    attrs: { activity: activity }
+                  })
                 }),
                 _vm._v(" "),
                 _c("ControlBar", {
@@ -37512,7 +37548,7 @@ var render = function() {
                   }
                 })
               ],
-              1
+              2
             )
           ])
         ])
@@ -37522,7 +37558,16 @@ var render = function() {
     _c("div", { staticClass: "mt-5" })
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-11 col-md-8" }, [
+      _c("h4", { staticClass: "pl-3" }, [_vm._v("Tätigkeiten")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -37545,42 +37590,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-1 col-md-4" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-light",
-            on: {
-              click: function($event) {
-                return _vm.$emit("activity-add")
-              }
-            }
-          },
-          [_c("i", { staticClass: "fas fa-plus" })]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(1)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-11 col-md-8" }, [
-      _c("h4", { staticClass: "pl-3" }, [_vm._v("Tätigkeiten")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container bg-light p-3" }, [
+    _c("div", { staticClass: "container bg-light p-3" }, [
       _c("div", { staticClass: "form-row" }, [
         _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
@@ -37595,7 +37605,15 @@ var staticRenderFns = [
                 _c(
                   "option",
                   { attrs: { disabled: "", selected: "", value: "" } },
-                  [_vm._v(" Auftrag auswählen ")]
+                  [
+                    _vm._v(
+                      " " +
+                        _vm._s(
+                          _vm.activity.projectNumber || "Auftrag Auswählen"
+                        ) +
+                        " "
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _c("option", { attrs: { value: "test123" } }, [
@@ -37610,29 +37628,9 @@ var staticRenderFns = [
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "bauherr" } }, [_vm._v("Bauherr")]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "bauherr", disabled: "" }
-            })
-          ])
-        ]),
+        _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "bezeichnung" } }, [
-              _vm._v("Bezeichnung")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: { type: "text", id: "bezeichnung", disabled: "" }
-            })
-          ])
-        ]),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
@@ -37645,7 +37643,13 @@ var staticRenderFns = [
                 _c(
                   "option",
                   { attrs: { disabled: "", selected: "", value: "" } },
-                  [_vm._v(" Tätigkeit auswählen ")]
+                  [
+                    _vm._v(
+                      " " +
+                        _vm._s(_vm.activity.action || "Tätigkeit auswählen") +
+                        " "
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _c("option", { attrs: { value: "test123" } }, [
@@ -37665,8 +37669,25 @@ var staticRenderFns = [
             _c("label", { attrs: { for: "kilometer" } }, [_vm._v("Kilometer")]),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.activity.km,
+                  expression: "activity.km"
+                }
+              ],
               staticClass: "form-control",
-              attrs: { type: "number", id: "kilometer" }
+              attrs: { type: "number", id: "kilometer" },
+              domProps: { value: _vm.activity.km },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.activity, "km", $event.target.value)
+                }
+              }
             })
           ])
         ])
@@ -37678,8 +37699,25 @@ var staticRenderFns = [
             _c("label", { attrs: { for: "bemerkung" } }, [_vm._v("Bemerkung")]),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.activity.comment,
+                  expression: "activity.comment"
+                }
+              ],
               staticClass: "form-control",
-              attrs: { type: "text", id: "bemerkung" }
+              attrs: { type: "text", id: "bemerkung" },
+              domProps: { value: _vm.activity.comment },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.activity, "comment", $event.target.value)
+                }
+              }
             })
           ])
         ]),
@@ -37691,11 +37729,60 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.activity.hours,
+                  expression: "activity.hours"
+                }
+              ],
               staticClass: "form-control",
-              attrs: { type: "text", id: "stundenanzahl" }
+              attrs: { type: "text", id: "stundenanzahl" },
+              domProps: { value: _vm.activity.hours },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.activity, "hours", $event.target.value)
+                }
+              }
             })
           ])
         ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "bauherr" } }, [_vm._v("Bauherr")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", id: "bauherr", disabled: "" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "bezeichnung" } }, [_vm._v("Bezeichnung")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", id: "bezeichnung", disabled: "" }
+        })
       ])
     ])
   }
