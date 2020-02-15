@@ -2045,6 +2045,106 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      date: '',
+      start: '',
+      end: '',
+      pause: ''
+    };
+  },
+  computed: {
+    calcTotal: function calcTotal() {
+      var result = this.timeToDecimal(this.end) - this.timeToDecimal(this.start) - this.timeToDecimal(this.pause);
+      return !isNaN(result) ? result : '';
+    }
+  },
+  // 30 * x = 50
+  methods: {
+    timeToDecimal: function timeToDecimal($time) {
+      var data = $time.split(':');
+      var hours = data[0] * 100;
+      var minutes = data[1] * (5 / 3);
+      return (hours + minutes) / 100;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js& ***!
@@ -37707,97 +37807,164 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("form", { attrs: { method: "POST" } }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "form-row col-lg-4 col-md-6 col-sm-12" }, [
-            _c("div", { staticClass: "col" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "datum" } }, [_vm._v("Datum")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { name: "datum", type: "date", id: "datum", value: "" }
-                })
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-row col-lg-4 col-md-6 col-sm-12" }, [
-            _c("div", { staticClass: "col" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "start" } }, [_vm._v("Von")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { name: "von", type: "time", id: "start", value: "" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "ende" } }, [_vm._v("Bis")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { name: "bis", type: "time", id: "ende", value: "" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "pause" } }, [_vm._v("Pause (h)")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: { name: "pause", type: "time", id: "pause", value: "" }
-                })
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-row col-lg-4 col-md-6 col-sm-12" }, [
-            _c("div", { staticClass: "col" }, [
-              _c("div", { staticClass: "form-group" }, [
-                _c("label", { attrs: { for: "gesamt" } }, [
-                  _vm._v("Std-gesamt")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    name: "std_gesamt",
-                    type: "text",
-                    id: "gesamt",
-                    disabled: ""
+  return _c("div", [
+    _c("form", { attrs: { method: "POST" } }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "form-row col-lg-4 col-md-6 col-sm-12" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "datum" } }, [_vm._v("Datum")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { name: "datum", type: "date", id: "datum", value: "" },
+                domProps: {
+                  value: _vm.date && _vm.date.toISOString().split("T")[0]
+                },
+                on: {
+                  input: function($event) {
+                    _vm.date = $event.target.valueAsDate
                   }
-                }),
-                _vm._v(" "),
-                _c(
-                  "small",
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-row col-lg-4 col-md-6 col-sm-12" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "start" } }, [_vm._v("Von")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "form-text text-muted",
-                    attrs: { id: "emailHelp" }
-                  },
-                  [_vm._v("Die Gesamtstundenzahl wird automatisch errechnet.")]
-                )
-              ])
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.start,
+                    expression: "start"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "von", type: "time", id: "start", value: "" },
+                domProps: { value: _vm.start },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.start = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "ende" } }, [_vm._v("Bis")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.end,
+                    expression: "end"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "bis", type: "time", id: "ende", value: "" },
+                domProps: { value: _vm.end },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.end = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "pause" } }, [_vm._v("Pause (h)")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.pause,
+                    expression: "pause"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "pause", type: "time", id: "pause", value: "" },
+                domProps: { value: _vm.pause },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.pause = $event.target.value
+                  }
+                }
+              })
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-row col-lg-4 col-md-6 col-sm-12" }, [
+          _c("div", { staticClass: "col" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "gesamt" } }, [_vm._v("Std-gesamt")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.calcTotal,
+                    expression: "calcTotal"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  name: "std_gesamt",
+                  type: "text",
+                  id: "gesamt",
+                  disabled: ""
+                },
+                domProps: { value: _vm.calcTotal },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.calcTotal = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  staticClass: "form-text text-muted",
+                  attrs: { id: "emailHelp" }
+                },
+                [_vm._v("Die Gesamtstundenzahl wird automatisch errechnet.")]
+              )
             ])
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -50321,15 +50488,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DayData.vue?vue&type=template&id=04927bcf& */ "./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _DayData_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DayData.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DayData_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__["render"],
   _DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -50343,6 +50512,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/HoursForm/DayData.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./DayData.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DayData_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
