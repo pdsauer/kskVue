@@ -1899,7 +1899,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      activities: []
+      activities: [],
+      idcounter: 1
     };
   },
   components: {
@@ -1911,7 +1912,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   methods: {
     addActivity: function addActivity(id, projectNumber, action, km, comment, hours) {
       this.activities.push(new Activity(id, projectNumber, action, km, comment, hours));
+      this.idcounter++;
       console.log('Activity added');
+    },
+    activityDelete: function activityDelete(id) {
+      var index = this.activities.map(function (x) {
+        return x.id;
+      }).indexOf(id);
+      this.activities.splice(index, 1);
+      console.log('deleted');
     }
   }
 });
@@ -1938,6 +1947,20 @@ var Activity = function Activity(id, projectNumber, action, km, comment, hours) 
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37515,7 +37538,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             return _vm.addActivity(
-                              10,
+                              _vm.idcounter,
                               "2045/18",
                               "Telefonieren",
                               20,
@@ -37533,7 +37556,8 @@ var render = function() {
                 _vm._l(_vm.activities, function(activity) {
                   return _c("activityFields", {
                     key: activity.id,
-                    attrs: { activity: activity }
+                    attrs: { activity: activity },
+                    on: { activityDelete: _vm.activityDelete }
                   })
                 }),
                 _vm._v(" "),
@@ -37694,7 +37718,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-row" }, [
-        _c("div", { staticClass: "col" }, [
+        _c("div", { staticClass: "col col-lg-8 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "bemerkung" } }, [_vm._v("Bemerkung")]),
             _vm._v(" "),
@@ -37722,7 +37746,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
+        _c("div", { staticClass: "col-lg-1 col-sm-12 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "stundenanzahl" } }, [
               _vm._v("Stundenanzahl")
@@ -37749,6 +37773,30 @@ var render = function() {
                 }
               }
             })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-12" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "stundenanzahl" } }, [_vm._v(" ")]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-light form-control text-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.$emit("activityDelete", _vm.activity.id)
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-trash-alt" }),
+                _vm._v(
+                  "\n                        Tätigkeit löschen\n                    "
+                )
+              ]
+            )
           ])
         ])
       ])

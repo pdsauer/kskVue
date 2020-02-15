@@ -25,14 +25,14 @@
                                     <h4 class="pl-3">Tätigkeiten</h4>
                                 </div>
                                 <div class="col-lg-1 col-md-4">
-                                    <button class="btn btn-light" @click="addActivity(10,'2045/18', 'Telefonieren', 20, 'alles normal', 2)">
+                                    <button class="btn btn-light" @click="addActivity(idcounter,'2045/18', 'Telefonieren', 20, 'alles normal', 2)">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
 
 
-                            <activityFields v-for="activity in activities" :activity="activity" :key="activity.id"></activityFields>
+                            <activityFields v-for="activity in activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete"></activityFields>
 
                             <!-- Bedienungsleiste -->
                             <ControlBar @day-save="say('Day saved!')" @day-delete="say('Day deleted!')"></ControlBar>
@@ -55,7 +55,8 @@
     export default {
         data () {
             return {
-               activities: []
+               activities: [],
+                idcounter: 1
             }
         },
 
@@ -68,7 +69,15 @@
         methods: {
             addActivity: function (id, projectNumber, action, km, comment, hours) {
                 this.activities.push(new Activity(id, projectNumber, action, km, comment,  hours));
+                this.idcounter++;
                 console.log('Activity added');
+            },
+            activityDelete: function (id){
+                let index = this.activities.map((x) => {
+                    return x.id;
+                }).indexOf(id);
+                this.activities.splice(index, 1);
+                console.log('deleted');
             }
         }
 
