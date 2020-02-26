@@ -95,13 +95,13 @@
                                     </div>
                                 </div>
 
-                                <!-- <input class="btn btn-success" type="submit" value="Tag Speichern"> -->
+                                 <input class="btn btn-success" type="submit" value="Tag Speichern">
 
                             </form>
 
                         </div>
 
-                       
+
 
                         <!-- Bedienungsleiste -->
                         <div class="row mt-4">

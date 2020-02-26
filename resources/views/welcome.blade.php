@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
-@section('refresher')
-    @guest
 
-        @else
-        <meta http-equiv="refresh" content="0; URL=/home">
-    @endguest
-@endsection
 @section('content')
     <div class="container">
         <div class="row justify-content-center">

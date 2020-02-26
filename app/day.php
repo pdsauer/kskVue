@@ -12,6 +12,7 @@ class day extends Model
      * @var string
      */
     protected $table = 'tblStunden';
+    protected $hidden = array('TS');
 
     /**
      * The primary key associated with the table.
@@ -25,8 +26,8 @@ class day extends Model
      *
      * @var boolean
      */
-
     public $timestamps = false;
+
 
 
     /**

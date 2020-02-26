@@ -75,7 +75,7 @@ class StundenController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    
+
     public function vue(){
 
         return view('form.activities');
@@ -189,7 +189,7 @@ class StundenController extends Controller
             'pause' => ['required', ],
         ]);
 
-        $day =Day::find($Std_ID);
+        $day = Day::find($Std_ID);
 
         $day->Von = $this->decimalHours($validated['von']);
         $day->Bis = $this->decimalHours($validated['bis']);

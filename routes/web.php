@@ -50,6 +50,9 @@ Route::patch('/stunden/{day}/edit', 'StundenController@update');
 
 
 
+// Routes for API - DAY
+
+Route::get('/api/v1/days', 'Daycontroller@index');
 
 
 

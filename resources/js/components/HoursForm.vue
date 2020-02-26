@@ -78,6 +78,9 @@
                 }).indexOf(id);
                 this.activities.splice(index, 1);
                 console.log('deleted');
+            },
+            loadDays: function (){
+                console.log(axios.get('/api/v1/days'));
             }
         }
 
