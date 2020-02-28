@@ -11,7 +11,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="datum">Datum</label>
-                            <input name="datum" type="date" :value="date && date.toISOString().split('T')[0]" @input="date = $event.target.valueAsDate" class="form-control" id="datum" value="">
+                            <input name="datum" type="date" :value="day.date && day.date.toISOString().split('T')[0]" @input="day.date = $event.target.valueAsDate" class="form-control" id="datum" value="">
                         </div>
                     </div>
                 </div>
@@ -21,14 +21,14 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="start">Von</label>
-                            <input name="von" type="time" class="form-control" id="start" value="" v-model="start">
+                            <input name="von" type="time" class="form-control" id="start" value="" v-model="day.start">
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="form-group">
                             <label for="ende">Bis</label>
-                            <input name="bis" type="time" class="form-control" id="ende" value="" v-model="end">
+                            <input name="bis" type="time" class="form-control" id="ende" value="" v-model="day.end">
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="pause">Pause (h)</label>
-                            <input name="pause" type="time" class="form-control" id="pause" value="" v-model="pause">
+                            <input name="pause" type="time" class="form-control" id="pause" value="" v-model="day.pause">
                             <!-- <input name="pause" type="number" step="0.01" min="0" class="form-control" id="pause" value="0.0"> -->
                         </div>
                     </div>
@@ -66,16 +66,18 @@
     export default {
         data () {
             return {
-                date: '',
-                start: '',
-                end: '',
-                pause: ''
+                day: {
+                    date: '',
+                    start: '',
+                    end: '',
+                    pause: ''
+                }
             }
         },
 
         computed: {
             calcTotal(){
-                let result = this.timeToDecimal(this.end) - this.timeToDecimal(this.start) - this.timeToDecimal(this.pause);
+                let result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
                 return (!isNaN(result)? result : '');
             }
         },
@@ -84,8 +86,8 @@
 
         methods: {
 
-            timeToDecimal: function ($time) {
-                let data = $time.split(':');
+            timeToDecimal: function (time) {
+                let data = time.split(':');
                 let hours = data[0] * 100;
                 let minutes = data[1] * (5/3);
                 return (hours + minutes) / 100

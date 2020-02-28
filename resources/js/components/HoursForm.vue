@@ -6,7 +6,7 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <DaySelector></DaySelector>
+                            <DaySelector @daySelected="daySelected"></DaySelector>
 
                         </div>
 
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+
     import activityFields from './HoursForm/ActivityFields.vue';
     import DaySelector from './HoursForm/DaySelect';
     import DayData from './HoursForm/DayData.vue';
@@ -58,7 +59,14 @@
     export default {
         data () {
             return {
-               activities: [],
+                day: {
+                    id:'',
+                    date: '',
+                    start: '',
+                    end: '',
+                    pause: ''
+                },
+                activities: [],
                 idcounter: 1
             }
         },
@@ -82,8 +90,26 @@
                 this.activities.splice(index, 1);
                 console.log('deleted');
             },
-            loadDays: function (){
-                console.log(axios.get('/api/v1/days'));
+            loadDay: function (id){
+                // TODO use and Check for 404
+                axios.get('/api/v1/days/' + id).then(
+
+                    response => {
+                        console.log('New Day Selected');
+                        this.day.id = response.data.Std_ID;
+                        this.day.date = response.data.Datum;
+                        this.day.start = response.data.Von;
+                        this.day.end = response.data.Bis;
+                        this.day.pause = response.data.Pause;
+                    }
+                )
+            },
+            daySelected: function (day) {
+
+                console.log('Day Selected' + " "+  day.id);
+
+                this.loadDay(day.id);
+
             }
         }
 

@@ -56,12 +56,14 @@ class DayController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Day $day
+     * @return Day
      */
-    public function show($id)
+    public function show(Day $day)
     {
-        //
+        // Bestimmten Tag anzeigen
+
+        return $day;
     }
 
     /**

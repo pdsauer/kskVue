@@ -26,6 +26,7 @@
                 :custom-label="formatDate"
                 placeholder="Stunden Auswählen"
                 selectLabel=""
+                @input="onSelect"
             ></multiselect>
 
         </div>
@@ -60,10 +61,13 @@
                 )
         },
         methods:{
+            onSelect: function(){
+                this.$emit('daySelected', this.value);
+            },
             formatDate: function(date) {
                 let format = new Date(date.date);
                 let day = format.getDate();
-                let month = format.getMonth();
+                let month = format.getMonth() + 1;
                 let year = format.getFullYear();
                 return day + '.'+ month + '.' + year;
             }

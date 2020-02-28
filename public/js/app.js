@@ -1972,6 +1972,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      day: {
+        id: '',
+        date: '',
+        start: '',
+        end: '',
+        pause: ''
+      },
       activities: [],
       idcounter: 1
     };
@@ -1995,8 +2002,22 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.activities.splice(index, 1);
       console.log('deleted');
     },
-    loadDays: function loadDays() {
-      console.log(axios.get('/api/v1/days'));
+    loadDay: function loadDay(id) {
+      var _this = this;
+
+      // TODO use and Check for 404
+      axios.get('/api/v1/days/' + id).then(function (response) {
+        console.log('New Day Selected');
+        _this.day.id = response.data.Std_ID;
+        _this.day.date = response.data.Datum;
+        _this.day.start = response.data.Von;
+        _this.day.end = response.data.Bis;
+        _this.day.pause = response.data.Pause;
+      });
+    },
+    daySelected: function daySelected(day) {
+      console.log('Day Selected' + " " + day.id);
+      this.loadDay(day.id);
     }
   }
 });
@@ -2230,22 +2251,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      date: '',
-      start: '',
-      end: '',
-      pause: ''
+      day: {
+        date: '',
+        start: '',
+        end: '',
+        pause: ''
+      }
     };
   },
   computed: {
     calcTotal: function calcTotal() {
-      var result = this.timeToDecimal(this.end) - this.timeToDecimal(this.start) - this.timeToDecimal(this.pause);
+      var result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
       return !isNaN(result) ? result : '';
     }
   },
   // 30 * x = 50
   methods: {
-    timeToDecimal: function timeToDecimal($time) {
-      var data = $time.split(':');
+    timeToDecimal: function timeToDecimal(time) {
+      var data = time.split(':');
       var hours = data[0] * 100;
       var minutes = data[1] * (5 / 3);
       return (hours + minutes) / 100;
@@ -2266,6 +2289,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -2330,10 +2354,13 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    onSelect: function onSelect() {
+      this.$emit('daySelected', this.value);
+    },
     formatDate: function formatDate(date) {
       var format = new Date(date.date);
       var day = format.getDate();
-      var month = format.getMonth();
+      var month = format.getMonth() + 1;
       var year = format.getFullYear();
       return day + '.' + month + '.' + year;
     }
@@ -38264,7 +38291,12 @@ var render = function() {
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col" }, [
           _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [_c("DaySelector")], 1),
+            _c(
+              "div",
+              { staticClass: "card-header" },
+              [_c("DaySelector", { on: { daySelected: _vm.daySelected } })],
+              1
+            ),
             _vm._v(" "),
             _c(
               "div",
@@ -38704,11 +38736,12 @@ var render = function() {
                 staticClass: "form-control",
                 attrs: { name: "datum", type: "date", id: "datum", value: "" },
                 domProps: {
-                  value: _vm.date && _vm.date.toISOString().split("T")[0]
+                  value:
+                    _vm.day.date && _vm.day.date.toISOString().split("T")[0]
                 },
                 on: {
                   input: function($event) {
-                    _vm.date = $event.target.valueAsDate
+                    _vm.day.date = $event.target.valueAsDate
                   }
                 }
               })
@@ -38726,19 +38759,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.start,
-                    expression: "start"
+                    value: _vm.day.start,
+                    expression: "day.start"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { name: "von", type: "time", id: "start", value: "" },
-                domProps: { value: _vm.start },
+                domProps: { value: _vm.day.start },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.start = $event.target.value
+                    _vm.$set(_vm.day, "start", $event.target.value)
                   }
                 }
               })
@@ -38754,19 +38787,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.end,
-                    expression: "end"
+                    value: _vm.day.end,
+                    expression: "day.end"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { name: "bis", type: "time", id: "ende", value: "" },
-                domProps: { value: _vm.end },
+                domProps: { value: _vm.day.end },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.end = $event.target.value
+                    _vm.$set(_vm.day, "end", $event.target.value)
                   }
                 }
               })
@@ -38782,19 +38815,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.pause,
-                    expression: "pause"
+                    value: _vm.day.pause,
+                    expression: "day.pause"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { name: "pause", type: "time", id: "pause", value: "" },
-                domProps: { value: _vm.pause },
+                domProps: { value: _vm.day.pause },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.pause = $event.target.value
+                    _vm.$set(_vm.day, "pause", $event.target.value)
                   }
                 }
               })
@@ -38895,6 +38928,7 @@ var render = function() {
               placeholder: "Stunden Auswählen",
               selectLabel: ""
             },
+            on: { input: _vm.onSelect },
             model: {
               value: _vm.value,
               callback: function($$v) {
