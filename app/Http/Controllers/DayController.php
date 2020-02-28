@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Day;
 use Illuminate\Support\Facades\Auth;
@@ -23,11 +24,11 @@ class DayController extends Controller
     /**
      * Fetch all Days belonging to the user
      *
-     * @return day[]|\Illuminate\Database\Eloquent\Collection
+     * @return day[]|Collection
      */
     public function index()
     {
-        //
+        // TODO nur die Tage der letzen 3 Monatebereitstellen
 
         return  Day::where('PersNr', auth()->user()->PersNr)->get();
     }

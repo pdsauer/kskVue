@@ -53,7 +53,6 @@
             }
         },
         mounted() {
-
             axios.get('/api/v1/days').then(
                 response => this.days = response.data.map(function(day) {
                     return {date: day.Datum, id: day.Std_ID}

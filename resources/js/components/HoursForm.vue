@@ -15,7 +15,7 @@
                             <div class="container bg-white">
 
                                 <!-- Allgemeine-Tagesdaten-Eingbae   -->
-                                <DayData></DayData>
+                                <DayData :dayData="day" :calcTotal="calcTotal"></DayData>
 
                             </div>
 
@@ -64,9 +64,11 @@
                     date: '',
                     start: '',
                     end: '',
-                    pause: ''
+                    pause: '',
+
                 },
                 activities: [],
+                newDay: true,
                 idcounter: 1
             }
         },
@@ -102,16 +104,43 @@
                         this.day.end = response.data.Bis;
                         this.day.pause = response.data.Pause;
                     }
-                )
+                );
+
+                //
             },
             daySelected: function (day) {
 
-                console.log('Day Selected' + " "+  day.id);
+                // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
+                // Sonst tag füllen
 
-                this.loadDay(day.id);
+                if(day == null){
 
+                    this.day.id = '';
+                    this.day.date = '';
+                    this.day.start = '';
+                    this.day.end = '';
+                    this.day.pause = '';
+                } else {
+                    this.loadDay(day.id);
+                }
+
+
+
+            },
+            timeToDecimal: function (time) {
+                let data = time.split(':');
+                let hours = data[0] * 100;
+                let minutes = data[1] * (5/3);
+                return (hours + minutes) / 100
+            },
+
+        },
+        computed: {
+            calcTotal(){
+                let result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
+                return (!isNaN(result)? result : '');
             }
-        }
+        },
 
     }
 

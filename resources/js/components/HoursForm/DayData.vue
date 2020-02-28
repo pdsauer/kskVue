@@ -64,17 +64,17 @@
 <script>
 
     export default {
+        props: ['dayData'],
         data () {
             return {
                 day: {
-                    date: '',
-                    start: '',
-                    end: '',
-                    pause: ''
+                    date: this.dayData.date,
+                    start: this.dayData.start,
+                    end: this.dayData.end,
+                    pause: this.dayData.pause
                 }
             }
         },
-
         computed: {
             calcTotal(){
                 let result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
