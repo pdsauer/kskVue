@@ -52,6 +52,9 @@
     import DayData from './HoursForm/DayData.vue';
     import ControlBar from './HoursForm/ControlBar.vue';
 
+
+    const axios = require('axios').default;
+
     export default {
         data () {
             return {
