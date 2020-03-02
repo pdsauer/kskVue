@@ -71,7 +71,7 @@
                     date: this.dayData.date,
                     start: this.dayData.start,
                     end: this.dayData.end,
-                    pause: this.dayData.pause
+                    pause: this.dayData.pause,
                 }
             }
         },

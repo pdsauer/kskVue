@@ -15,7 +15,72 @@
                             <div class="container bg-white">
 
                                 <!-- Allgemeine-Tagesdaten-Eingbae   -->
-                                <DayData :dayData="day" :calcTotal="calcTotal"></DayData>
+                               <!-- <DayData :dayData="day" :calcTotal="calcTotal"></DayData>-->
+                                <div>
+
+                                    <!-- Allgemeine-Tagesdaten-Eingbae   -->
+                                    <form method="POST">
+
+                                        <div class="row">
+
+                                            <div class="form-row col-lg-4 col-md-6 col-sm-12">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="datum">Datum</label>
+                                                        <input
+                                                            name="datum"
+                                                            type="date"
+                                                            id="datum"
+                                                            class="form-control"
+                                                            :value="day.date && day.date.toISOString().split('T')[0]"
+                                                            @input="day.date = $event.target.valueAsDate"
+                                                            >
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row col-lg-4 col-md-6 col-sm-12">
+
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="start">Von</label>
+                                                        <input name="von" type="time" class="form-control" id="start" value="" v-model="day.start">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="ende">Bis</label>
+                                                        <input name="bis" type="time" class="form-control" id="ende" value="" v-model="day.end">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="pause">Pause (h)</label>
+                                                        <input name="pause" type="time" class="form-control" id="pause" value="" v-model="day.pause">
+                                                        <!-- <input name="pause" type="number" step="0.01" min="0" class="form-control" id="pause" value="0.0"> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row col-lg-4 col-md-6 col-sm-12">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="gesamt">Std-gesamt</label>
+                                                        <input name="std_gesamt" type="text" id="gesamt" class="form-control" v-model="calcTotal" disabled>
+                                                        <small id="emailHelp" class="form-text text-muted">Die Gesamtstundenzahl wird automatisch errechnet.</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <input class="btn btn-success" type="submit" value="Tag Speichern"> -->
+                                    </form>
+
+
+                                </div>
 
                             </div>
 
@@ -79,6 +144,12 @@
                      ControlBar: ControlBar
         },
 
+        watch: {
+            day(){
+                console.log('day noticed Change');
+            }
+        },
+
         methods: {
             addActivity: function (id, projectNumber, action, km, comment, hours) {
                 this.activities.push(new Activity(id, projectNumber, action, km, comment,  hours));
@@ -100,9 +171,9 @@
                         console.log('New Day Selected');
                         this.day.id = response.data.Std_ID;
                         this.day.date = response.data.Datum;
-                        this.day.start = response.data.Von;
-                        this.day.end = response.data.Bis;
-                        this.day.pause = response.data.Pause;
+                        this.day.start = this.timeToNormal(response.data.Von) ;
+                        this.day.end = this.timeToNormal(response.data.Bis);
+                        this.day.pause = this.timeToNormal(response.data.Pause);
                     }
                 );
 
@@ -120,6 +191,8 @@
                     this.day.start = '';
                     this.day.end = '';
                     this.day.pause = '';
+                    console.log('Tag geleert');
+
                 } else {
                     this.loadDay(day.id);
                 }
@@ -133,6 +206,15 @@
                 let minutes = data[1] * (5/3);
                 return (hours + minutes) / 100
             },
+            timeToNormal: function (time){
+                let hours = Math.floor(Math.abs(time));
+                let minutes = Math.floor((Math.abs(time)) % 1 * 60);
+
+                return hours + ':' + minutes;
+            },
+            say: function (msg) {
+                alert(msg);
+            }
 
         },
         computed: {
@@ -140,8 +222,8 @@
                 let result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
                 return (!isNaN(result)? result : '');
             }
-        },
 
+        }
     }
 
     class Activity {
