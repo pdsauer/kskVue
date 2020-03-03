@@ -2027,6 +2027,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+//
 
 
 
@@ -2090,15 +2091,18 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
       // Sonst tag füllen
       if (day == null) {
-        this.day.id = '';
-        this.day.date = '';
-        this.day.start = '';
-        this.day.end = '';
-        this.day.pause = '';
-        console.log('Tag geleert');
+        this.emptyData();
       } else {
         this.loadDay(day.id);
       }
+    },
+    emptyData: function emptyData() {
+      this.day.id = '';
+      this.day.date = '';
+      this.day.start = '';
+      this.day.end = '';
+      this.day.pause = '';
+      console.log('Tag geleert');
     },
     timeToDecimal: function timeToDecimal(time) {
       var data = time.split(':');
@@ -2110,6 +2114,24 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       var hours = Math.floor(Math.abs(time));
       var minutes = Math.floor(Math.abs(time) % 1 * 60);
       return hours + ':' + minutes;
+    },
+    saveHander: function saveHander(day) {
+      if (day.id === "") {
+        // Wenn Tag leer ist -> Tag neu speichern
+        alert('Neuen Tag speichern');
+      } else {
+        // Tag ist gefüllt -> update Tag
+        alert('Tag updaten');
+      }
+    },
+    deleteDay: function deleteDay(day) {
+      if (day.id === "") {
+        // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
+        this.emptyData();
+      } else {
+        // Wenn Day.id nicht leer ist -> DELETE Request an Server
+        axios["delete"]('/api/v1/days/' + day.id).then(this.emptyData);
+      }
     },
     say: function say(msg) {
       alert(msg);
@@ -2250,6 +2272,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+//
+//
+//
 //
 //
 //
@@ -38427,11 +38452,6 @@ var render = function() {
                                     type: "date",
                                     id: "datum"
                                   },
-                                  domProps: {
-                                    value:
-                                      _vm.day.date &&
-                                      _vm.day.date.toISOString().split("T")[0]
-                                  },
                                   on: {
                                     input: function($event) {
                                       _vm.day.date = $event.target.valueAsDate
@@ -38665,10 +38685,10 @@ var render = function() {
                 _c("ControlBar", {
                   on: {
                     "day-save": function($event) {
-                      return _vm.say("Day saved!")
+                      return _vm.saveHander(_vm.day)
                     },
                     "day-delete": function($event) {
-                      return _vm.say("Day deleted!")
+                      return _vm.deleteDay(_vm.day)
                     }
                   }
                 })
@@ -38958,11 +38978,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row mt-4" }, [
-    _c("div", { staticClass: "col-lg-2 col-md-2" }, [
+    _c("div", { staticClass: "col-lg-2 col-md-3 col-sm-12 mt-2" }, [
       _c(
         "button",
         {
-          staticClass: "btn btn-success",
+          staticClass: "btn btn-block btn-success",
           on: {
             click: function($event) {
               return _vm.$emit("day-save")
@@ -38973,13 +38993,13 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "col-lg-8 col-md-6 col-sm-0 mt-2" }),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-2 col-md-2" }, [
+    _c("div", { staticClass: "col-lg-2 col-md-3 col-sm-12 mt-2" }, [
       _c(
         "button",
         {
-          staticClass: "btn btn-outline-danger",
+          staticClass: "btn btn-outline-danger btn-block",
           on: {
             click: function($event) {
               return _vm.$emit("day-delete")
@@ -38991,37 +39011,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-8 col-md-" }, [
-      _c("div", { staticClass: "form-group row" }, [
-        _c(
-          "label",
-          {
-            staticClass: "col-sm-2 col-form-label col-form-label-sm",
-            attrs: { for: "colFormLabelSm" }
-          },
-          [_vm._v("Stundensumme")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-2" }, [
-          _c("input", {
-            staticClass: "form-control form-control-sm",
-            attrs: {
-              type: "text",
-              id: "colFormLabelSm",
-              placeholder: "0",
-              disabled: ""
-            }
-          })
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -51763,15 +51753,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************!*\
   !*** ./resources/js/components/HoursForm/DayData.vue ***!
   \*******************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DayData_vue_vue_type_template_id_04927bcf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DayData.vue?vue&type=template&id=04927bcf& */ "./resources/js/components/HoursForm/DayData.vue?vue&type=template&id=04927bcf&");
 /* harmony import */ var _DayData_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DayData.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _DayData_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _DayData_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -51801,7 +51790,7 @@ component.options.__file = "resources/js/components/HoursForm/DayData.vue"
 /*!********************************************************************************!*\
   !*** ./resources/js/components/HoursForm/DayData.vue?vue&type=script&lang=js& ***!
   \********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

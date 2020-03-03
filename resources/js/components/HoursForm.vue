@@ -32,9 +32,10 @@
                                                             type="date"
                                                             id="datum"
                                                             class="form-control"
-                                                            :value="day.date && day.date.toISOString().split('T')[0]"
+
                                                             @input="day.date = $event.target.valueAsDate"
                                                             >
+                                                        <!--:value="day.date && day.date.toISOString().split('T')[0]"-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -100,7 +101,7 @@
                             <activityFields v-for="activity in activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete"></activityFields>
 
                             <!-- Bedienungsleiste -->
-                            <ControlBar @day-save="say('Day saved!')" @day-delete="say('Day deleted!')"></ControlBar>
+                            <ControlBar @day-save="saveHander(day)" @day-delete="deleteDay(day)"></ControlBar>
 
                         </div>
                     </div>
@@ -186,19 +187,20 @@
 
                 if(day == null){
 
-                    this.day.id = '';
-                    this.day.date = '';
-                    this.day.start = '';
-                    this.day.end = '';
-                    this.day.pause = '';
-                    console.log('Tag geleert');
+                    this.emptyData();
 
                 } else {
                     this.loadDay(day.id);
                 }
 
-
-
+            },
+            emptyData: function(){
+                this.day.id = '';
+                this.day.date = '';
+                this.day.start = '';
+                this.day.end = '';
+                this.day.pause = '';
+                console.log('Tag geleert');
             },
             timeToDecimal: function (time) {
                 let data = time.split(':');
@@ -211,6 +213,29 @@
                 let minutes = Math.floor((Math.abs(time)) % 1 * 60);
 
                 return hours + ':' + minutes;
+            },
+            saveHander: function(day) {
+
+                    if (day.id === ""){
+                        // Wenn Tag leer ist -> Tag neu speichern
+                        alert('Neuen Tag speichern');
+                    } else {
+                        // Tag ist gefüllt -> update Tag
+                        alert('Tag updaten');
+                    }
+            },
+            deleteDay(day){
+
+
+                if (day.id === ""){
+                    // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
+                    this.emptyData();
+                } else {
+                    // Wenn Day.id nicht leer ist -> DELETE Request an Server
+                    axios.delete('/api/v1/days/'+ day.id).then(
+                        this.emptyData
+                    );
+                }
             },
             say: function (msg) {
                 alert(msg);

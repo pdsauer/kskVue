@@ -93,11 +93,17 @@ class DayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Day $day)
     {
-        //
+        // Check if day belongs to auth-User
+        if ($day->PersNr = auth()->user()->PersNr){
+            //delete Day
+            $day->delete();
+        }
+        return null;
     }
 }

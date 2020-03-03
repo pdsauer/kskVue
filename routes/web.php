@@ -54,6 +54,7 @@ Route::patch('/stunden/{day}/edit', 'StundenController@update');
 
 Route::get('/api/v1/days', 'DayController@index');
 Route::get('api/v1/days/{day}', 'DayController@show');
+Route::delete('api/v1/days/{day}', 'DayController@destroy');
 
 
 
