@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Day;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class DayController extends Controller
@@ -36,7 +37,7 @@ class DayController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -47,11 +48,16 @@ class DayController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Request
      */
     public function store(Request $request)
     {
-        //
+        //Validation
+
+
+        // Store Day in DB
+
+        return $request;
     }
 
     /**
@@ -71,7 +77,7 @@ class DayController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -83,7 +89,7 @@ class DayController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -93,8 +99,8 @@ class DayController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param Day $day
+     * @return Response
      * @throws \Exception
      */
     public function destroy(Day $day)

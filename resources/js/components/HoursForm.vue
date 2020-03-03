@@ -1,5 +1,8 @@
 <template>
     <div>
+
+        <Modal v-if="showModal" text="modalMessage"></Modal>
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col">
@@ -101,6 +104,7 @@
                             <activityFields v-for="activity in activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete"></activityFields>
 
                             <!-- Bedienungsleiste -->
+                            <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
                             <ControlBar @day-save="saveHander(day)" @day-delete="deleteDay(day)"></ControlBar>
 
                         </div>
@@ -118,6 +122,8 @@
     import DaySelector from './HoursForm/DaySelect';
     import DayData from './HoursForm/DayData.vue';
     import ControlBar from './HoursForm/ControlBar.vue';
+    import Modal from './modal';
+    import ValidationErrors from './HoursForm/ValidationErrors';
 
 
     const axios = require('axios').default;
@@ -131,18 +137,24 @@
                     start: '',
                     end: '',
                     pause: '',
-
                 },
                 activities: [],
                 newDay: true,
-                idcounter: 1
+                idcounter: 1,
+                showModal: false,
+                modalMessage: '',
+                validationErrors: ''
             }
         },
 
-        components: {activityFields: activityFields,
-                     DaySelector: DaySelector,
-                     DayData: DayData,
-                     ControlBar: ControlBar
+        components: {
+            activityFields: activityFields,
+            DaySelector: DaySelector,
+            DayData: DayData,
+            ControlBar: ControlBar,
+            Modal: Modal,
+            ValidationErrors: ValidationErrors
+
         },
 
         watch: {
@@ -179,6 +191,19 @@
                 );
 
                 //
+            },
+            saveDay: function(day){
+                axios.post('/api/v1/days', {day}).catch(
+                        error => {
+                            if (error.response.status === 422){
+                                console.log('errors');
+                                this.validationErrors = error.response.data.errors;
+                            }
+                        }
+                    );
+            },
+            updateDay: function(day){
+
             },
             daySelected: function (day) {
 
@@ -218,7 +243,14 @@
 
                     if (day.id === ""){
                         // Wenn Tag leer ist -> Tag neu speichern
-                        alert('Neuen Tag speichern');
+                        // alert('Neuen Tag speichern');
+                        // Verify, that day is correctlyfilled
+                        if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
+                            this.saveDay(day);
+                        } else {
+                            console.log('Tag muss korrekt gefüllt werden');
+                        }
+
                     } else {
                         // Tag ist gefüllt -> update Tag
                         alert('Tag updaten');
