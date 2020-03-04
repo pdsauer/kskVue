@@ -55,7 +55,7 @@ class DayController extends Controller
         //Validation
 
 
-        // Store Day in DB
+        // Store Day in DB test
 
         return $request;
     }
