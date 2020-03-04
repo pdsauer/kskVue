@@ -35,7 +35,7 @@
                                                             type="date"
                                                             id="datum"
                                                             class="form-control"
-
+                                                            :value="day.date && day.date.toISOString().split('T')[0]"
                                                             @input="day.date = $event.target.valueAsDate"
                                                             >
                                                         <!--:value="day.date && day.date.toISOString().split('T')[0]"-->
@@ -125,8 +125,8 @@
     import Modal from './modal';
     import ValidationErrors from './HoursForm/ValidationErrors';
 
-
     const axios = require('axios').default;
+
 
     export default {
         data () {
@@ -183,7 +183,7 @@
                     response => {
                         console.log('New Day Selected');
                         this.day.id = response.data.Std_ID;
-                        this.day.date = response.data.Datum;
+                        this.day.date = new Date(response.data.Datum);
                         this.day.start = this.timeToNormal(response.data.Von) ;
                         this.day.end = this.timeToNormal(response.data.Bis);
                         this.day.pause = this.timeToNormal(response.data.Pause);

@@ -2094,7 +2094,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       axios.get('/api/v1/days/' + id).then(function (response) {
         console.log('New Day Selected');
         _this.day.id = response.data.Std_ID;
-        _this.day.date = response.data.Datum;
+        _this.day.date = new Date(response.data.Datum);
         _this.day.start = _this.timeToNormal(response.data.Von);
         _this.day.end = _this.timeToNormal(response.data.Bis);
         _this.day.pause = _this.timeToNormal(response.data.Pause);
@@ -38562,6 +38562,11 @@ var render = function() {
                                       type: "date",
                                       id: "datum"
                                     },
+                                    domProps: {
+                                      value:
+                                        _vm.day.date &&
+                                        _vm.day.date.toISOString().split("T")[0]
+                                    },
                                     on: {
                                       input: function($event) {
                                         _vm.day.date = $event.target.valueAsDate
@@ -39586,7 +39591,7 @@ function normalizeComponent (
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
-      // register for functioal component in vue file
+      // register for functional component in vue file
       var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
