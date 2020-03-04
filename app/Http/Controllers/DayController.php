@@ -55,7 +55,7 @@ class DayController extends Controller
         //Validation
 
 
-        // Store Day in DB test
+        // Store Day in DB test das ist ein test in laravel7
 
         return $request;
     }
