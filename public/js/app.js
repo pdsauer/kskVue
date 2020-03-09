@@ -2121,7 +2121,25 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         }
       });
     },
-    updateDay: function updateDay(day) {},
+    updateDay: function updateDay(day) {
+      var _this3 = this;
+
+      var daySend = {};
+      daySend.id = day.id;
+      daySend.end = this.timeToDecimal(day.end);
+      daySend.start = this.timeToDecimal(day.start);
+      daySend.pause = this.timeToDecimal(day.pause);
+      daySend.date = day.date;
+      axios.patch('/api/v1/days/' + this.day.id, {
+        daySend: daySend
+      }).then(function (response) {
+        return console.log(response);
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this3.validationErrors = error.response.data.errors;
+        }
+      });
+    },
     daySelected: function daySelected(day) {
       // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
       // Sonst tag füllen
@@ -2146,34 +2164,33 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       return (hours + minutes) / 100;
     },
     timeToNormal: function timeToNormal(time) {
-      var hours = Math.floor(Math.abs(time)); // '0' vor z.B. 9:00 einfügen
+      var data = time.split('.');
+      var hours = data[0];
+      var minutes = Math.floor(Math.abs(data[1]) * 3 / 5);
 
-      if (hours < 10) {
+      if (hours === 0 || hours === '') {
+        hours = '00';
+      } else if (hours < 10) {
         hours = '0' + hours;
       }
 
-      var minutes = Math.floor(Math.abs(time) % 1 * 60); // '0' an 09:0 anfügen
-
-      if (minutes % 10 === 0) {
+      if (minutes.toString().length === 1) {
         minutes += '0';
       }
 
       return hours + ':' + minutes;
     },
     saveHander: function saveHander(day) {
-      if (day.id === "") {
-        // Wenn Tag leer ist -> Tag neu speichern
-        // alert('Neuen Tag speichern');
-        // Verify, that day is correctlyfilled
-        if (day.date !== "" && day.start !== "" && day.end !== "" && day.pause !== "") {
-          // console.log(this.day);
+      if (day.date !== "" && day.start !== "" && day.end !== "" && day.pause !== "") {
+        if (day.id === "") {
           this.saveDay(this.day);
         } else {
-          console.log('Tag muss korrekt gefüllt werden');
+          // Tag ist gefüllt -> update Tag
+          console.log('Tag updaten');
+          this.updateDay(this.day);
         }
       } else {
-        // Tag ist gefüllt -> update Tag
-        alert('Tag updaten');
+        console.log('Tag muss korrekt gefüllt werden');
       }
     },
     deleteDay: function deleteDay(day) {

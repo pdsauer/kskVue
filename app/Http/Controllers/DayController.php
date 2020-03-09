@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Day;
 use Illuminate\Http\Response;
@@ -48,14 +49,13 @@ class DayController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @return JsonResponse
      */
     public function store(Request $request)
     {
         //Validation
         $day = new Day;
-        // ;
         // TODO: add comparison end > start
         $validatedData = $request->validate([
             '*.date' => 'required|date',
@@ -64,7 +64,6 @@ class DayController extends Controller
             '*.pause' => 'required|numeric'
         ]);
 
-        // error_log(print_r($validatedData['daySend']['end'], TRUE));
         $day->Datum = $validatedData['daySend']['date'];
         $day->Von = $validatedData['daySend']['start'];
         $day->Bis = $validatedData['daySend']['end'];
@@ -76,8 +75,6 @@ class DayController extends Controller
 
         // Store Day in DB
         $day->save();
-
-
 
         return response()->json(['status' => 'true']);
     }
@@ -96,26 +93,34 @@ class DayController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // Validate
+
+        $validatedData = $request->validate([
+            '*.id' => 'required|numeric',
+            '*.date' => 'required|date',
+            '*.start' => 'required|numeric',
+            '*.end' => 'required|numeric|gt:daySend.start',
+            '*.pause' => 'required|numeric'
+        ]);
+        $day = Day::find($validatedData['daySend']['id']);
+
+        $day->Datum = $validatedData['daySend']['date'];
+        $day->Von = $validatedData['daySend']['start'];
+        $day->Bis = $validatedData['daySend']['end'];
+        $day->Pause = $validatedData['daySend']['pause'];
+        $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause));
+
+        $day->save();
+
+        return response()->json(['status' => 'true']);
+
     }
 
     /**

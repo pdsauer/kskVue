@@ -212,7 +212,20 @@
                     );
             },
             updateDay: function(day){
+                let daySend = {};
+                daySend.id = day.id;
+                daySend.end = this.timeToDecimal(day.end);
+                daySend.start = this.timeToDecimal(day.start);
+                daySend.pause = this.timeToDecimal(day.pause);
+                daySend.date = day.date;
+                axios.patch('/api/v1/days/' + this.day.id, {daySend}).then(response => console.log(response)).catch(
+                    error => {
+                        if (error.response.status === 422){
 
+                            this.validationErrors = error.response.data.errors;
+                        }
+                    }
+                );
             },
             daySelected: function (day) {
 
@@ -243,37 +256,40 @@
                 return (hours + minutes) / 100
             },
             timeToNormal: function (time){
-                let hours = Math.floor(Math.abs(time));
-                // '0' vor z.B. 9:00 einfügen
-                if (hours < 10){
+
+                let data = time.split('.');
+                let hours = data[0];
+                let minutes = Math.floor((Math.abs(data[1])) * 3/5);
+                if (hours === 0 || hours === ''){
+                    hours = '00';
+                }
+                else if(hours < 10){
                     hours = '0' + hours;
                 }
-                let minutes = Math.floor((Math.abs(time)) % 1 * 60);
-                // '0' an 09:0 anfügen
 
-                if (minutes % 10 === 0 ){
+                if(minutes.toString().length === 1){
                     minutes += '0';
                 }
-
                 return hours + ':' + minutes;
             },
             saveHander: function(day) {
 
+                if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
+
                     if (day.id === ""){
-                        // Wenn Tag leer ist -> Tag neu speichern
-                        // alert('Neuen Tag speichern');
-                        // Verify, that day is correctlyfilled
-                        if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
-                            // console.log(this.day);
-                            this.saveDay(this.day);
-                        } else {
-                            console.log('Tag muss korrekt gefüllt werden');
-                        }
+
+                        this.saveDay(this.day);
 
                     } else {
                         // Tag ist gefüllt -> update Tag
-                        alert('Tag updaten');
+                        console.log('Tag updaten');
+                        this.updateDay(this.day);
                     }
+                } else {
+
+                    console.log('Tag muss korrekt gefüllt werden');
+                }
+
             },
             deleteDay(day){
                 this.modalMessage = 'Wollen Sie den Tag wirklich löschen?';
