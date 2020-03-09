@@ -8,12 +8,16 @@
                 <div class="col-lg-2 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="auftrags_id">Auftragsnummer</label>
-                        <select class="form-control" id="auftrags_id">
-                            <option disabled selected value> {{ activity.projectNumber || 'Auftrag Auswählen' }} </option>
-                            <option value="test123">2202/15</option>
-                            <option value="test234">2205/49</option>
+                        <multiselect
+                            class=""
+                            id="auftrags_id"
+                            v-model="valueOrder"
+                            :options="orders"
+                            placeholder="Auftrag"
+                            selectLabel=""
+                            :custom-label="formatOrder"
+                        ></multiselect>
 
-                        </select>
                     </div>
                 </div>
 
@@ -45,18 +49,6 @@
                             selectLabel=""
 
                         ></multiselect>
-
-
-
-
-<!--                        <select class="form-control" id="tätigkeit">
-                            <option disabled selected value> {{ activity.action || 'Tätigkeit auswählen'}} </option>
-                            <option value="test123">Drucken</option>
-                            <option value="test234">Kopieren</option>
-            :custom-label="formatDate"
-            @input="onSelect"
-                        </select>-->
-
 
 
                     </div>
@@ -118,19 +110,50 @@
         data() {
             return {
                 valueActivity: null,
-                options: [],
-                activities: []
+                valueOrder: null,
+                orders: [],
+                activities: [],
+                day_UF: {
+                    id: '',
+                    day_id: '',
+                    order_id: '',
+                    activity_id: '',
+                    hours: '',
+                    km: '',
+                    remark: '',
+                    builder: ''
+                }
             }
         },
         methods:{
             formatActivity: function(activity) {
                 return activity.activity;
+            },
+            formatOrder: function(order){
+                return order.order;
+            },
+            saveActivity: function () {
+
+            },
+            updateActivity: function () {
+
+            },
+            deleteActivity: function () {
+
+            },
+            loadActivity: function () {
+
             }
         },
         mounted() {
             axios.get('/api/v1/activities').then(response => {
                 this.activities = response.data.map(function(activity) {
-                    return {activity: activity.Tätigkeit, id: activity.T_Kurz}
+                    return {activity: activity.Tätigkeit, id: activity.T_kurz}
+                })
+            });
+            axios.get('/api/v1/orders').then(response => {
+                this.orders = response.data.map(function(order){
+                    return {order: order.Auftrags_Nr, id: order.Auftrags_ID}
                 })
             })
         }

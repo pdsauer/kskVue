@@ -2363,14 +2363,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2384,14 +2376,32 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       valueActivity: null,
-      options: [],
-      activities: []
+      valueOrder: null,
+      orders: [],
+      activities: [],
+      day_UF: {
+        id: '',
+        day_id: '',
+        order_id: '',
+        activity_id: '',
+        hours: '',
+        km: '',
+        remark: '',
+        builder: ''
+      }
     };
   },
   methods: {
     formatActivity: function formatActivity(activity) {
       return activity.activity;
-    }
+    },
+    formatOrder: function formatOrder(order) {
+      return order.order;
+    },
+    saveActivity: function saveActivity() {},
+    updateActivity: function updateActivity() {},
+    deleteActivity: function deleteActivity() {},
+    loadActivity: function loadActivity() {}
   },
   mounted: function mounted() {
     var _this = this;
@@ -2400,7 +2410,15 @@ __webpack_require__.r(__webpack_exports__);
       _this.activities = response.data.map(function (activity) {
         return {
           activity: activity.Tätigkeit,
-          id: activity.T_Kurz
+          id: activity.T_kurz
+        };
+      });
+    });
+    axios.get('/api/v1/orders').then(function (response) {
+      _this.orders = response.data.map(function (order) {
+        return {
+          order: order.Auftrags_Nr,
+          id: order.Auftrags_ID
         };
       });
     });
@@ -39049,39 +39067,33 @@ var render = function() {
     _c("div", { staticClass: "container bg-light p-3" }, [
       _c("div", { staticClass: "form-row" }, [
         _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "auftrags_id" } }, [
-              _vm._v("Auftragsnummer")
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              { staticClass: "form-control", attrs: { id: "auftrags_id" } },
-              [
-                _c(
-                  "option",
-                  { attrs: { disabled: "", selected: "", value: "" } },
-                  [
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          _vm.activity.projectNumber || "Auftrag Auswählen"
-                        ) +
-                        " "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "test123" } }, [
-                  _vm._v("2202/15")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "test234" } }, [
-                  _vm._v("2205/49")
-                ])
-              ]
-            )
-          ])
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { attrs: { for: "auftrags_id" } }, [
+                _vm._v("Auftragsnummer")
+              ]),
+              _vm._v(" "),
+              _c("multiselect", {
+                attrs: {
+                  id: "auftrags_id",
+                  options: _vm.orders,
+                  placeholder: "Auftrag",
+                  selectLabel: "",
+                  "custom-label": _vm.formatOrder
+                },
+                model: {
+                  value: _vm.valueOrder,
+                  callback: function($$v) {
+                    _vm.valueOrder = $$v
+                  },
+                  expression: "valueOrder"
+                }
+              })
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _vm._m(0),
@@ -39223,7 +39235,7 @@ var render = function() {
               [
                 _c("i", { staticClass: "fas fa-trash-alt" }),
                 _vm._v(
-                  "\n                            Tätigkeit löschen\n                        "
+                  "\n                        Tätigkeit löschen\n                    "
                 )
               ]
             )
