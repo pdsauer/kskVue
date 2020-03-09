@@ -2033,7 +2033,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
-//
 
 
 
@@ -2058,7 +2057,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       idcounter: 1,
       showModal: false,
       modalMessage: '',
-      validationErrors: ''
+      modalBtnText: '',
+      modalFunctionOnConfirm: '',
+      modalBtnClass: '',
+      validationErrors: '',
+      daySelectorKey: true
     };
   },
   components: {
@@ -2068,11 +2071,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     ControlBar: _HoursForm_ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     Modal: _modal__WEBPACK_IMPORTED_MODULE_4__["default"],
     ValidationErrors: _HoursForm_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__["default"]
-  },
-  watch: {
-    day: function day() {
-      console.log('day noticed Change');
-    }
   },
   methods: {
     addActivity: function addActivity(id, projectNumber, action, km, comment, hours) {
@@ -2103,7 +2101,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     saveDay: function saveDay(day) {
       var _this2 = this;
 
-      // Fehler leeren
+      console.log('save DAy'); // Fehler leeren
+
       this.validationErrors = ''; // Zum abschicken vorbereiten
 
       var daySend = {};
@@ -2113,11 +2112,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       daySend.date = day.date;
       axios.post('/api/v1/days', {
         daySend: daySend
-      }).then(function (response) {
-        return console.log(response);
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this2.validationErrors = error.response.data.errors;
+        }
+      }).then(function (response) {
+        if (response.status === 200) {
+          _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+
+          _this2.emptyData();
         }
       });
     },
@@ -2132,11 +2135,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       daySend.date = day.date;
       axios.patch('/api/v1/days/' + this.day.id, {
         daySend: daySend
-      }).then(function (response) {
-        return console.log(response);
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this3.validationErrors = error.response.data.errors;
+        }
+      }).then(function (response) {
+        if (response.status === 200) {
+          _this3.displayModal('Tag wurde erfolreich aktualisiert', 'OK', '', 'emptyModal');
+
+          _this3.emptyData();
         }
       });
     },
@@ -2155,6 +2162,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.start = '';
       this.day.end = '';
       this.day.pause = '';
+      this.daySelectorKey = !this.daySelectorKey;
       console.log('Tag geleert');
     },
     timeToDecimal: function timeToDecimal(time) {
@@ -2193,21 +2201,36 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         console.log('Tag muss korrekt gefüllt werden');
       }
     },
-    deleteDay: function deleteDay(day) {
-      this.modalMessage = 'Wollen Sie den Tag wirklich löschen?';
-      this.showModal = true;
-      /*                if (day.id === ""){
-                          // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
-                          this.emptyData();
-                      } else {
-                          // Wenn Day.id nicht leer ist -> DELETE Request an Server
-                          axios.delete('/api/v1/days/'+ day.id).then(
-                              this.emptyData
-                          );
-                      }*/
+    deleteHandler: function deleteHandler() {
+      this.displayModal('Wollen sie den Tag wirklich löschen?', 'Löschen', 'btn-outline-danger', 'deleteDay');
+    },
+    deleteDay: function deleteDay() {
+      if (this.day.id === "") {
+        // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
+        this.emptyData();
+      } else {
+        // Wenn Day.id nicht leer ist -> DELETE Request an Server
+        axios["delete"]('/api/v1/days/' + this.day.id).then(this.emptyData);
+      }
     },
     say: function say(msg) {
       alert(msg);
+    },
+    emptyModal: function emptyModal() {
+      this.showModal = false;
+      this.modalMessage = '';
+      this.modalBtnText = '';
+    },
+    displayModal: function displayModal(message, btnText, modalBtnClass, functionOnConfirm) {
+      this.modalMessage = message;
+      this.modalBtnText = btnText;
+      this.modalFunctionOnConfirm = functionOnConfirm;
+      this.modalBtnClass = modalBtnClass;
+      this.showModal = true;
+    },
+    modalFunction: function modalFunction() {
+      this[this.modalFunctionOnConfirm]();
+      this.emptyModal();
     }
   },
   computed: {
@@ -2634,12 +2657,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Modal",
-  props: ['modalText'],
+  props: ['modalText', 'modalBtnText', 'modalBtnStyle', 'btnClass'],
   methods: {
     close: function close() {
       this.$emit('modalClose');
+    },
+    modalConfirm: function modalConfirm() {
+      this.$emit('modalConfirm');
     }
   }
 });
@@ -38616,7 +38646,14 @@ var render = function() {
     "div",
     [
       _vm.showModal
-        ? _c("Modal", { attrs: { "modal-text": _vm.modalMessage } })
+        ? _c("Modal", {
+            attrs: {
+              "btn-class": this.modalBtnClass,
+              "modal-text": _vm.modalMessage,
+              "modal-btn-text": _vm.modalBtnText
+            },
+            on: { modalConfirm: _vm.modalFunction, modalClose: _vm.emptyModal }
+          })
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
@@ -38626,7 +38663,12 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "card-header" },
-                [_c("DaySelector", { on: { daySelected: _vm.daySelected } })],
+                [
+                  _c("DaySelector", {
+                    key: _vm.daySelectorKey,
+                    on: { daySelected: _vm.daySelected }
+                  })
+                ],
                 1
               ),
               _vm._v(" "),
@@ -38907,7 +38949,7 @@ var render = function() {
                         return _vm.saveHander(_vm.day)
                       },
                       "day-delete": function($event) {
-                        return _vm.deleteDay(_vm.day)
+                        return _vm.deleteHandler()
                       }
                     }
                   })
@@ -39539,62 +39581,56 @@ var render = function() {
     [
       _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "modal-header" }, [
+            _c("h5", { staticClass: "modal-title" }, [_vm._v("Modal title")]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-label": "Close"
+                },
+                on: { click: _vm.close }
+              },
+              [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c("p", [_vm._v(" " + _vm._s(_vm.modalText))])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-success",
+                class: _vm.btnClass,
+                attrs: { type: "button" },
+                on: { click: _vm.modalConfirm }
+              },
+              [_vm._v(_vm._s(_vm.modalBtnText))]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-primary",
+                attrs: { type: "button", "data-dismiss": "modal" },
+                on: { click: _vm.close }
+              },
+              [_vm._v("Schließen")]
+            )
+          ])
         ])
       ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Modal title")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-outline-danger", attrs: { type: "button" } },
-        [_vm._v("Tag löschen")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-primary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Schließen")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <Modal v-if="showModal" :modal-text="modalMessage"></Modal>
+        <Modal v-if="showModal" :btn-class="this.modalBtnClass" :modal-text="modalMessage" :modal-btn-text="modalBtnText" @modalConfirm="modalFunction" @modalClose="emptyModal"></Modal>
 
         <div class="container">
             <div class="row justify-content-center">
@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <DaySelector @daySelected="daySelected"></DaySelector>
+                            <DaySelector :key="daySelectorKey" @daySelected="daySelected"></DaySelector>
 
                         </div>
 
@@ -38,7 +38,6 @@
                                                             :value="day.date && day.date.toISOString().split('T')[0]"
                                                             @input="day.date = $event.target.valueAsDate"
                                                             >
-                                                        <!--:value="day.date && day.date.toISOString().split('T')[0]"-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -105,7 +104,7 @@
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
-                            <ControlBar @day-save="saveHander(day)" @day-delete="deleteDay(day)"></ControlBar>
+                            <ControlBar @day-save="saveHander(day)" @day-delete="deleteHandler()"></ControlBar>
 
                         </div>
                     </div>
@@ -143,7 +142,11 @@
                 idcounter: 1,
                 showModal: false,
                 modalMessage: '',
-                validationErrors: ''
+                modalBtnText: '',
+                modalFunctionOnConfirm: '',
+                modalBtnClass: '',
+                validationErrors: '',
+                daySelectorKey: true
             }
         },
 
@@ -157,11 +160,6 @@
 
         },
 
-        watch: {
-            day(){
-                console.log('day noticed Change');
-            }
-        },
 
         methods: {
             addActivity: function (id, projectNumber, action, km, comment, hours) {
@@ -176,6 +174,7 @@
                 this.activities.splice(index, 1);
                 console.log('deleted');
             },
+
             loadDay: function (id){
                 // TODO use and Check for 404
                 axios.get('/api/v1/days/' + id).then(
@@ -194,6 +193,7 @@
             },
             saveDay: function(day){
 
+                console.log('save DAy');
                 // Fehler leeren
                 this.validationErrors = '';
                 // Zum abschicken vorbereiten
@@ -202,14 +202,24 @@
                 daySend.start = this.timeToDecimal(day.start);
                 daySend.pause = this.timeToDecimal(day.pause);
                 daySend.date = day.date;
-                axios.post('/api/v1/days', {daySend}).then(response => console.log(response)).catch(
+
+                axios
+                    .post('/api/v1/days', {daySend})
+                    .catch(
                         error => {
                             if (error.response.status === 422){
 
                                 this.validationErrors = error.response.data.errors;
                             }
                         }
-                    );
+                    )
+                    .then((response) => {
+
+                        if(response.status === 200){
+                            this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+                            this.emptyData();
+                        }
+                    });
             },
             updateDay: function(day){
                 let daySend = {};
@@ -218,14 +228,21 @@
                 daySend.start = this.timeToDecimal(day.start);
                 daySend.pause = this.timeToDecimal(day.pause);
                 daySend.date = day.date;
-                axios.patch('/api/v1/days/' + this.day.id, {daySend}).then(response => console.log(response)).catch(
+                axios
+                    .patch('/api/v1/days/' + this.day.id, {daySend})
+                    .catch(
                     error => {
                         if (error.response.status === 422){
 
                             this.validationErrors = error.response.data.errors;
                         }
                     }
-                );
+                ).then(response => {
+
+                if(response.status === 200){
+                    this.displayModal('Tag wurde erfolreich aktualisiert', 'OK', '', 'emptyModal');
+                    this.emptyData();
+                }});
             },
             daySelected: function (day) {
 
@@ -247,6 +264,7 @@
                 this.day.start = '';
                 this.day.end = '';
                 this.day.pause = '';
+                this.daySelectorKey = !this.daySelectorKey;
                 console.log('Tag geleert');
             },
             timeToDecimal: function (time) {
@@ -291,21 +309,38 @@
                 }
 
             },
-            deleteDay(day){
-                this.modalMessage = 'Wollen Sie den Tag wirklich löschen?';
-                this.showModal = true;
-/*                if (day.id === ""){
+            deleteHandler: function(){
+                this.displayModal('Wollen sie den Tag wirklich löschen?', 'Löschen', 'btn-outline-danger', 'deleteDay');
+            },
+            deleteDay(){
+
+               if (this.day.id === ""){
                     // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
                     this.emptyData();
                 } else {
                     // Wenn Day.id nicht leer ist -> DELETE Request an Server
-                    axios.delete('/api/v1/days/'+ day.id).then(
+                    axios.delete('/api/v1/days/'+ this.day.id).then(
                         this.emptyData
-                    );
-                }*/
+                    );}
             },
             say: function (msg) {
                 alert(msg);
+            },
+            emptyModal: function () {
+                this.showModal = false;
+                this.modalMessage = '';
+                this.modalBtnText = '';
+            },
+            displayModal: function (message, btnText, modalBtnClass, functionOnConfirm){
+                this.modalMessage = message;
+                this.modalBtnText = btnText;
+                this.modalFunctionOnConfirm = functionOnConfirm;
+                this.modalBtnClass = modalBtnClass;
+                this.showModal = true;
+            },
+            modalFunction: function () {
+                this[this.modalFunctionOnConfirm]();
+                this.emptyModal();
             }
 
         },

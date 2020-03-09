@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -50,15 +51,16 @@ class DayController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return JsonResponse
+     * @return ResponseFactory|Response
      */
     public function store(Request $request)
     {
+
         //Validation
         $day = new Day;
         // TODO: add comparison end > start
         $validatedData = $request->validate([
-            '*.date' => 'required|date',
+            '*.date' => ['required', 'date'],
             '*.start' => 'required|numeric',
             '*.end' => 'required|numeric|gt:daySend.start',
             '*.pause' => 'required|numeric'
@@ -74,9 +76,13 @@ class DayController extends Controller
         $day->PersNr = auth()->user()->PersNr;
 
         // Store Day in DB
-        $day->save();
+        try{
+            $day->save();
+        } catch (\Exception $e){
+            error_log(print_r($e->getMessage(), TRUE));
+        }
 
-        return response()->json(['status' => 'true']);
+        return response('Success', 200);
     }
 
     /**
@@ -96,7 +102,7 @@ class DayController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @return JsonResponse
+     * @return ResponseFactory|Response
      */
     public function update(Request $request)
     {
@@ -104,7 +110,12 @@ class DayController extends Controller
 
         $validatedData = $request->validate([
             '*.id' => 'required|numeric',
-            '*.date' => 'required|date',
+            '*.date' => [
+                'required',
+                'date',
+                Rule::unique('tblStunden')->where(
+                    function($query) {$query->where('PersNr', auth()->user()->PersNr);
+                    })],
             '*.start' => 'required|numeric',
             '*.end' => 'required|numeric|gt:daySend.start',
             '*.pause' => 'required|numeric'
@@ -118,8 +129,7 @@ class DayController extends Controller
         $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause));
 
         $day->save();
-
-        return response()->json(['status' => 'true']);
+        return response('Success', 200);
 
     }
 
