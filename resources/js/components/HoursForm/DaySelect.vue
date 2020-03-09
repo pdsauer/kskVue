@@ -69,6 +69,9 @@
                 let month = format.getMonth() + 1;
                 let year = format.getFullYear();
                 return day + '.'+ month + '.' + year;
+            },
+            empty: function() {
+                this.value = null;
             }
         }
 

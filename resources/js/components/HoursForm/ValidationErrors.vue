@@ -8,10 +8,10 @@
 
 <script>
     export default {
-        name: "validationErrors",
+        name: "ValidationErrors",
         props: ['errors'],
         computed: {
-            validationErrors() {
+            ValidationErrors() {
                 let errors = Object.values(this.errors);
                 errors = errors.flat();
                 return errors;

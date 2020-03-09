@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Day;
@@ -48,16 +49,37 @@ class DayController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return Request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
         //Validation
+        $day = new Day;
+        // ;
+        // TODO: add comparison end > start
+        $validatedData = $request->validate([
+            '*.date' => 'required|date',
+            '*.start' => 'required|numeric',
+            '*.end' => 'required|numeric|gt:daySend.start',
+            '*.pause' => 'required|numeric'
+        ]);
+
+        // error_log(print_r($validatedData['daySend']['end'], TRUE));
+        $day->Datum = $validatedData['daySend']['date'];
+        $day->Von = $validatedData['daySend']['start'];
+        $day->Bis = $validatedData['daySend']['end'];
+        $day->Pause = $validatedData['daySend']['pause'];
+        $day->Dat_Kuerz = 'test';
+        $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause));
+        $day->Eingabedatum = Carbon::now();
+        $day->PersNr = auth()->user()->PersNr;
+
+        // Store Day in DB
+        $day->save();
 
 
-        // Store Day in DB test das ist ein test in laravel7
 
-        return $request;
+        return response()->json(['status' => 'true']);
     }
 
     /**

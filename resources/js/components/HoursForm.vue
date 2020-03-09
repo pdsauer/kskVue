@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <Modal v-if="showModal" text="modalMessage"></Modal>
+        <Modal v-if="showModal" :modal-text="modalMessage"></Modal>
 
         <div class="container">
             <div class="row justify-content-center">
@@ -193,10 +193,19 @@
                 //
             },
             saveDay: function(day){
-                axios.post('/api/v1/days', {day}).catch(
+
+                // Fehler leeren
+                this.validationErrors = '';
+                // Zum abschicken vorbereiten
+                let daySend = {};
+                daySend.end = this.timeToDecimal(day.end);
+                daySend.start = this.timeToDecimal(day.start);
+                daySend.pause = this.timeToDecimal(day.pause);
+                daySend.date = day.date;
+                axios.post('/api/v1/days', {daySend}).then(response => console.log(response)).catch(
                         error => {
                             if (error.response.status === 422){
-                                console.log('errors');
+
                                 this.validationErrors = error.response.data.errors;
                             }
                         }
@@ -235,7 +244,16 @@
             },
             timeToNormal: function (time){
                 let hours = Math.floor(Math.abs(time));
+                // '0' vor z.B. 9:00 einfügen
+                if (hours < 10){
+                    hours = '0' + hours;
+                }
                 let minutes = Math.floor((Math.abs(time)) % 1 * 60);
+                // '0' an 09:0 anfügen
+
+                if (minutes % 10 === 0 ){
+                    minutes += '0';
+                }
 
                 return hours + ':' + minutes;
             },
@@ -246,7 +264,8 @@
                         // alert('Neuen Tag speichern');
                         // Verify, that day is correctlyfilled
                         if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
-                            this.saveDay(day);
+                            // console.log(this.day);
+                            this.saveDay(this.day);
                         } else {
                             console.log('Tag muss korrekt gefüllt werden');
                         }
@@ -257,9 +276,9 @@
                     }
             },
             deleteDay(day){
-
-
-                if (day.id === ""){
+                this.modalMessage = 'Wollen Sie den Tag wirklich löschen?';
+                this.showModal = true;
+/*                if (day.id === ""){
                     // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
                     this.emptyData();
                 } else {
@@ -267,7 +286,7 @@
                     axios.delete('/api/v1/days/'+ day.id).then(
                         this.emptyData
                     );
-                }
+                }*/
             },
             say: function (msg) {
                 alert(msg);

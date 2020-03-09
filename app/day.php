@@ -12,6 +12,11 @@ class day extends Model
      * @var string
      */
     protected $table = 'tblStunden';
+    /**
+     * Hide timestamps
+     *
+     * @var array
+     */
     protected $hidden = array('TS');
 
     /**
@@ -36,7 +41,7 @@ class day extends Model
      * @var array
      */
     protected $fillable = [
-        'Dat_Kuerz', 'Datum', 'Von', 'Bis', 'Pause', 'Std_gesamt', 'Eingabedatum', 'PersNr', 'TS'
+        'Datum', 'Von', 'Bis', 'Pause'
     ];
 
 }
