@@ -104,7 +104,7 @@
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
-                            <ControlBar @day-save="saveHander(day)" @day-delete="deleteHandler()"></ControlBar>
+                            <ControlBar @day-save="saveHandler(day)" @day-delete="deleteHandler()"></ControlBar>
 
                         </div>
                     </div>
@@ -290,7 +290,7 @@
                 }
                 return hours + ':' + minutes;
             },
-            saveHander: function(day) {
+            saveHandler: function(day) {
 
                 if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
 

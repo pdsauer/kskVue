@@ -35,12 +35,30 @@
                 <div class="col-lg-3 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="tätigkeit">Tätigkeit</label>
-                        <select class="form-control" id="tätigkeit">
+                        <multiselect
+                            class=""
+                            id="tätigkeit"
+                            v-model="valueActivity"
+                            :options="activities"
+                            :custom-label="formatActivity"
+                            placeholder="Tätigkeit Auswählen"
+                            selectLabel=""
+
+                        ></multiselect>
+
+
+
+
+<!--                        <select class="form-control" id="tätigkeit">
                             <option disabled selected value> {{ activity.action || 'Tätigkeit auswählen'}} </option>
                             <option value="test123">Drucken</option>
                             <option value="test234">Kopieren</option>
+            :custom-label="formatDate"
+            @input="onSelect"
+                        </select>-->
 
-                        </select>
+
+
                     </div>
                 </div>
 
@@ -87,12 +105,34 @@
 </template>
 
 <script>
-    export default {
+    import {Multiselect} from "vue-multiselect";
 
+
+    export default {
+        components: {Multiselect},
         props: {
             activity: {
                 type: Object
             }
+        },
+        data() {
+            return {
+                valueActivity: null,
+                options: [],
+                activities: []
+            }
+        },
+        methods:{
+            formatActivity: function(activity) {
+                return activity.activity;
+            }
+        },
+        mounted() {
+            axios.get('/api/v1/activities').then(response => {
+                this.activities = response.data.map(function(activity) {
+                    return {activity: activity.Tätigkeit, id: activity.T_Kurz}
+                })
+            })
         }
     }
 </script>

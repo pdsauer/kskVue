@@ -26,7 +26,7 @@
                                 <hr class="my-4">
 
                                 <p class="lead">
-                                    <a class="btn btn-primary btn-lg" href="/stunden" role="button"> <i class="fas fa-calendar-alt"></i> &nbsp; Stunden eingeben</a>
+                                    <a class="btn btn-primary btn-lg" href="/stunden/vue" role="button"> <i class="fas fa-calendar-alt"></i> &nbsp; Stunden eingeben</a>
                                 </p>
                             </div>
 

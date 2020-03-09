@@ -58,6 +58,14 @@ Route::delete('api/v1/days/{day}', 'DayController@destroy');
 Route::post('/api/v1/days/', 'DayController@store');
 Route::patch('/api/v1/days/{day}', 'DayController@update');
 
+// Routes for API - Activity
+Route::get('/api/v1/activities', 'ActivityController@index');
+Route::get('/api/v1/activities/{id}', 'ActivityController@show');
+
+
+// Routes for API - Order
+Route::get('/api/v1/orders', 'OrderController@index');
+Route::get('/api/v1/orders/{id}', 'OrderController@show');
 
 
 // Routen für das Schwarzebrett

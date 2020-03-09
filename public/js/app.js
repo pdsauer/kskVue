@@ -2188,7 +2188,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
       return hours + ':' + minutes;
     },
-    saveHander: function saveHander(day) {
+    saveHandler: function saveHandler(day) {
       if (day.date !== "" && day.start !== "" && day.end !== "" && day.pause !== "") {
         if (day.id === "") {
           this.saveDay(this.day);
@@ -2263,6 +2263,8 @@ var Activity = function Activity(id, projectNumber, action, km, comment, hours) 
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2351,11 +2353,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0__["Multiselect"]
+  },
   props: {
     activity: {
       type: Object
     }
+  },
+  data: function data() {
+    return {
+      valueActivity: null,
+      options: [],
+      activities: []
+    };
+  },
+  methods: {
+    formatActivity: function formatActivity(activity) {
+      return activity.activity;
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/v1/activities').then(function (response) {
+      _this.activities = response.data.map(function (activity) {
+        return {
+          activity: activity.Tätigkeit,
+          id: activity.T_Kurz
+        };
+      });
+    });
   }
 });
 
@@ -38946,7 +38994,7 @@ var render = function() {
                   _c("ControlBar", {
                     on: {
                       "day-save": function($event) {
-                        return _vm.saveHander(_vm.day)
+                        return _vm.saveHandler(_vm.day)
                       },
                       "day-delete": function($event) {
                         return _vm.deleteHandler()
@@ -39041,35 +39089,33 @@ var render = function() {
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { attrs: { for: "tätigkeit" } }, [_vm._v("Tätigkeit")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              { staticClass: "form-control", attrs: { id: "tätigkeit" } },
-              [
-                _c(
-                  "option",
-                  { attrs: { disabled: "", selected: "", value: "" } },
-                  [
-                    _vm._v(
-                      " " +
-                        _vm._s(_vm.activity.action || "Tätigkeit auswählen") +
-                        " "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "test123" } }, [
-                  _vm._v("Drucken")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "test234" } }, [
-                  _vm._v("Kopieren")
-                ])
-              ]
-            )
-          ])
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { attrs: { for: "tätigkeit" } }, [
+                _vm._v("Tätigkeit")
+              ]),
+              _vm._v(" "),
+              _c("multiselect", {
+                attrs: {
+                  id: "tätigkeit",
+                  options: _vm.activities,
+                  "custom-label": _vm.formatActivity,
+                  placeholder: "Tätigkeit Auswählen",
+                  selectLabel: ""
+                },
+                model: {
+                  value: _vm.valueActivity,
+                  callback: function($$v) {
+                    _vm.valueActivity = $$v
+                  },
+                  expression: "valueActivity"
+                }
+              })
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-1 col-sm-12 col-md-6" }, [
@@ -39177,7 +39223,7 @@ var render = function() {
               [
                 _c("i", { staticClass: "fas fa-trash-alt" }),
                 _vm._v(
-                  "\n                        Tätigkeit löschen\n                    "
+                  "\n                            Tätigkeit löschen\n                        "
                 )
               ]
             )

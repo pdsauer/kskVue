@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use App\Activity;
+use App\Order;
 
-class ActivityController extends Controller
+class OrderController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -18,25 +18,25 @@ class ActivityController extends Controller
         $this->middleware('auth');
     }
 
-
     /**
-     * Show list of all Activities
+     * Show list of all Orders
      *
-     * @return Activity[]|Collection
+     * @return Order[]|Collection
      */
     public function index(){
 
-        return Activity::all();
+        return Order::all();
     }
 
-    /**
-     * Show list of all Activities
-     *
-     * @param string $id
-     * @return Activity[]|Collection
-     */
-    public function show(?string $id){
 
-        return Activity::where('T_kurz', $id)->get();
+    /**
+     * Show list of all Orders
+     *
+     * @param $id
+     * @return Order[]|Collection
+     */
+    public function show($id){
+
+        return Order::where('Auftrags_ID', $id)->get();
     }
 }

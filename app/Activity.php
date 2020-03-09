@@ -11,21 +11,33 @@ class Activity extends Model
      *
      * @var string
      */
-    protected $table = 'tblStundenUF';
+    protected $table = 'tblTätigkeiten';
+
+    /**
+     * disbale autoincrement -> primary key = string
+     *
+     * @var bool
+     */
+
+    public $incrementing = false;
+
+    /**
+     * Hide timestamps
+     *
+     * @var array
+     */
+    protected $hidden = array('TS');
+    /**
+     * The primary key is a string in this table.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'UStd_ID';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'Std', 'Km', 'Bemerkung', 'Bauherr', 'TS'
-    ];
+    protected $primaryKey = 'T_kurz';
 }
