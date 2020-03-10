@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header" style="">Dashboard</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,15 +14,12 @@
                         </div>
                     @endif
 
-
-
-
                     <div class="row">
 
                         <div class="col-lg-6 col-md-12 col-sm-12">
 
-                            <div class="jumbotron">
-                                <h1 class="display-4">Stunden</h1>
+                            <div class="jumbotron" style="min-width: 420px">
+                                <h1 class="display-6">Stunden</h1>
                                 <hr class="my-4">
 
                                 <p class="lead">
@@ -32,19 +29,16 @@
 
                         </div>
 
-
                         <div class="col-lg-6 col-md-12 col-sm-12">
 
-                            <div class="jumbotron">
-                                <h1 class="display-4">Nachrichten</h1>
+                            <div class="jumbotron" style="min-width: 420px">
+                                <h1 class="display-6">Nachrichten</h1>
                                 <hr class="my-4">
 
                                 <p class="lead">
-                                    <a class="btn btn-primary btn-lg" href="/post" role="button"><i class="far fa-sticky-note"></i> &nbsp; Alle Nachrichten ansehen</a>
+                                    <a class="btn btn-primary btn-lg" href="/post" role="button"><i class="far fa-sticky-note"></i> Nachrichten ansehen</a>
                                 </p>
                             </div>
-
-
 
                         </div>
 
@@ -52,35 +46,25 @@
 
                         <div class="card-body">
 
-                            @for($i = 0; $i < 2; $i++)
+                            @foreach($posts as $post)
                             <div class="row">
-
-
-                                <article class="">
-                                    <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
+                                <article class="w-100">
+                                    <h4 class="title text-dark">{{ $post->title }}</h4>
 
                                     <p>
-                                        60% of organizations were exposed to actual or attempted fraud loss last year.
-                                        As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                        <a href="/post/4">Mehr Lesen</a>
+                                        {{ $post->inhalt }}
+                                        <a href="/post/{{ $post->id }}">Mehr Lesen</a>
                                     </p>
                                     <p class="text-muted">
-                                        <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                        <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
+                                        <i class="fas fa-user"></i> &nbsp; {{ $post->user['Vorname'].' '.$post->user['Nachname'] }}
+                                        <i class="fas fa-calendar-alt"></i>  &nbsp;{{ Carbon\Carbon::parse($post->created_at)->format('d.m.Y') }}&nbsp;
                                     </p>
 
                                 </article>
-
-
                             </div>
 
-                            @endfor
+                            @endforeach
                         </div>
-
-
-
-
-
                 </div>
             </div>
         </div>
