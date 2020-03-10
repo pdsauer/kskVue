@@ -51,12 +51,18 @@ Route::patch('/stunden/{day}/edit', 'StundenController@update');
 
 
 // Routes for API - DAY
-
 Route::get('/api/v1/days', 'DayController@index');
 Route::get('api/v1/days/{day}', 'DayController@show');
 Route::delete('api/v1/days/{day}', 'DayController@destroy');
 Route::post('/api/v1/days/', 'DayController@store');
 Route::patch('/api/v1/days/{day}', 'DayController@update');
+
+// Routes for API - DAY_UF
+Route::get('/api/v1/days_UF/', 'Day_UFController@index');
+Route::get('api/v1/days_UF/{day}', 'Day_UFController@show');
+Route::delete('api/v1/days_UF/{day}', 'Day_UFController@destroy');
+Route::post('/api/v1/days_UF/', 'Day_UFController@store');
+Route::patch('/api/v1/days_UF/{day}', 'Day_UFController@update');
 
 // Routes for API - Activity
 Route::get('/api/v1/activities', 'ActivityController@index');
@@ -68,9 +74,11 @@ Route::get('/api/v1/orders', 'OrderController@index');
 Route::get('/api/v1/orders/{id}', 'OrderController@show');
 
 
+
+
 // Routen für das Schwarzebrett
 Route::get('/post/create', 'postController@create');
-
 Route::get('/post/{post}', 'postController@show');
-
+Route::get('/post/{post}/edit', 'postController@edit');
 Route::get('/post', 'postController@index');
+Route::post('/post', 'postController@store');

@@ -1,8 +1,6 @@
 <template>
     <div>
-
         <div class="container bg-light p-3">
-
             <div class="form-row">
 
                 <div class="col-lg-2 col-sm-12 col-md-6">
@@ -17,7 +15,6 @@
                             selectLabel=""
                             :custom-label="formatOrder"
                         ></multiselect>
-
                     </div>
                 </div>
 
@@ -49,15 +46,14 @@
                             selectLabel=""
 
                         ></multiselect>
-
-
                     </div>
                 </div>
+
 
                 <div class="col-lg-1 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="kilometer">Kilometer</label>
-                        <input type="number" class="form-control" id="kilometer" v-model="activity.km">
+                        <input type="number" class="form-control" id="kilometer" v-model="day_UF.km">
                     </div>
                 </div>
             </div>
@@ -66,13 +62,13 @@
                 <div class="col col-lg-8 col-md-6">
                     <div class="form-group">
                         <label for="bemerkung">Bemerkung</label>
-                        <input type="text" class="form-control" id="bemerkung" v-model="activity.comment">
+                        <input type="text" class="form-control" id="bemerkung" v-model="day_UF.comment">
                     </div>
                 </div>
                 <div class="col-lg-1 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="stundenanzahl">Stundenanzahl</label>
-                        <input type="text" class="form-control" id="stundenanzahl" v-model="activity.hours">
+                        <input type="text" class="form-control" id="stundenanzahl" v-model="day_UF.hours">
                     </div>
                 </div>
 
@@ -80,18 +76,14 @@
 
                     <div class="form-group">
                         <label for="stundenanzahl">&nbsp;</label>
-                        <button class="btn btn-light form-control text-danger" @click="$emit('activityDelete', activity.id)">
+                        <button class="btn btn-light form-control text-danger" @click="$emit('activityDelete', day_UF.id)">
                             <i class="fas fa-trash-alt"></i>
                             Tätigkeit löschen
                         </button>
                     </div>
-
                 </div>
 
-
             </div>
-
-
         </div>
     </div>
 </template>
@@ -102,11 +94,11 @@
 
     export default {
         components: {Multiselect},
-        props: {
+/*        props: {
             activity: {
                 type: Object
             }
-        },
+        },*/
         data() {
             return {
                 valueActivity: null,
@@ -155,7 +147,10 @@
                 this.orders = response.data.map(function(order){
                     return {order: order.Auftrags_Nr, id: order.Auftrags_ID}
                 })
-            })
+            });
+            this.bus.$on('saveDayUF', () => {
+                console.log('DAY_UF Wird gespeichert')
+            });
         }
     }
 </script>

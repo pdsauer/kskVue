@@ -100,7 +100,7 @@
                             </div>
 
 
-                            <activityFields v-for="activity in activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete"></activityFields>
+                            <activityFields v-for="activity in activities" :key="activity.id" @activityDelete="activityDelete"></activityFields>
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
@@ -193,7 +193,7 @@
             },
             saveDay: function(day){
 
-                console.log('save DAy');
+                console.log('save Day');
                 // Fehler leeren
                 this.validationErrors = '';
                 // Zum abschicken vorbereiten
@@ -292,6 +292,7 @@
             },
             saveHandler: function(day) {
 
+                this.bus.$emit('saveDayUF');
                 if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
 
                     if (day.id === ""){

@@ -2101,7 +2101,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     saveDay: function saveDay(day) {
       var _this2 = this;
 
-      console.log('save DAy'); // Fehler leeren
+      console.log('save Day'); // Fehler leeren
 
       this.validationErrors = ''; // Zum abschicken vorbereiten
 
@@ -2189,6 +2189,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       return hours + ':' + minutes;
     },
     saveHandler: function saveHandler(day) {
+      this.bus.$emit('saveDayUF');
+
       if (day.date !== "" && day.start !== "" && day.end !== "" && day.pause !== "") {
         if (day.id === "") {
           this.saveDay(this.day);
@@ -2355,24 +2357,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0__["Multiselect"]
   },
-  props: {
-    activity: {
-      type: Object
-    }
-  },
+
+  /*        props: {
+              activity: {
+                  type: Object
+              }
+          },*/
   data: function data() {
     return {
       valueActivity: null,
@@ -2421,6 +2416,9 @@ __webpack_require__.r(__webpack_exports__);
           id: order.Auftrags_ID
         };
       });
+    });
+    this.bus.$on('saveDayUF', function () {
+      console.log('DAY_UF Wird gespeichert');
     });
   }
 });
@@ -38998,7 +38996,6 @@ var render = function() {
                   _vm._l(_vm.activities, function(activity) {
                     return _c("activityFields", {
                       key: activity.id,
-                      attrs: { activity: activity },
                       on: { activityDelete: _vm.activityDelete }
                     })
                   }),
@@ -39139,19 +39136,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.activity.km,
-                  expression: "activity.km"
+                  value: _vm.day_UF.km,
+                  expression: "day_UF.km"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "number", id: "kilometer" },
-              domProps: { value: _vm.activity.km },
+              domProps: { value: _vm.day_UF.km },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.activity, "km", $event.target.value)
+                  _vm.$set(_vm.day_UF, "km", $event.target.value)
                 }
               }
             })
@@ -39169,19 +39166,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.activity.comment,
-                  expression: "activity.comment"
+                  value: _vm.day_UF.comment,
+                  expression: "day_UF.comment"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "bemerkung" },
-              domProps: { value: _vm.activity.comment },
+              domProps: { value: _vm.day_UF.comment },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.activity, "comment", $event.target.value)
+                  _vm.$set(_vm.day_UF, "comment", $event.target.value)
                 }
               }
             })
@@ -39199,19 +39196,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.activity.hours,
-                  expression: "activity.hours"
+                  value: _vm.day_UF.hours,
+                  expression: "day_UF.hours"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "stundenanzahl" },
-              domProps: { value: _vm.activity.hours },
+              domProps: { value: _vm.day_UF.hours },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.activity, "hours", $event.target.value)
+                  _vm.$set(_vm.day_UF, "hours", $event.target.value)
                 }
               }
             })
@@ -39228,7 +39225,7 @@ var render = function() {
                 staticClass: "btn btn-light form-control text-danger",
                 on: {
                   click: function($event) {
-                    return _vm.$emit("activityDelete", _vm.activity.id)
+                    return _vm.$emit("activityDelete", _vm.day_UF.id)
                   }
                 }
               },
@@ -51905,6 +51902,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('hours-form', __webpack_require__(/*! ./components/HoursForm.vue */ "./resources/js/components/HoursForm.vue")["default"]);
+Vue.prototype.bus = new Vue();
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

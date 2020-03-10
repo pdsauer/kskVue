@@ -12,21 +12,15 @@
 
                             <div class="">
 
-                                <h2>Neuigkeiten</h2>
-
                                 <article class="">
-                                    <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
+                                    <h4 class="title text-dark">{{ $post->title }}</h4>
 
                                     <p>
-                                        60% of organizations were exposed to actual or attempted fraud loss last year.
-                                        As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est exercitationem officiis tempora voluptatum.
-                                        A ab blanditiis consequuntur cum cupiditate debitis dicta ducimus eos est ipsa iusto modi nemo nesciunt nobis quasi repellat, sit.
-                                        Ab dolore eligendi magnam officia quia suscipit. Aliquam at cum eos natus non placeat soluta tenetur voluptatem!
+                                        {{ $post->inhalt }}
                                     </p>
                                     <p class="text-muted">
-                                        <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                        <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
+                                        <i class="fas fa-user"></i> &nbsp; {{ $post->user['Vorname'].' '.$post->user['Nachname'] }} &nbsp;
+                                        <i class="fas fa-calendar-alt"></i>  &nbsp; {{ Carbon\Carbon::parse($post->created_at)->format('d.m.Y') }}&nbsp;
                                     </p>
 
                                 </article>

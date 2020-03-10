@@ -37,7 +37,7 @@
 
                         <div class="container bg-white">
 
-                            <form method="POST" action ="/post/create">
+                            <form method="POST" action ="/post">
 
                                 @csrf
                                 <div class="row">
@@ -48,8 +48,8 @@
                                     </div>
 
                                     <div class="form-group col-lg-4 col-sm-12">
-                                        <label for="exampleFormControlSelect2">Für Büro</label>
-                                        <select class="form-control" id="exampleFormControlSelect2">
+                                        <label for="BüroSelect">Für Büro</label>
+                                        <select class="form-control" id="BüroSelect" name="BüroSelect">
                                             <option selected value="0">alle</option>
                                             <option value="1">Ascheberg</option>
                                             <option value="2">Eutin</option>

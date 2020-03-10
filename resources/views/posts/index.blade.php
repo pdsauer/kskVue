@@ -15,51 +15,25 @@
                         @endif
 
 
+                        @foreach($posts as $post)
                             <article class="">
-                                <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
+                                <h4 class="title text-dark">{{ $post->title }}</h4>
 
                                 <p>
-                                    60% of organizations were exposed to actual or attempted fraud loss last year.
-                                    As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                    <a href="/post/4">Mehr Lesen</a>
+                                    {{ $post->inhalt }}
+                                    <a href="/post/{{ $post->id }}">Mehr Lesen</a>
                                 </p>
                                 <p class="text-muted">
-                                    <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                    <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
+                                    <i class="fas fa-user"></i> &nbsp;  {{ $post->user['Vorname'].' '.$post->user['Nachname'] }} &nbsp;
+                                    <i class="fas fa-calendar-alt"></i>  &nbsp; {{ Carbon\Carbon::parse($post->created_at)->format('d.m.Y') }}&nbsp;
                                 </p>
 
                             </article>
+                        @endforeach
 
 
-                            <article class="">
-                                <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
 
-                                <p>
-                                    60% of organizations were exposed to actual or attempted fraud loss last year.
-                                    As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                    <a href="/post/4">Mehr Lesen</a>
-                                </p>
-                                <p class="text-muted">
-                                    <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                    <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
-                                </p>
 
-                            </article>
-
-                            <article class="">
-                                <h4 class="title text-dark">Bitte neuen Index verwenden</h4>
-
-                                <p>
-                                    60% of organizations were exposed to actual or attempted fraud loss last year.
-                                    As fraud and risk increases year over year, the amount of data being collected increases as well.
-                                    <a href="/post/4">Mehr Lesen</a>
-                                </p>
-                                <p class="text-muted">
-                                    <i class="fas fa-user"></i> &nbsp; John Doe &nbsp;
-                                    <i class="fas fa-calendar-alt"></i>  &nbsp; Juli 23, 2014 &nbsp;
-                                </p>
-
-                            </article>
                     </div>
                 </div>
             </div>
