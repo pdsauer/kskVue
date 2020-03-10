@@ -51,7 +51,7 @@ class postController extends Controller
     public function store(Request $request){
 
         // Nur Mitglieder der Gruppe 1 dürfen Posts machen
-        if(1 == auth()->user()->Gruppe  || 1 == auth()->user()->Zugrifsrechte ){
+        if(1 == auth()->user()->Gruppe  || 1 == auth()->user()->ZugriffRechte ){
             $post = new Post();
             $valdiated = $request->validate([
                 'postTitle' => 'required|string',

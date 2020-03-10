@@ -116,6 +116,11 @@
 </template>
 
 <script>
+    // To Fix JS Horrible date API - USE ON DAY LOAD TO FIX OFFSET
+    Date.prototype.addHours = function(h) {
+        this.setTime(this.getTime() + (h*60*60*1000));
+        return this;
+    }
 
     import activityFields from './HoursForm/ActivityFields.vue';
     import DaySelector from './HoursForm/DaySelect';
@@ -182,7 +187,7 @@
                     response => {
                         console.log('New Day Selected');
                         this.day.id = response.data.Std_ID;
-                        this.day.date = new Date(response.data.Datum);
+                        this.day.date = new Date(response.data.Datum).addHours(1);
                         this.day.start = this.timeToNormal(response.data.Von) ;
                         this.day.end = this.timeToNormal(response.data.Bis);
                         this.day.pause = this.timeToNormal(response.data.Pause);

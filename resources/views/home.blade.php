@@ -56,7 +56,7 @@
                                         <a href="/post/{{ $post->id }}">Mehr Lesen</a>
                                     </p>
                                     <p class="text-muted">
-                                        <i class="fas fa-user"></i> &nbsp; {{ $post->user['Vorname'].' '.$post->user['Nachname'] }}
+                                        <i class="fas fa-user"></i> &nbsp; {{ $post->user['Vorname'].' '.$post->user['Nachname'] }} &nbsp;
                                         <i class="fas fa-calendar-alt"></i>  &nbsp;{{ Carbon\Carbon::parse($post->created_at)->format('d.m.Y') }}&nbsp;
                                     </p>
 

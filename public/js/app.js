@@ -2033,6 +2033,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //
 //
 //
+// To Fix JS Horrible date API - USE ON DAY LOAD TO FIX OFFSET
+Date.prototype.addHours = function (h) {
+  this.setTime(this.getTime() + h * 60 * 60 * 1000);
+  return this;
+};
+
 
 
 
@@ -2092,7 +2098,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       axios.get('/api/v1/days/' + id).then(function (response) {
         console.log('New Day Selected');
         _this.day.id = response.data.Std_ID;
-        _this.day.date = new Date(response.data.Datum);
+        _this.day.date = new Date(response.data.Datum).addHours(1);
         _this.day.start = _this.timeToNormal(response.data.Von);
         _this.day.end = _this.timeToNormal(response.data.Bis);
         _this.day.pause = _this.timeToNormal(response.data.Pause);

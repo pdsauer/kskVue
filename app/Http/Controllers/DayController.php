@@ -99,14 +99,15 @@ class DayController extends Controller
     {
         // Validate
 
+        /*Rule::unique('tblStunden')->where(
+            function($query) {$query->where('PersNr', auth()->user()->PersNr);
+            })*/
         $validatedData = $request->validate([
             '*.id' => 'required|numeric',
             '*.date' => [
                 'required',
                 'date',
-                Rule::unique('tblStunden')->where(
-                    function($query) {$query->where('PersNr', auth()->user()->PersNr);
-                    })],
+],
             '*.start' => 'required|numeric',
             '*.end' => 'required|numeric|gt:daySend.start',
             '*.pause' => 'required|numeric'
