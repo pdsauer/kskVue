@@ -2088,6 +2088,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       console.log('Activity added');
     },
     activityDelete: function activityDelete(id) {
+      // console.log(this.day.activities.forEach(act => console.log(act.remark)));
       var index = this.day.activities.map(function (x) {
         return x.id;
       }).indexOf(id);
@@ -2208,8 +2209,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       return hours + ':' + minutes;
     },
     saveHandler: function saveHandler(day) {
-      this.bus.$emit('saveDayUF');
-
       if (day.date !== "" && day.start !== "" && day.end !== "" && day.pause !== "") {
         if (day.id === "") {
           this.saveDay(this.day);
@@ -2274,6 +2273,7 @@ var Activity = /*#__PURE__*/function () {
     var remark;
     var km;
     var hours;
+    var bauherr;
   }
 
   _createClass(Activity, [{
@@ -2285,12 +2285,40 @@ var Activity = /*#__PURE__*/function () {
         // load by UStd_ID
         axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
           _this4.project_ID = response.data.Auftrags_ID;
-          _this4.remark = response.data.Bemerkung;
+          _this4.remark = response.data.Bemerkungen;
           _this4.action = response.data.Tkurz;
-          _this4.hours = response.data.Std;
-          _this4.km = response.data.km;
+          _this4.hours = _this4.timeToNormal(response.data.Std);
+          _this4.km = response.data.Km;
+          _this4.bauherr = response.data.Bauherr;
         });
       }
+    }
+  }, {
+    key: "timeToNormal",
+    value: function timeToNormal(time) {
+      var data = time.split('.');
+      var hours = data[0];
+      var minutes = Math.floor(Math.abs(data[1]) * 3 / 5);
+
+      if (hours === 0 || hours === '') {
+        hours = '00';
+      } else if (hours < 10) {
+        hours = '0' + hours;
+      }
+
+      if (minutes.toString().length === 1) {
+        minutes += '0';
+      }
+
+      return hours + ':' + minutes;
+    }
+  }, {
+    key: "timeToDecimal",
+    value: function timeToDecimal(time) {
+      var data = time.split(':');
+      var hours = data[0] * 100;
+      var minutes = data[1] * (5 / 3);
+      return (hours + minutes) / 100;
     }
   }]);
 
@@ -2400,17 +2428,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0__["Multiselect"]
   },
-
-  /*        props: {
-              activity: {
-                  type: Object
-              }
-          },*/
+  props: {
+    activity: {
+      type: Object
+    }
+  },
   data: function data() {
     return {
       valueActivity: null,
@@ -2436,10 +2465,20 @@ __webpack_require__.r(__webpack_exports__);
     formatOrder: function formatOrder(order) {
       return order.order;
     },
-    saveActivity: function saveActivity() {},
-    updateActivity: function updateActivity() {},
-    deleteActivity: function deleteActivity() {},
-    loadActivity: function loadActivity() {}
+    setActivityDropDown: function setActivityDropDown(id) {
+      this.valueActivity = {};
+      this.valueActivity.id = id;
+      this.valueActivity.activity = this.activities.filter(function (activity) {
+        return activity.id === id;
+      })[0].activity;
+    },
+    setOrderDropDown: function setOrderDropDown(id) {
+      this.valueOrder = {};
+      this.valueOrder.id = id;
+      this.valueOrder.order = this.orders.filter(function (order) {
+        return order.id === id;
+      })[0].order;
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -2459,9 +2498,6 @@ __webpack_require__.r(__webpack_exports__);
           id: order.Auftrags_ID
         };
       });
-    });
-    this.bus.$on('saveDayUF', function () {
-      console.log('DAY_UF Wird gespeichert');
     });
   }
 });
@@ -2619,6 +2655,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -7224,6 +7261,25 @@ __webpack_require__.r(__webpack_exports__);
 
 }));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.activity[data-v-357c3562]{\n    border-top: 1px solid #1c1c1c;\n}\n\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -38090,6 +38146,36 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modal.vue?vue&type=style&index=0&id=478d961c&scoped=true&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modal.vue?vue&type=style&index=0&id=478d961c&scoped=true&lang=css& ***!
@@ -39032,6 +39118,7 @@ var render = function() {
                   _vm._l(_vm.day.activities, function(activity) {
                     return _c("activityFields", {
                       key: activity.id,
+                      attrs: { activity: activity },
                       on: { activityDelete: _vm.activityDelete }
                     })
                   }),
@@ -39081,10 +39168,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -39097,7 +39184,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "container bg-light p-3" }, [
+    _c("div", { staticClass: "container bg-light p-3 activity" }, [
       _c("div", { staticClass: "form-row" }, [
         _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
           _c(
@@ -39114,7 +39201,8 @@ var render = function() {
                   options: _vm.orders,
                   placeholder: "Auftrag",
                   selectLabel: "",
-                  "custom-label": _vm.formatOrder
+                  "custom-label": _vm.formatOrder,
+                  deselectLabel: "Klicken zum Abwählen"
                 },
                 model: {
                   value: _vm.valueOrder,
@@ -39129,9 +39217,35 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "bauherr" } }, [_vm._v("Bauherr")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.activity.bauherr,
+                  expression: "activity.bauherr"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "bauherr", disabled: "" },
+              domProps: { value: _vm.activity.bauherr },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.activity, "bauherr", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
         _vm._v(" "),
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
           _c(
@@ -39148,6 +39262,7 @@ var render = function() {
                   options: _vm.activities,
                   "custom-label": _vm.formatActivity,
                   placeholder: "Tätigkeit Auswählen",
+                  deselectLabel: "Klicken zum Abwählen",
                   selectLabel: ""
                 },
                 model: {
@@ -39163,7 +39278,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-1 col-sm-12 col-md-6" }, [
+        _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "kilometer" } }, [_vm._v("Kilometer")]),
             _vm._v(" "),
@@ -39172,19 +39287,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.day_UF.km,
-                  expression: "day_UF.km"
+                  value: _vm.activity.km,
+                  expression: "activity.km"
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "number", id: "kilometer" },
-              domProps: { value: _vm.day_UF.km },
+              attrs: { type: "number", step: "0.1", id: "kilometer" },
+              domProps: { value: _vm.activity.km },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.day_UF, "km", $event.target.value)
+                  _vm.$set(_vm.activity, "km", $event.target.value)
                 }
               }
             })
@@ -39193,7 +39308,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-row" }, [
-        _c("div", { staticClass: "col col-lg-8 col-md-6" }, [
+        _c("div", { staticClass: "col-5 col-lg-6 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "bemerkung" } }, [_vm._v("Bemerkung")]),
             _vm._v(" "),
@@ -39202,26 +39317,26 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.day_UF.comment,
-                  expression: "day_UF.comment"
+                  value: _vm.activity.remark,
+                  expression: "activity.remark"
                 }
               ],
               staticClass: "form-control",
               attrs: { type: "text", id: "bemerkung" },
-              domProps: { value: _vm.day_UF.comment },
+              domProps: { value: _vm.activity.remark },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.day_UF, "comment", $event.target.value)
+                  _vm.$set(_vm.activity, "remark", $event.target.value)
                 }
               }
             })
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-1 col-sm-12 col-md-6" }, [
+        _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "stundenanzahl" } }, [
               _vm._v("Stundenanzahl")
@@ -39232,26 +39347,26 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.day_UF.hours,
-                  expression: "day_UF.hours"
+                  value: _vm.activity.hours,
+                  expression: "activity.hours"
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", id: "stundenanzahl" },
-              domProps: { value: _vm.day_UF.hours },
+              attrs: { type: "time", id: "stundenanzahl" },
+              domProps: { value: _vm.activity.hours },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.day_UF, "hours", $event.target.value)
+                  _vm.$set(_vm.activity, "hours", $event.target.value)
                 }
               }
             })
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-12" }, [
+        _c("div", { staticClass: "col-lg-4 col-sm-12 col-md-12" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "stundenanzahl" } }, [_vm._v(" ")]),
             _vm._v(" "),
@@ -39279,21 +39394,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-3 col-sm-12 col-md-6" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "bauherr" } }, [_vm._v("Bauherr")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", id: "bauherr", disabled: "" }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39589,7 +39689,8 @@ var render = function() {
               options: _vm.days,
               "custom-label": _vm.formatDate,
               placeholder: "Stunden Auswählen",
-              selectLabel: ""
+              selectLabel: "",
+              deselectLabel: "Klicken zum Abwählen"
             },
             on: { input: _vm.onSelect },
             model: {
@@ -51937,8 +52038,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('hours-form', __webpack_require__(/*! ./components/HoursForm.vue */ "./resources/js/components/HoursForm.vue")["default"]);
-Vue.prototype.bus = new Vue();
+Vue.component('hours-form', __webpack_require__(/*! ./components/HoursForm.vue */ "./resources/js/components/HoursForm.vue")["default"]); // Vue.prototype.bus = new Vue();
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -52087,9 +52188,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=template&id=357c3562& */ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&");
+/* harmony import */ var _ActivityFields_vue_vue_type_template_id_357c3562_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=template&id=357c3562&scoped=true& */ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&scoped=true&");
 /* harmony import */ var _ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _ActivityFields_vue_vue_type_style_index_0_id_357c3562_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css& */ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -52097,13 +52200,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _ActivityFields_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _ActivityFields_vue_vue_type_template_id_357c3562_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ActivityFields_vue_vue_type_template_id_357c3562_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "357c3562",
   null
   
 )
@@ -52129,19 +52232,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562& ***!
-  \*********************************************************************************************/
+/***/ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css&":
+/*!***********************************************************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_style_index_0_id_357c3562_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=style&index=0&id=357c3562&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_style_index_0_id_357c3562_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_style_index_0_id_357c3562_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_style_index_0_id_357c3562_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_style_index_0_id_357c3562_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_style_index_0_id_357c3562_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&scoped=true& ***!
+  \*********************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=template&id=357c3562& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ActivityFields.vue?vue&type=template&id=357c3562&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ActivityFields.vue?vue&type=template&id=357c3562&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ActivityFields_vue_vue_type_template_id_357c3562_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -100,7 +100,7 @@
                             </div>
 
 
-                            <activityFields v-for="activity in day.activities" :key="activity.id" @activityDelete="activityDelete"></activityFields>
+                            <activityFields v-for="activity in day.activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete"></activityFields>
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
@@ -172,6 +172,7 @@
                 console.log('Activity added');
             },
             activityDelete: function (id){
+                // console.log(this.day.activities.forEach(act => console.log(act.remark)));
                 let index = this.day.activities.map((x) => {
                     return x.id;
                 }).indexOf(id);
@@ -202,9 +203,6 @@
                         );
                     }
                 );
-
-
-
 
             },
             saveDay: function(day){
@@ -308,7 +306,6 @@
             },
             saveHandler: function(day) {
 
-                this.bus.$emit('saveDayUF');
                 if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
 
                     if (day.id === ""){
@@ -383,6 +380,7 @@
             let remark;
             let km;
             let hours;
+            let bauherr
         }
 
         load(){
@@ -393,13 +391,37 @@
                 axios.get('/api/v1/days_UF/' + this.UStd_ID).then(
                     (response) => {
                         this.project_ID = response.data.Auftrags_ID;
-                        this.remark = response.data.Bemerkung;
+                        this.remark = response.data.Bemerkungen;
                         this.action = response.data.Tkurz;
-                        this.hours = response.data.Std;
-                        this.km = response.data.km;
+                        this.hours = this.timeToNormal(response.data.Std);
+                        this.km = response.data.Km;
+                        this.bauherr = response.data.Bauherr;
                     }
                 )
             }
+        }
+
+        timeToNormal(time){
+            let data = time.split('.');
+            let hours = data[0];
+            let minutes = Math.floor((Math.abs(data[1])) * 3/5);
+            if (hours === 0 || hours === ''){
+                hours = '00';
+            }
+            else if(hours < 10){
+                hours = '0' + hours;
+            }
+
+            if(minutes.toString().length === 1){
+                minutes += '0';
+            }
+            return hours + ':' + minutes;
+        }
+        timeToDecimal(time) {
+            let data = time.split(':');
+            let hours = data[0] * 100;
+            let minutes = data[1] * (5/3);
+            return (hours + minutes) / 100
         }
     }
 </script>

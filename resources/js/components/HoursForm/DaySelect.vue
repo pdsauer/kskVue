@@ -26,6 +26,7 @@
                 :custom-label="formatDate"
                 placeholder="Stunden Auswählen"
                 selectLabel=""
+                deselectLabel="Klicken zum Abwählen"
                 @input="onSelect"
             ></multiselect>
 

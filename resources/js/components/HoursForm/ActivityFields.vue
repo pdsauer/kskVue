@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container bg-light p-3">
+        <div class="container bg-light p-3 activity">
             <div class="form-row">
 
                 <div class="col-lg-2 col-sm-12 col-md-6">
@@ -14,14 +14,15 @@
                             placeholder="Auftrag"
                             selectLabel=""
                             :custom-label="formatOrder"
+                            deselectLabel="Klicken zum Abwählen"
                         ></multiselect>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-sm-12 col-md-6">
+                <div class="col-lg-2 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="bauherr">Bauherr</label>
-                        <input type="text" class="form-control" id="bauherr" disabled>
+                        <input type="text" class="form-control" id="bauherr" disabled v-model="activity.bauherr">
                     </div>
                 </div>
 
@@ -43,6 +44,7 @@
                             :options="activities"
                             :custom-label="formatActivity"
                             placeholder="Tätigkeit Auswählen"
+                            deselectLabel="Klicken zum Abwählen"
                             selectLabel=""
 
                         ></multiselect>
@@ -50,29 +52,29 @@
                 </div>
 
 
-                <div class="col-lg-1 col-sm-12 col-md-6">
+                <div class="col-lg-2 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="kilometer">Kilometer</label>
-                        <input type="number" class="form-control" id="kilometer" v-model="day_UF.km">
+                        <input type="number" step="0.1" class="form-control" id="kilometer" v-model="activity.km">
                     </div>
                 </div>
             </div>
 
             <div class="form-row">
-                <div class="col col-lg-8 col-md-6">
+                <div class="col-5 col-lg-6 col-md-6">
                     <div class="form-group">
                         <label for="bemerkung">Bemerkung</label>
-                        <input type="text" class="form-control" id="bemerkung" v-model="day_UF.comment">
+                        <input type="text" class="form-control" id="bemerkung" v-model="activity.remark">
                     </div>
                 </div>
-                <div class="col-lg-1 col-sm-12 col-md-6">
+                <div class="col-lg-2 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="stundenanzahl">Stundenanzahl</label>
-                        <input type="text" class="form-control" id="stundenanzahl" v-model="day_UF.hours">
+                        <input type="time" class="form-control" id="stundenanzahl" v-model="activity.hours">
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-sm-12 col-md-12">
+                <div class="col-lg-4 col-sm-12 col-md-12">
 
                     <div class="form-group">
                         <label for="stundenanzahl">&nbsp;</label>
@@ -94,11 +96,11 @@
 
     export default {
         components: {Multiselect},
-/*        props: {
+        props: {
             activity: {
                 type: Object
             }
-        },*/
+        },
         data() {
             return {
                 valueActivity: null,
@@ -124,18 +126,17 @@
             formatOrder: function(order){
                 return order.order;
             },
-            saveActivity: function () {
-
+            setActivityDropDown: function (id){
+                this.valueActivity = {};
+                this.valueActivity.id = id;
+                this.valueActivity.activity = this.activities.filter(activity => activity.id === id)[0].activity;
             },
-            updateActivity: function () {
-
-            },
-            deleteActivity: function () {
-
-            },
-            loadActivity: function () {
-
+            setOrderDropDown: function (id){
+                this.valueOrder = {};
+                this.valueOrder.id = id;
+                this.valueOrder.order = this.orders.filter(order => order.id === id)[0].order;
             }
+
         },
         mounted() {
             axios.get('/api/v1/activities').then(response => {
@@ -148,9 +149,15 @@
                     return {order: order.Auftrags_Nr, id: order.Auftrags_ID}
                 })
             });
-            this.bus.$on('saveDayUF', () => {
-                console.log('DAY_UF Wird gespeichert')
-            });
+
         }
     }
 </script>
+
+<style scoped>
+
+    .activity{
+        border-top: 1px solid #1c1c1c;
+    }
+
+</style>
