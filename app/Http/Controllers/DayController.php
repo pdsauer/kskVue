@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,7 +35,8 @@ class DayController extends Controller
     {
         // TODO nur die Tage der letzen 3 Monatebereitstellen
 
-        return  Day::where('PersNr', auth()->user()->PersNr)->get();
+        return (\auth()->user()->days);
+        //return  Day::where('PersNr', auth()->user()->PersNr)->get();
     }
 
 

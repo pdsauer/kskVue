@@ -21,25 +21,27 @@ class Day_UFController extends Controller
     }
 
     /**
-     * Fetch all Days_UF
+     * Fetch all Days_UF_Ids belonging to the Day
      *
      *
+     * @param int|null $id
      * @return day_UF[]|Collection
      */
-    public function index()
+    public function index(?int $id)
     {
-        return  Day_UF::all();
+        return Day_UF::where('Std_Id', $id)->pluck('UStd_ID');
     }
 
     /**
-     * Display the list of all the DAYS_UF belonging to this DAY.
+     * return the  DAYS_UF belonging to the ID.
      *
-     * @param int|null $id
+     * @param Day_UF $day_UF
      * @return Day_UF
      */
-    public function show(?int $id)
+    public function show(Day_UF $day_UF)
     {
-        return Day_UF::where('Std_Id', $id)->get();
+        return $day_UF;
+        //return Day_UF::where('UStd_ID', $id)->get();
     }
 
 

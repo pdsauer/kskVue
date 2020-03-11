@@ -57,6 +57,17 @@ class User extends Authenticatable
      */
     public function posts()
     {
-        return $this->hasMany('App\Post', 'id');
+        return $this->hasMany('App\Post', 'author');
     }
+
+    /**
+     * Get the Days asoociated with the user.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function days()
+    {
+        return $this->hasMany('App\Day', 'PersNr');
+    }
+
+
 }

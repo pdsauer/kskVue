@@ -63,4 +63,13 @@ class Day_UF extends Model
     protected $fillable = [
         'Std_Id', 'Auftrags_ID', 'Tkurz', 'Std', 'Km', 'Bemerkung', 'Bauherr'
     ];
+
+    /**
+     * Get the user asoociated with the post.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Day()
+    {
+        return $this->belongsTo('App\Day', 'Std_Id');
+    }
 }

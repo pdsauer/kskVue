@@ -44,4 +44,22 @@ class day extends Model
         'Datum', 'Von', 'Bis', 'Pause'
     ];
 
+    /**
+     * Get the user asoociated with the post.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Day_UF()
+    {
+        return $this->hasMany('App\Day_UF');
+    }
+
+    /**
+     * Get the user asoociated with the post.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'PersNr');
+    }
+
 }

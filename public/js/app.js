@@ -1916,6 +1916,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HoursForm_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./HoursForm/ValidationErrors */ "./resources/js/components/HoursForm/ValidationErrors.vue");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 //
 //
 //
@@ -2056,10 +2060,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         date: '',
         start: '',
         end: '',
-        pause: ''
+        pause: '',
+        activities: []
       },
-      activities: [],
-      newDay: true,
       idcounter: 1,
       showModal: false,
       modalMessage: '',
@@ -2079,16 +2082,16 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     ValidationErrors: _HoursForm_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   methods: {
-    addActivity: function addActivity(id, projectNumber, action, km, comment, hours) {
-      this.activities.push(new Activity(id, projectNumber, action, km, comment, hours));
+    addActivity: function addActivity(UStd_ID, Std_Id) {
+      this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id));
       this.idcounter++;
       console.log('Activity added');
     },
     activityDelete: function activityDelete(id) {
-      var index = this.activities.map(function (x) {
+      var index = this.day.activities.map(function (x) {
         return x.id;
       }).indexOf(id);
-      this.activities.splice(index, 1);
+      this.day.activities.splice(index, 1);
       console.log('deleted');
     },
     loadDay: function loadDay(id) {
@@ -2101,8 +2104,18 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         _this.day.date = new Date(response.data.Datum).addHours(1);
         _this.day.start = _this.timeToNormal(response.data.Von);
         _this.day.end = _this.timeToNormal(response.data.Bis);
-        _this.day.pause = _this.timeToNormal(response.data.Pause);
-      }); //
+        _this.day.pause = _this.timeToNormal(response.data.Pause); // load activities by Std_ID
+
+        axios.get('/api/v1/days_UF/list/' + _this.day.id).then(function (response) {
+          response.data.forEach(function (ustd_ID) {
+            return _this.addActivity(ustd_ID, _this.day.id);
+          }); // load all Activity fields
+
+          _this.day.activities.forEach(function (activity) {
+            return activity.load();
+          });
+        });
+      });
     },
     saveDay: function saveDay(day) {
       var _this2 = this;
@@ -2249,16 +2262,40 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
   }
 });
 
-var Activity = function Activity(id, projectNumber, action, km, comment, hours) {
-  _classCallCheck(this, Activity);
+var Activity = /*#__PURE__*/function () {
+  function Activity(id, UStd_ID, Std_Id) {
+    _classCallCheck(this, Activity);
 
-  this.id = id;
-  this.projectNumber = projectNumber;
-  this.action = action;
-  this.km = km;
-  this.comment = comment;
-  this.hours = hours;
-};
+    this.id = id;
+    this.UStd_ID = UStd_ID;
+    this.Std_Id = Std_Id;
+    var project_ID;
+    var action;
+    var remark;
+    var km;
+    var hours;
+  }
+
+  _createClass(Activity, [{
+    key: "load",
+    value: function load() {
+      var _this4 = this;
+
+      if (this.UStd_ID) {
+        // load by UStd_ID
+        axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
+          _this4.project_ID = response.data.Auftrags_ID;
+          _this4.remark = response.data.Bemerkung;
+          _this4.action = response.data.Tkurz;
+          _this4.hours = response.data.Std;
+          _this4.km = response.data.km;
+        });
+      }
+    }
+  }]);
+
+  return Activity;
+}();
 
 /***/ }),
 
@@ -38983,14 +39020,7 @@ var render = function() {
                           staticClass: "btn btn-light",
                           on: {
                             click: function($event) {
-                              return _vm.addActivity(
-                                _vm.idcounter,
-                                "2045/18",
-                                "Telefonieren",
-                                20,
-                                "alles normal",
-                                2
-                              )
+                              return _vm.addActivity(_vm.idcounter)
                             }
                           }
                         },
@@ -38999,7 +39029,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._l(_vm.activities, function(activity) {
+                  _vm._l(_vm.day.activities, function(activity) {
                     return _c("activityFields", {
                       key: activity.id,
                       on: { activityDelete: _vm.activityDelete }

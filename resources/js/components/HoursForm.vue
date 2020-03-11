@@ -93,14 +93,14 @@
                                     <h4 class="pl-3">Tätigkeiten</h4>
                                 </div>
                                 <div class="col-lg-1 col-md-4">
-                                    <button class="btn btn-light" @click="addActivity(idcounter,'2045/18', 'Telefonieren', 20, 'alles normal', 2)">
+                                    <button class="btn btn-light" @click="addActivity(idcounter)">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
                             </div>
 
 
-                            <activityFields v-for="activity in activities" :key="activity.id" @activityDelete="activityDelete"></activityFields>
+                            <activityFields v-for="activity in day.activities" :key="activity.id" @activityDelete="activityDelete"></activityFields>
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
@@ -120,7 +120,7 @@
     Date.prototype.addHours = function(h) {
         this.setTime(this.getTime() + (h*60*60*1000));
         return this;
-    }
+    };
 
     import activityFields from './HoursForm/ActivityFields.vue';
     import DaySelector from './HoursForm/DaySelect';
@@ -141,9 +141,8 @@
                     start: '',
                     end: '',
                     pause: '',
+                    activities: []
                 },
-                activities: [],
-                newDay: true,
                 idcounter: 1,
                 showModal: false,
                 modalMessage: '',
@@ -167,16 +166,16 @@
 
 
         methods: {
-            addActivity: function (id, projectNumber, action, km, comment, hours) {
-                this.activities.push(new Activity(id, projectNumber, action, km, comment,  hours));
+            addActivity: function (UStd_ID, Std_Id) {
+                this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id));
                 this.idcounter++;
                 console.log('Activity added');
             },
             activityDelete: function (id){
-                let index = this.activities.map((x) => {
+                let index = this.day.activities.map((x) => {
                     return x.id;
                 }).indexOf(id);
-                this.activities.splice(index, 1);
+                this.day.activities.splice(index, 1);
                 console.log('deleted');
             },
 
@@ -191,10 +190,22 @@
                         this.day.start = this.timeToNormal(response.data.Von) ;
                         this.day.end = this.timeToNormal(response.data.Bis);
                         this.day.pause = this.timeToNormal(response.data.Pause);
+
+                        // load activities by Std_ID
+                        axios.get('/api/v1/days_UF/list/' + this.day.id).then(
+                            (response) => {
+
+                                response.data.forEach(ustd_ID => this.addActivity(ustd_ID, this.day.id));
+                                // load all Activity fields
+                                this.day.activities.forEach(activity => activity.load());
+                            }
+                        );
                     }
                 );
 
-                //
+
+
+
             },
             saveDay: function(day){
 
@@ -361,13 +372,34 @@
 
     class Activity {
 
-        constructor(id, projectNumber, action, km, comment, hours) {
+
+
+        constructor(id, UStd_ID, Std_Id) {
             this.id = id;
-            this.projectNumber = projectNumber;
-            this.action = action;
-            this.km = km;
-            this.comment = comment;
-            this.hours = hours;
+            this.UStd_ID = UStd_ID;
+            this.Std_Id = Std_Id;
+            let project_ID;
+            let action;
+            let remark;
+            let km;
+            let hours;
+        }
+
+        load(){
+
+            if(this.UStd_ID){
+
+                // load by UStd_ID
+                axios.get('/api/v1/days_UF/' + this.UStd_ID).then(
+                    (response) => {
+                        this.project_ID = response.data.Auftrags_ID;
+                        this.remark = response.data.Bemerkung;
+                        this.action = response.data.Tkurz;
+                        this.hours = response.data.Std;
+                        this.km = response.data.km;
+                    }
+                )
+            }
         }
     }
 </script>
