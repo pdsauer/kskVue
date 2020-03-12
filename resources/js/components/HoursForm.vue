@@ -100,7 +100,11 @@
                             </div>
 
 
-                            <activityFields v-for="activity in day.activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete" ></activityFields>
+                            <activityFields
+                                v-for="activity in day.activities"
+                                :activity="activity"
+                                :key="activity.id"
+                                @activityDelete="activityDelete"></activityFields>
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
@@ -201,11 +205,12 @@
                                 response.data.forEach(ustd_ID => this.addActivity(ustd_ID, this.day.id));
                                 // load all Activity fields
                                 this.day.activities.forEach(activity => activity.load());
-
-                                // Force load of Dropdowns
+                                return Promise.resolve('Test');
 
                             }
-                        );
+                        ).finally(()=>{
+                            //
+                        });
                     }
                 );
 
@@ -273,7 +278,8 @@
                     this.emptyData();
 
                 } else {
-                    this.loadDay(day.id);
+                    this.loadDay(day.id)
+
                 }
 
             },
@@ -376,7 +382,6 @@
     class Activity {
 
 
-
         constructor(id, UStd_ID, Std_Id) {
             this.id = id;
             this.UStd_ID = UStd_ID;
@@ -386,13 +391,10 @@
             let remark;
             let km;
             let hours;
-            let bauherr
+            let bauherr;
         }
-
         load(){
-
             if(this.UStd_ID){
-
                 // load by UStd_ID
                 axios.get('/api/v1/days_UF/' + this.UStd_ID).then(
                     (response) => {
@@ -406,6 +408,7 @@
                 )
             }
         }
+
 
         timeToNormal(time){
             let data = time.split('.');

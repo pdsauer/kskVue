@@ -2037,6 +2037,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
 // To Fix JS Horrible date API - USE ON DAY LOAD TO FIX OFFSET
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000);
@@ -2112,8 +2116,10 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
           _this.day.activities.forEach(function (activity) {
             return activity.load();
-          }); // Force load of Dropdowns
+          });
 
+          return Promise.resolve('Test');
+        })["finally"](function () {//
         });
       });
     },
@@ -2430,6 +2436,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2465,32 +2472,27 @@ __webpack_require__.r(__webpack_exports__);
     formatOrder: function formatOrder(order) {
       return order.order;
     },
+    // Set Dropdown to right value to fit vue-Multiselect
     setActivityDropDown: function setActivityDropDown(id) {
       if (id) {
-        console.log('Set Activity Drop Down');
         this.valueActivity = {};
         this.valueActivity.id = id;
         this.valueActivity.activity = this.activities.filter(function (activity) {
           return activity.id === id;
         })[0].activity;
-      } else {
-        console.log('Activity is empty');
       }
     },
+    // Set Dropdown to right value to fit vue-Multiselect
     setOrderDropDown: function setOrderDropDown(id) {
       if (id) {
-        console.log('Set Order Dropdown');
         this.valueOrder = {};
         this.valueOrder.id = id;
         this.valueOrder.order = this.orders.filter(function (order) {
           return order.id === parseInt(id);
         })[0].order;
-      } else {
-        console.log('Order is empty');
       }
     },
     loadDropdowns: function loadDropdowns() {
-      console.log('Load dropdownms');
       this.setOrderDropDown(this.activity.project_ID);
       this.setActivityDropDown(this.activity.activity);
     }
@@ -2515,6 +2517,8 @@ __webpack_require__.r(__webpack_exports__);
           id: order.Auftrags_ID
         };
       });
+    })["finally"](function () {
+      _this.loadDropdowns();
     });
   }
 });
@@ -39280,7 +39284,8 @@ var render = function() {
                   "custom-label": _vm.formatActivity,
                   placeholder: "Tätigkeit Auswählen",
                   deselectLabel: "Klicken zum Abwählen",
-                  selectLabel: ""
+                  selectLabel: "",
+                  "track-by": "id"
                 },
                 model: {
                   value: _vm.valueActivity,
@@ -52055,8 +52060,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('hours-form', __webpack_require__(/*! ./components/HoursForm.vue */ "./resources/js/components/HoursForm.vue")["default"]); // Vue.prototype.$bus = new Vue();
-
+Vue.component('hours-form', __webpack_require__(/*! ./components/HoursForm.vue */ "./resources/js/components/HoursForm.vue")["default"]);
+Vue.prototype.bus = new Vue();
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

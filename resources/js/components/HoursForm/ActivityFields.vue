@@ -46,6 +46,7 @@
                             placeholder="Tätigkeit Auswählen"
                             deselectLabel="Klicken zum Abwählen"
                             selectLabel=""
+                            track-by="id"
 
                         ></multiselect>
                     </div>
@@ -100,6 +101,7 @@
             activity: {
                 type: Object
             },
+
         },
         data() {
             return {
@@ -126,30 +128,24 @@
             formatOrder: function(order){
                 return order.order;
             },
+            // Set Dropdown to right value to fit vue-Multiselect
             setActivityDropDown: function (id){
-
                 if(id){
-                    console.log('Set Activity Drop Down');
                     this.valueActivity = {};
                     this.valueActivity.id = id;
                     this.valueActivity.activity = this.activities.filter(activity => activity.id === id)[0].activity;
-                } else {
-                    console.log('Activity is empty');
                 }
             },
+            // Set Dropdown to right value to fit vue-Multiselect
             setOrderDropDown: function (id){
-
                 if(id){
-                    console.log('Set Order Dropdown');
                     this.valueOrder = {};
                     this.valueOrder.id = id;
                     this.valueOrder.order = this.orders.filter(order => order.id === parseInt(id))[0].order;
-                }else {
-                    console.log('Order is empty');
                 }
             },
             loadDropdowns: function(){
-                console.log('Load dropdownms');
+
                 this.setOrderDropDown(this.activity.project_ID);
                 this.setActivityDropDown(this.activity.activity);
             }
@@ -161,12 +157,17 @@
                     return {activity: activity.Tätigkeit, id: activity.T_kurz}
                 })
             });
+
             //Set src for Multiselect - Order
             axios.get('/api/v1/orders').then(response => {
                 this.orders = response.data.map(function(order){
                     return {order: order.Auftrags_Nr, id: order.Auftrags_ID}
                 })
+            }).finally(() => {
+               this.loadDropdowns()
             });
+
+
         },
     }
 </script>

@@ -21,7 +21,7 @@ window.Vue = require('vue');
 
 
 Vue.component('hours-form', require('./components/HoursForm.vue').default);
-// Vue.prototype.$bus = new Vue();
+Vue.prototype.bus = new Vue();
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
