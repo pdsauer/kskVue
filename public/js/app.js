@@ -2085,7 +2085,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     addActivity: function addActivity(UStd_ID, Std_Id) {
       this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id));
       this.idcounter++;
-      console.log('Activity added');
     },
     activityDelete: function activityDelete(id) {
       // console.log(this.day.activities.forEach(act => console.log(act.remark)));
@@ -2093,7 +2092,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         return x.id;
       }).indexOf(id);
       this.day.activities.splice(index, 1);
-      console.log('deleted');
     },
     loadDay: function loadDay(id) {
       var _this = this;
@@ -2114,7 +2112,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
           _this.day.activities.forEach(function (activity) {
             return activity.load();
-          });
+          }); // Force load of Dropdowns
+
         });
       });
     },
@@ -2182,6 +2181,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.start = '';
       this.day.end = '';
       this.day.pause = '';
+      this.day.activities = [];
       this.daySelectorKey = !this.daySelectorKey;
       console.log('Tag geleert');
     },
@@ -2269,7 +2269,7 @@ var Activity = /*#__PURE__*/function () {
     this.UStd_ID = UStd_ID;
     this.Std_Id = Std_Id;
     var project_ID;
-    var action;
+    var activity;
     var remark;
     var km;
     var hours;
@@ -2286,7 +2286,7 @@ var Activity = /*#__PURE__*/function () {
         axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
           _this4.project_ID = response.data.Auftrags_ID;
           _this4.remark = response.data.Bemerkungen;
-          _this4.action = response.data.Tkurz;
+          _this4.activity = response.data.Tkurz;
           _this4.hours = _this4.timeToNormal(response.data.Std);
           _this4.km = response.data.Km;
           _this4.bauherr = response.data.Bauherr;
@@ -2466,23 +2466,39 @@ __webpack_require__.r(__webpack_exports__);
       return order.order;
     },
     setActivityDropDown: function setActivityDropDown(id) {
-      this.valueActivity = {};
-      this.valueActivity.id = id;
-      this.valueActivity.activity = this.activities.filter(function (activity) {
-        return activity.id === id;
-      })[0].activity;
+      if (id) {
+        console.log('Set Activity Drop Down');
+        this.valueActivity = {};
+        this.valueActivity.id = id;
+        this.valueActivity.activity = this.activities.filter(function (activity) {
+          return activity.id === id;
+        })[0].activity;
+      } else {
+        console.log('Activity is empty');
+      }
     },
     setOrderDropDown: function setOrderDropDown(id) {
-      this.valueOrder = {};
-      this.valueOrder.id = id;
-      this.valueOrder.order = this.orders.filter(function (order) {
-        return order.id === id;
-      })[0].order;
+      if (id) {
+        console.log('Set Order Dropdown');
+        this.valueOrder = {};
+        this.valueOrder.id = id;
+        this.valueOrder.order = this.orders.filter(function (order) {
+          return order.id === parseInt(id);
+        })[0].order;
+      } else {
+        console.log('Order is empty');
+      }
+    },
+    loadDropdowns: function loadDropdowns() {
+      console.log('Load dropdownms');
+      this.setOrderDropDown(this.activity.project_ID);
+      this.setActivityDropDown(this.activity.activity);
     }
   },
   mounted: function mounted() {
     var _this = this;
 
+    //Set src for Multiselect - activity
     axios.get('/api/v1/activities').then(function (response) {
       _this.activities = response.data.map(function (activity) {
         return {
@@ -2490,7 +2506,8 @@ __webpack_require__.r(__webpack_exports__);
           id: activity.T_kurz
         };
       });
-    });
+    }); //Set src for Multiselect - Order
+
     axios.get('/api/v1/orders').then(function (response) {
       _this.orders = response.data.map(function (order) {
         return {
@@ -52038,7 +52055,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('hours-form', __webpack_require__(/*! ./components/HoursForm.vue */ "./resources/js/components/HoursForm.vue")["default"]); // Vue.prototype.bus = new Vue();
+Vue.component('hours-form', __webpack_require__(/*! ./components/HoursForm.vue */ "./resources/js/components/HoursForm.vue")["default"]); // Vue.prototype.$bus = new Vue();
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

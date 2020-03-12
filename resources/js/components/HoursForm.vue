@@ -100,7 +100,7 @@
                             </div>
 
 
-                            <activityFields v-for="activity in day.activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete"></activityFields>
+                            <activityFields v-for="activity in day.activities" :activity="activity" :key="activity.id" @activityDelete="activityDelete" ></activityFields>
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
@@ -150,7 +150,7 @@
                 modalFunctionOnConfirm: '',
                 modalBtnClass: '',
                 validationErrors: '',
-                daySelectorKey: true
+                daySelectorKey: true,
             }
         },
 
@@ -169,7 +169,7 @@
             addActivity: function (UStd_ID, Std_Id) {
                 this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id));
                 this.idcounter++;
-                console.log('Activity added');
+
             },
             activityDelete: function (id){
                 // console.log(this.day.activities.forEach(act => console.log(act.remark)));
@@ -177,12 +177,14 @@
                     return x.id;
                 }).indexOf(id);
                 this.day.activities.splice(index, 1);
-                console.log('deleted');
+
             },
 
             loadDay: function (id){
+
                 // TODO use and Check for 404
                 axios.get('/api/v1/days/' + id).then(
+
 
                     response => {
                         console.log('New Day Selected');
@@ -199,6 +201,9 @@
                                 response.data.forEach(ustd_ID => this.addActivity(ustd_ID, this.day.id));
                                 // load all Activity fields
                                 this.day.activities.forEach(activity => activity.load());
+
+                                // Force load of Dropdowns
+
                             }
                         );
                     }
@@ -278,6 +283,7 @@
                 this.day.start = '';
                 this.day.end = '';
                 this.day.pause = '';
+                this.day.activities = [];
                 this.daySelectorKey = !this.daySelectorKey;
                 console.log('Tag geleert');
             },
@@ -376,7 +382,7 @@
             this.UStd_ID = UStd_ID;
             this.Std_Id = Std_Id;
             let project_ID;
-            let action;
+            let activity;
             let remark;
             let km;
             let hours;
@@ -392,7 +398,7 @@
                     (response) => {
                         this.project_ID = response.data.Auftrags_ID;
                         this.remark = response.data.Bemerkungen;
-                        this.action = response.data.Tkurz;
+                        this.activity = response.data.Tkurz;
                         this.hours = this.timeToNormal(response.data.Std);
                         this.km = response.data.Km;
                         this.bauherr = response.data.Bauherr;

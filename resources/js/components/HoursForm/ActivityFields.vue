@@ -99,7 +99,7 @@
         props: {
             activity: {
                 type: Object
-            }
+            },
         },
         data() {
             return {
@@ -127,30 +127,47 @@
                 return order.order;
             },
             setActivityDropDown: function (id){
-                this.valueActivity = {};
-                this.valueActivity.id = id;
-                this.valueActivity.activity = this.activities.filter(activity => activity.id === id)[0].activity;
+
+                if(id){
+                    console.log('Set Activity Drop Down');
+                    this.valueActivity = {};
+                    this.valueActivity.id = id;
+                    this.valueActivity.activity = this.activities.filter(activity => activity.id === id)[0].activity;
+                } else {
+                    console.log('Activity is empty');
+                }
             },
             setOrderDropDown: function (id){
-                this.valueOrder = {};
-                this.valueOrder.id = id;
-                this.valueOrder.order = this.orders.filter(order => order.id === id)[0].order;
-            }
 
+                if(id){
+                    console.log('Set Order Dropdown');
+                    this.valueOrder = {};
+                    this.valueOrder.id = id;
+                    this.valueOrder.order = this.orders.filter(order => order.id === parseInt(id))[0].order;
+                }else {
+                    console.log('Order is empty');
+                }
+            },
+            loadDropdowns: function(){
+                console.log('Load dropdownms');
+                this.setOrderDropDown(this.activity.project_ID);
+                this.setActivityDropDown(this.activity.activity);
+            }
         },
         mounted() {
+            //Set src for Multiselect - activity
             axios.get('/api/v1/activities').then(response => {
                 this.activities = response.data.map(function(activity) {
                     return {activity: activity.Tätigkeit, id: activity.T_kurz}
                 })
             });
+            //Set src for Multiselect - Order
             axios.get('/api/v1/orders').then(response => {
                 this.orders = response.data.map(function(order){
                     return {order: order.Auftrags_Nr, id: order.Auftrags_ID}
                 })
             });
-
-        }
+        },
     }
 </script>
 
