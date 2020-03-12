@@ -23,6 +23,8 @@ und dann
 
 eingegeben werden.
 
+Innerhalb der MSSQL-Datenbank muss die integrierte db.sql datei ausgeführt werden, damit die Tabellen angelegt werden.
+
 ## Konfiguration
 
 Danach muss mit 
@@ -35,3 +37,10 @@ Die Umgebungsvariablen konfiguriert werden.
 Wenn dies erledigt wurde, kann über 
 ``php artisan db:seed``
 die Datenbank mit den nötigen Informationen gefüllt werden
+
+zum Anmelden steht nun zwei User bereit
+
+    - pds@web.de
+    - hcs@web.de
+    
+Beide benutzen das Passwort 'password'
