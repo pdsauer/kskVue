@@ -31,3 +31,7 @@ Danach muss mit
 
 der Applikations-Schlüssel generiert werden. Ab nun können in `.env`
 Die Umgebungsvariablen konfiguriert werden. 
+
+Wenn dies erledigt wurde, kann über 
+``php artisan db:seed``
+die Datenbank mit den nötigen Informationen gefüllt werden
