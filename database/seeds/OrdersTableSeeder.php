@@ -31,7 +31,7 @@ class OrdersTableSeeder extends Seeder
             'Schallschutz' => 'nein',
             'Wärmeschutz' => 'nein',
             'FWD' => 'nein',
-            'Konstr_Überwachnung' => 'nein',
+            'Konstr_Überwachung' => 'nein',
             'Realisiert' => false,
         ]);
 
@@ -54,7 +54,7 @@ class OrdersTableSeeder extends Seeder
             'Schallschutz' => 'nein',
             'Wärmeschutz' => 'nein',
             'FWD' => 'nein',
-            'Konstr_Überwachnung' => 'nein',
+            'Konstr_Überwachung' => 'nein',
             'Realisiert' => false,
         ]);
 
@@ -77,7 +77,7 @@ class OrdersTableSeeder extends Seeder
             'Schallschutz' => 'nein',
             'Wärmeschutz' => 'nein',
             'FWD' => 'nein',
-            'Konstr_Überwachnung' => 'nein',
+            'Konstr_Überwachung' => 'nein',
             'Realisiert' => false,
         ]);
     }

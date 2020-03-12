@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder
             'Kürzel' => 'hcs',
             'Nachname' => 'Sauer',
             'Vorname' => 'Henrik',
-            'PersNr' => 123,
+            'PersNr' => 456,
             'Std_Satz' => 10.00,
             'Büro_Nr' => 2,
             'Soll_Std_Tag' => 8.00,
