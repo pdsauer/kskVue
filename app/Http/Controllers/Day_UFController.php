@@ -104,9 +104,9 @@ class Day_UFController extends Controller
     public function update(Request $request)
     {
 
-        $day_UF = new Day_UF;
 
-        error_log(print_r('update Hit Activity', TRUE));
+
+
         //Validation
         error_log(print_r($request->all(), TRUE));
         $validatedData = $request->validate([
@@ -115,14 +115,13 @@ class Day_UFController extends Controller
             '*.project_ID' => 'numeric',
             '*.activity' => 'string',
             '*.hours' => 'numeric',
-            '*.km' => 'numeric',
             '*.remark' => 'string',
-            '*.bauherr' => 'string'
         ]);
 
 
-
-        $day_UF::find($validatedData['data']['UStd_ID']);
+        error_log(print_r('validation done', TRUE));
+        $day_UF = Day_UF::find((float) $validatedData['data']['UStd_ID']);
+        //$day_UF::where('UStd_ID', $validatedData['data']['Std_Id']);
         $day_UF->Std_Id = $validatedData['data']['Std_Id'];
         $day_UF->Auftrags_ID = $validatedData['data']['project_ID'];
         $day_UF->Tkurz = $validatedData['data']['activity'];
@@ -130,12 +129,13 @@ class Day_UFController extends Controller
         //$day_UF->km = $validatedData['data']['km'];
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
         // $day_UF->Bauherr = $validatedData['data']['bauherr'];
+        error_log(print_r($day_UF->Std, TRUE));
+        $day_UF->save();
+/*        try {
 
-        try {
-            $day_UF->save();
         } catch (\Exception $e) {
             error_log(print_r($e->getMessage(), TRUE));
-        }
+        }*/
 
         return response('Success', 200);
     }

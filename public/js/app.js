@@ -2198,6 +2198,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
       });
     },
+    copyDay: function copyDay() {// Stunden ID  und Stunden ID löschen
+    },
     daySelected: function daySelected(day) {
       // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
       // Sonst tag füllen
@@ -2218,10 +2220,12 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       console.log('Tag geleert');
     },
     timeToDecimal: function timeToDecimal(time) {
-      var data = time.split(':');
-      var hours = data[0] * 100;
-      var minutes = data[1] * (5 / 3);
-      return (hours + minutes) / 100;
+      if (time) {
+        var data = time.split(':');
+        var hours = data[0] * 100;
+        var minutes = data[1] * (5 / 3);
+        return (hours + minutes) / 100;
+      }
     },
     timeToNormal: function timeToNormal(time) {
       var data = time.split('.');
@@ -2241,7 +2245,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       return hours + ':' + minutes;
     },
     saveHandler: function saveHandler(day) {
-      if (day.date !== "" && day.start !== "" && day.end !== "" && day.pause !== "") {
+      if (this.checkData()) {
         if (day.id === "") {
           this.saveDay(this.day);
         } else {
@@ -2251,7 +2255,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         } //
 
       } else {
-        console.log('Tag muss korrekt gefüllt werden');
+        this.displayModal('Die Stundensumme muss stimmen, oder die Stundendauer wurde nicht korrekt eingegeben!', 'OK', '', 'emptyModal');
       }
     },
     deleteHandler: function deleteHandler() {
@@ -2284,6 +2288,28 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     modalFunction: function modalFunction() {
       this[this.modalFunctionOnConfirm]();
       this.emptyModal();
+    },
+    calcTotalActivity: function calcTotalActivity() {
+      var _this4 = this;
+
+      var sum = 0;
+      this.day.activities.forEach(function (activity) {
+        sum += _this4.timeToDecimal(activity.hours);
+      });
+      return !isNaN(sum) ? sum : '';
+    },
+    checkData: function checkData() {
+      var status = true; // Überprüfen, ob Stunden übereinstimmen
+
+      if (this.calcTotal !== this.calcTotalActivity()) {
+        status = false; // Stunden sind nicht gleich
+      } else if (this.day.date !== "" && this.day.start !== "" && this.day.end !== "" && this.day.pause !== "") {
+        status = false;
+      } else if (this.timeToDecimal(this.day.start) > this.timeToDecimal(this.day.end)) {
+        status = false;
+      }
+
+      return status;
     }
   },
   computed: {
@@ -2320,19 +2346,19 @@ var Activity = /*#__PURE__*/function () {
   _createClass(Activity, [{
     key: "load",
     value: function load() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.UStd_ID) {
         // load by UStd_ID
         axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
-          _this4.project_ID = response.data.Auftrags_ID;
-          _this4.remark = response.data.Bemerkungen;
-          _this4.activity = response.data.Tkurz;
-          _this4.hours = _this4.timeToNormal(response.data.Std);
-          _this4.km = response.data.Km;
-          _this4.bauherr = response.data.Bauherr;
-          _this4.valueOrders.id = response.data.Auftrags_ID;
-          _this4.valueActivity.id = response.data.Tkurz;
+          _this5.project_ID = response.data.Auftrags_ID;
+          _this5.remark = response.data.Bemerkungen;
+          _this5.activity = response.data.Tkurz;
+          _this5.hours = _this5.timeToNormal(response.data.Std);
+          _this5.km = response.data.Km;
+          _this5.bauherr = response.data.Bauherr;
+          _this5.valueOrders.id = response.data.Auftrags_ID;
+          _this5.valueActivity.id = response.data.Tkurz;
         });
       }
     }
@@ -2355,7 +2381,7 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "save",
     value: function save() {
-      var _this5 = this;
+      var _this6 = this;
 
       var data = {};
       data.Std_Id = this.Std_Id;
@@ -2370,14 +2396,14 @@ var Activity = /*#__PURE__*/function () {
         data: data
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this5.validationErrors = error.response.data.errors;
+          _this6.validationErrors = error.response.data.errors;
         }
       });
     }
   }, {
     key: "update",
     value: function update() {
-      var _this6 = this;
+      var _this7 = this;
 
       console.log('update activity');
       var data = {};
@@ -2393,7 +2419,7 @@ var Activity = /*#__PURE__*/function () {
         data: data
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this6.validationErrors = error.response.data.errors;
+          _this7.validationErrors = error.response.data.errors;
         }
       });
     }
@@ -2612,9 +2638,11 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 //
 //
 //
@@ -2637,11 +2665,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    sum: ''
+  }
+});
 
 /***/ }),
 
@@ -39537,11 +39565,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row mt-4" }, [
-    _c("div", { staticClass: "col-lg-2 col-md-3 col-sm-12 mt-2" }, [
+    _c("div", { staticClass: "col-lg-6 col-md-8 col-sm-12 mt-2" }, [
       _c(
         "button",
         {
-          staticClass: "btn btn-block btn-success",
+          staticClass: "btn  btn-success",
           on: {
             click: function($event) {
               return _vm.$emit("day-save")
@@ -39549,10 +39577,36 @@ var render = function() {
           }
         },
         [_vm._v("Tag speichern")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn  btn-primary",
+          on: {
+            click: function($event) {
+              return _vm.$emit("day-copy")
+            }
+          }
+        },
+        [_vm._v("Tag kopieren")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn  btn-outline-primary",
+          on: {
+            click: function($event) {
+              return _vm.$emit("day-new")
+            }
+          }
+        },
+        [_vm._v("Tag kopieren")]
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-8 col-md-6 col-sm-0 mt-2" }),
+    _c("div", { staticClass: "col-lg-4 col-md-1 col-sm-0 mt-2" }),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-2 col-md-3 col-sm-12 mt-2" }, [
       _c(
@@ -52419,9 +52473,7 @@ component.options.__file = "resources/js/components/HoursForm/ControlBar.vue"
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ControlBar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

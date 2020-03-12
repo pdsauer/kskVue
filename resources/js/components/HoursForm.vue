@@ -108,7 +108,7 @@
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
-                            <ControlBar @day-save="saveHandler(day)" @day-delete="deleteHandler()"></ControlBar>
+                            <ControlBar @day-save="saveHandler(day)" @day-delete="deleteHandler()" ></ControlBar>
 
                         </div>
                     </div>
@@ -215,7 +215,6 @@
 
             },
             saveDay: function(day){
-
                 console.log('save Day');
                 // Fehler leeren
                 this.validationErrors = '';
@@ -293,6 +292,9 @@
                     // this.emptyData();
                 });
             },
+            copyDay: function (){
+                // Stunden ID  und Stunden ID löschen
+            },
             daySelected: function (day) {
 
                 // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
@@ -319,10 +321,13 @@
                 console.log('Tag geleert');
             },
             timeToDecimal: function (time) {
-                let data = time.split(':');
-                let hours = data[0] * 100;
-                let minutes = data[1] * (5/3);
-                return (hours + minutes) / 100
+                if(time){
+                    let data = time.split(':');
+                    let hours = data[0] * 100;
+                    let minutes = data[1] * (5/3);
+                    return (hours + minutes) / 100
+                }
+
             },
             timeToNormal: function (time){
 
@@ -343,7 +348,7 @@
             },
             saveHandler: function(day) {
 
-                if (day.date !== "" && day.start!== "" && day.end !== "" && day.pause !== "" ){
+                if (this.checkData() ){
 
                     if (day.id === ""){
 
@@ -357,7 +362,7 @@
 
                     //
                 } else {
-                    console.log('Tag muss korrekt gefüllt werden');
+                    this.displayModal('Die Stundensumme muss stimmen, oder die Stundendauer wurde nicht korrekt eingegeben!', 'OK', '', 'emptyModal');
                 }
 
             },
@@ -393,6 +398,29 @@
             modalFunction: function () {
                 this[this.modalFunctionOnConfirm]();
                 this.emptyModal();
+            },
+            calcTotalActivity(){
+                let sum = 0;
+                this.day.activities.forEach(activity => {sum += this.timeToDecimal(activity.hours)});
+                return (!isNaN(sum)? sum : '');
+            },
+            checkData: function () {
+
+                let status = true;
+
+                // Überprüfen, ob Stunden übereinstimmen
+                if(this.calcTotal !== this.calcTotalActivity()){
+                    status = false;
+                    // Stunden sind nicht gleich
+                }  else if(this.day.date !== "" && this.day.start!== "" && this.day.end !== "" && this.day.pause !== "") {
+
+                    status =  false;
+                } else if(this.timeToDecimal(this.day.start) > this.timeToDecimal(this.day.end)){
+                    status = false;
+                }
+
+                return status;
+
             }
 
         },
@@ -400,8 +428,7 @@
             calcTotal(){
                 let result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
                 return (!isNaN(result)? result : '');
-            }
-
+            },
         }
     }
 
