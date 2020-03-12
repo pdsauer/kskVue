@@ -75,7 +75,7 @@ class DayController extends Controller
             error_log(print_r($e->getMessage(), TRUE));
         }
 
-        return response('Success', 200);
+        return response(array('success' => true, 'insert_id' => $day->Std_ID), 200);
     }
 
     /**

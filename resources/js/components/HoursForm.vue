@@ -186,7 +186,7 @@
             },
 
             loadDay: function (id){
-
+                this.emptyData();
                 // TODO use and Check for 404
                 axios.get('/api/v1/days/' + id).then(
 
@@ -194,7 +194,7 @@
                     response => {
                         console.log('New Day Selected');
                         this.day.id = response.data.Std_ID;
-                        this.day.date = new Date(response.data.Datum).addHours(1);
+                        this.day.date = new Date(response.data.Datum).addHours(2);
                         this.day.start = this.timeToNormal(response.data.Von) ;
                         this.day.end = this.timeToNormal(response.data.Bis);
                         this.day.pause = this.timeToNormal(response.data.Pause);
@@ -209,14 +209,12 @@
                                 return Promise.resolve('Test');
 
                             }
-                        ).finally(()=>{
-                            //
-                        });
+                        )
                     }
                 );
 
             },
-            saveDay: function(day){
+            saveDay: async function(day){
 
                 console.log('save Day');
                 // Fehler leeren
@@ -241,10 +239,20 @@
                     .then((response) => {
 
                         if(response.status === 200){
-                            this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
-                            this.emptyData();
+                            // Set id to day
+                            // return  response.data.insert_id;
+                            this.day.id = response.data.insert_id;
+
+                            // save Activityies
+                            console.log('Vorbereitung Stunden speichern');
+                            this.day.activities.forEach(activity => activity.Std_Id = this.day.id);
+                            this.day.activities.forEach(activity => activity.saveHandler());
                         }
-                    });
+                    }).finally(() => {
+                        this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+                        // this.emptyData();
+                }
+                );
             },
             updateDay: function(day){
                 let daySend = {};
@@ -266,7 +274,7 @@
 
                 if(response.status === 200){
                     this.displayModal('Tag wurde erfolreich aktualisiert', 'OK', '', 'emptyModal');
-                    this.emptyData();
+                    // this.emptyData();
                 }});
             },
             daySelected: function (day) {
@@ -323,15 +331,16 @@
 
                     if (day.id === ""){
 
-                        this.saveDay(this.day);
+                      this.saveDay(this.day);
 
                     } else {
                         // Tag ist gefüllt -> update Tag
                         console.log('Tag updaten');
                         this.updateDay(this.day);
                     }
-                } else {
 
+                    //
+                } else {
                     console.log('Tag muss korrekt gefüllt werden');
                 }
 
@@ -387,14 +396,17 @@
             this.id = id;
             this.UStd_ID = UStd_ID;
             this.Std_Id = Std_Id;
-            let project_ID;
+            let project_ID ;
             let activity;
             let remark;
             let km;
             let hours;
             let bauherr;
+            this.valueOrders = {id: null, order: null };
+            this.valueActivity = {id: null, activity: null};
         }
         load(){
+
             if(this.UStd_ID){
                 // load by UStd_ID
                 axios.get('/api/v1/days_UF/' + this.UStd_ID).then(
@@ -405,6 +417,9 @@
                         this.hours = this.timeToNormal(response.data.Std);
                         this.km = response.data.Km;
                         this.bauherr = response.data.Bauherr;
+                        this.valueOrders.id = response.data.Auftrags_ID;
+                        this.valueActivity.id = response.data.Tkurz;
+
                     }
                 )
             }
@@ -413,6 +428,44 @@
             if(this.UStd_ID){
                 axios.delete('/api/v1/days_UF/' + this.UStd_ID);
             }
+        }
+        saveHandler(){
+            console.log(this);
+            if(this.UStd_ID){
+                this.save()
+            } else {
+                this.update()
+            }
+        }
+        save(){
+            console.log('save' + ' ' +  this.UStd_ID,);
+            axios.post('/api/v1/days_UF', {
+
+                Std_Id: this.Std_Id,
+                project_ID: this.valueOrders.id,
+                actvitiy: this.valueActivity.id,
+                remark : this.remark,
+                km: this.km,
+                hours: this.timeToDecimal(this.hours),
+                bauherr: this.bauherr
+            })
+        }
+        update(){
+            console.log('update');
+/*            axios
+                .patch('/api/v1/days_UF/' + this.UStd_ID, this)
+                .catch(
+                    error => {
+                        if (error.response.status === 422){
+
+                            this.validationErrors = error.response.data.errors;
+                        }
+                    }
+                ).then(response => {
+
+                if(response.status === 200){
+                   return true;
+                }});*/
         }
 
 

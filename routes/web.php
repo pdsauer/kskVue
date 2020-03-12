@@ -49,7 +49,7 @@ Route::patch('/api/v1/days/{day}', 'DayController@update');
 Route::get('/api/v1/days_UF/list/{day}', 'Day_UFController@index');
 Route::get('api/v1/days_UF/{day_UF}', 'Day_UFController@show');
 Route::delete('api/v1/days_UF/{day_UF}', 'Day_UFController@destroy');
-Route::post('/api/v1/days_UF/', 'Day_UFController@store');
+Route::post('/api/v1/days_UF', 'Day_UFController@store');
 Route::patch('/api/v1/days_UF/{day}', 'Day_UFController@update');
 
 // Routes for API - Activity

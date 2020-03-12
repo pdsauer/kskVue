@@ -9,12 +9,13 @@
                         <multiselect
                             class=""
                             id="auftrags_id"
-                            v-model="valueOrder"
+                            v-model="activity.valueOrders"
                             :options="orders"
                             placeholder="Auftrag"
                             selectLabel=""
                             :custom-label="formatOrder"
                             deselectLabel="Klicken zum Abwählen"
+
                         ></multiselect>
                     </div>
                 </div>
@@ -40,7 +41,7 @@
                         <multiselect
                             class=""
                             id="tätigkeit"
-                            v-model="valueActivity"
+                            v-model="activity.valueActivity"
                             :options="activities"
                             :custom-label="formatActivity"
                             placeholder="Tätigkeit Auswählen"
@@ -105,20 +106,8 @@
         },
         data() {
             return {
-                valueActivity: null,
-                valueOrder: null,
                 orders: [],
                 activities: [],
-                day_UF: {
-                    id: '',
-                    day_id: '',
-                    order_id: '',
-                    activity_id: '',
-                    hours: '',
-                    km: '',
-                    remark: '',
-                    builder: ''
-                }
             }
         },
         methods:{
@@ -128,27 +117,26 @@
             formatOrder: function(order){
                 return order.order;
             },
+
             // Set Dropdown to right value to fit vue-Multiselect
             setActivityDropDown: function (id){
                 if(id){
-                    this.valueActivity = {};
-                    this.valueActivity.id = id;
-                    this.valueActivity.activity = this.activities.filter(activity => activity.id === id)[0].activity;
+
+                    this.activity.valueActivity.activity = this.activities.filter(activity => activity.id === id)[0].activity;
                 }
             },
+
             // Set Dropdown to right value to fit vue-Multiselect
             setOrderDropDown: function (id){
                 if(id){
-                    this.valueOrder = {};
-                    this.valueOrder.id = id;
-                    this.valueOrder.order = this.orders.filter(order => order.id === parseInt(id))[0].order;
+                    this.activity.valueOrders.order = this.orders.filter(order => order.id === parseInt(id))[0].order;
                 }
             },
             loadDropdowns: function(){
 
-                this.setOrderDropDown(this.activity.project_ID);
+                 this.setOrderDropDown(this.activity.project_ID);
                 this.setActivityDropDown(this.activity.activity);
-            }
+            },
         },
         mounted() {
             //Set src for Multiselect - activity
@@ -164,6 +152,7 @@
                     return {order: order.Auftrags_Nr, id: order.Auftrags_ID}
                 })
             }).finally(() => {
+                console.log('load components');
                this.loadDropdowns()
             });
 

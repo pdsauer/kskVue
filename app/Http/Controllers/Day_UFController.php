@@ -68,17 +68,20 @@ class Day_UFController extends Controller
 
         $day_UF = new Day_UF();
 
-        $validated = $request->validate([
+/*        $validated = $request->validate([
             'Std_Id' => 'require|numeric',
-            'Auftrags_ID' => 'require',
-            'Tkurz' => 'require|string',
-            'Std' => 'require|numeric',
-            'Km' => 'numeric',
-            'Bemerkung' => 'string',
-            'Bauherr' => 'string'
-        ]);
+            'project_ID' => 'require',
+            'activity' => 'require|string',
+            'hours' => 'require',
+            'km' => 'numeric',
+            'remark' => 'string',
+            'bauherr' => 'string'
+        ]);*/
 
+        // $day_UF->Std_Id = $validated
+        error_log(print_r($request, TRUE));
         // Store Day_UF in DB
+
         try{
             $day_UF->save();
         } catch (\Exception $e){
