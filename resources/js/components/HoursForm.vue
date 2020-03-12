@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <DaySelector :key="daySelectorKey" @daySelected="daySelected"></DaySelector>
+                            <DaySelector @daySelected="daySelected"></DaySelector>
 
                         </div>
 
@@ -108,7 +108,11 @@
 
                             <!-- Bedienungsleiste -->
                             <ValidationErrors :errors="validationErrors" v-if="validationErrors"></ValidationErrors>
-                            <ControlBar @day-save="saveHandler(day)" @day-delete="deleteHandler()" ></ControlBar>
+                            <ControlBar
+                                @day-save="saveHandler(day)"
+                                @day-delete="deleteHandler()"
+                                @day-new="emptyData()"
+                                @day-copy="copyDay()" ></ControlBar>
 
                         </div>
                     </div>
@@ -154,7 +158,7 @@
                 modalFunctionOnConfirm: '',
                 modalBtnClass: '',
                 validationErrors: '',
-                daySelectorKey: true,
+
             }
         },
 
@@ -293,7 +297,19 @@
                 });
             },
             copyDay: function (){
-                // Stunden ID  und Stunden ID löschen
+
+                console.log('copy-day');
+                // Stunden Datum  und Stunden ID löschen
+                this.day.date = null;
+                this.day.id = null;
+
+                // Stunden Aktivitäten id löschen
+                this.day.activities.forEach(activitiy => {
+                    // activitiy.Std_Id = null;
+                    activitiy.UStd_ID = null;
+                });
+
+
             },
             daySelected: function (day) {
 
@@ -317,8 +333,6 @@
                 this.day.end = '';
                 this.day.pause = '';
                 this.day.activities = [];
-                this.daySelectorKey = !this.daySelectorKey;
-                console.log('Tag geleert');
             },
             timeToDecimal: function (time) {
                 if(time){
@@ -350,7 +364,7 @@
 
                 if (this.checkData() ){
 
-                    if (day.id === ""){
+                    if (day.id === "" || day.id === null){
 
                       this.saveDay(this.day);
 
@@ -410,12 +424,14 @@
 
                 // Überprüfen, ob Stunden übereinstimmen
                 if(this.calcTotal !== this.calcTotalActivity()){
+                    console.log('Total Falsch');
                     status = false;
                     // Stunden sind nicht gleich
-                }  else if(this.day.date !== "" && this.day.start!== "" && this.day.end !== "" && this.day.pause !== "") {
-
+                }  else if(this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
+                    console.log('Felder leer');
                     status =  false;
                 } else if(this.timeToDecimal(this.day.start) > this.timeToDecimal(this.day.end)){
+                    console.log('Richtung Falsch');
                     status = false;
                 }
 

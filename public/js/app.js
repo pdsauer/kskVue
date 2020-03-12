@@ -2041,6 +2041,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
 // To Fix JS Horrible date API - USE ON DAY LOAD TO FIX OFFSET
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000);
@@ -2073,8 +2077,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       modalBtnText: '',
       modalFunctionOnConfirm: '',
       modalBtnClass: '',
-      validationErrors: '',
-      daySelectorKey: true
+      validationErrors: ''
     };
   },
   components: {
@@ -2198,7 +2201,16 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
       });
     },
-    copyDay: function copyDay() {// Stunden ID  und Stunden ID löschen
+    copyDay: function copyDay() {
+      console.log('copy-day'); // Stunden Datum  und Stunden ID löschen
+
+      this.day.date = null;
+      this.day.id = null; // Stunden Aktivitäten id löschen
+
+      this.day.activities.forEach(function (activitiy) {
+        // activitiy.Std_Id = null;
+        activitiy.UStd_ID = null;
+      });
     },
     daySelected: function daySelected(day) {
       // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
@@ -2216,8 +2228,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.end = '';
       this.day.pause = '';
       this.day.activities = [];
-      this.daySelectorKey = !this.daySelectorKey;
-      console.log('Tag geleert');
     },
     timeToDecimal: function timeToDecimal(time) {
       if (time) {
@@ -2246,7 +2256,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     },
     saveHandler: function saveHandler(day) {
       if (this.checkData()) {
-        if (day.id === "") {
+        if (day.id === "" || day.id === null) {
           this.saveDay(this.day);
         } else {
           // Tag ist gefüllt -> update Tag
@@ -2302,10 +2312,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       var status = true; // Überprüfen, ob Stunden übereinstimmen
 
       if (this.calcTotal !== this.calcTotalActivity()) {
+        console.log('Total Falsch');
         status = false; // Stunden sind nicht gleich
-      } else if (this.day.date !== "" && this.day.start !== "" && this.day.end !== "" && this.day.pause !== "") {
+      } else if (this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
+        console.log('Felder leer');
         status = false;
       } else if (this.timeToDecimal(this.day.start) > this.timeToDecimal(this.day.end)) {
+        console.log('Richtung Falsch');
         status = false;
       }
 
@@ -38988,12 +39001,7 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "card-header" },
-                [
-                  _c("DaySelector", {
-                    key: _vm.daySelectorKey,
-                    on: { daySelected: _vm.daySelected }
-                  })
-                ],
+                [_c("DaySelector", { on: { daySelected: _vm.daySelected } })],
                 1
               ),
               _vm._v(" "),
@@ -39268,6 +39276,12 @@ var render = function() {
                       },
                       "day-delete": function($event) {
                         return _vm.deleteHandler()
+                      },
+                      "day-new": function($event) {
+                        return _vm.emptyData()
+                      },
+                      "day-copy": function($event) {
+                        return _vm.copyDay()
                       }
                     }
                   })
@@ -39602,7 +39616,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Tag kopieren")]
+        [_vm._v("neuer Tag")]
       )
     ]),
     _vm._v(" "),

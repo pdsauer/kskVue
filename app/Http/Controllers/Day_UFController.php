@@ -74,9 +74,7 @@ class Day_UFController extends Controller
             '*.project_ID' => 'numeric',
             '*.activity' => 'string',
             '*.hours' => 'numeric',
-            '*.km' => 'numeric',
             '*.remark' => 'string',
-            '*.bauherr' => 'string'
         ]);
 
         $day_UF->Std_Id = $validatedData['data']['Std_Id'];
@@ -86,7 +84,7 @@ class Day_UFController extends Controller
         //$day_UF->km = $validatedData['data']['km'];
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
         // $day_UF->Bauherr = $validatedData['data']['bauherr'];
-
+        error_log(print_r($day_UF, TRUE));
        try{
            $day_UF->save();
        } catch (\Exception $e){
