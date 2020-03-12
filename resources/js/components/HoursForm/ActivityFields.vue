@@ -79,7 +79,7 @@
 
                     <div class="form-group">
                         <label for="stundenanzahl">&nbsp;</label>
-                        <button class="btn btn-light form-control text-danger" @click="$emit('activityDelete', day_UF.id)">
+                        <button class="btn btn-light form-control text-danger" @click="$emit('activityDelete', activity.id)">
                             <i class="fas fa-trash-alt"></i>
                             Tätigkeit löschen
                         </button>

@@ -180,6 +180,7 @@
                 let index = this.day.activities.map((x) => {
                     return x.id;
                 }).indexOf(id);
+                this.day.activities[index].delete();
                 this.day.activities.splice(index, 1);
 
             },
@@ -406,6 +407,11 @@
                         this.bauherr = response.data.Bauherr;
                     }
                 )
+            }
+        }
+        delete(){
+            if(this.UStd_ID){
+                axios.delete('/api/v1/days_UF/' + this.UStd_ID);
             }
         }
 

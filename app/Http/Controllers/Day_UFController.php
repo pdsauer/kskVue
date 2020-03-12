@@ -44,6 +44,19 @@ class Day_UFController extends Controller
         //return Day_UF::where('UStd_ID', $id)->get();
     }
 
+    /**
+     * deletes Day_UF by id
+     *
+     * @param Day_UF $day_UF
+     * @return void
+     * @throws \Exception
+     */
+    public function destroy(Day_UF $day_UF)
+    {
+         $day_UF->delete();
+
+    }
+
 
     /**
      * Store a newly created resource in storage.

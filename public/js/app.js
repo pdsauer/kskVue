@@ -2095,6 +2095,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       var index = this.day.activities.map(function (x) {
         return x.id;
       }).indexOf(id);
+      this.day.activities[index]["delete"]();
       this.day.activities.splice(index, 1);
     },
     loadDay: function loadDay(id) {
@@ -2297,6 +2298,13 @@ var Activity = /*#__PURE__*/function () {
           _this4.km = response.data.Km;
           _this4.bauherr = response.data.Bauherr;
         });
+      }
+    }
+  }, {
+    key: "delete",
+    value: function _delete() {
+      if (this.UStd_ID) {
+        axios["delete"]('/api/v1/days_UF/' + this.UStd_ID);
       }
     }
   }, {
@@ -39398,7 +39406,7 @@ var render = function() {
                 staticClass: "btn btn-light form-control text-danger",
                 on: {
                   click: function($event) {
-                    return _vm.$emit("activityDelete", _vm.day_UF.id)
+                    return _vm.$emit("activityDelete", _vm.activity.id)
                   }
                 }
               },
