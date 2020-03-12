@@ -2166,6 +2166,10 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     updateDay: function updateDay(day) {
       var _this3 = this;
 
+      // Set ACtivity ID
+      this.day.activities.forEach(function (activity) {
+        return activity.Std_Id = _this3.day.id;
+      });
       var daySend = {};
       daySend.id = day.id;
       daySend.end = this.timeToDecimal(day.end);
@@ -2180,9 +2184,18 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         }
       }).then(function (response) {
         if (response.status === 200) {
-          _this3.displayModal('Tag wurde erfolreich aktualisiert', 'OK', '', 'emptyModal'); // this.emptyData();
+          // Set id to day
+          // return  response.data.insert_id;
+          // save Activityies
+          console.log('Vorbereitung Stunden speichern');
 
+          _this3.day.activities.forEach(function (activity) {
+            return activity.saveHandler();
+          });
         }
+      })["finally"](function () {
+        _this3.displayModal('Tag wurde erfolreich aktualisiert', 'OK', '', 'emptyModal'); // this.emptyData();
+
       });
     },
     daySelected: function daySelected(day) {
@@ -2351,7 +2364,8 @@ var Activity = /*#__PURE__*/function () {
       data.km = this.km;
       data.hours = this.timeToDecimal(this.hours);
       data.bauherr = this.bauherr;
-      console.log('Save Activity' + data);
+      console.log('Save Activity');
+      console.table(data);
       axios.post('/api/v1/days_UF', {
         data: data
       })["catch"](function (error) {
@@ -2363,21 +2377,25 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update() {
-      console.log('update');
-      /*            axios
-                      .patch('/api/v1/days_UF/' + this.UStd_ID, this)
-                      .catch(
-                          error => {
-                              if (error.response.status === 422){
-      
-                                  this.validationErrors = error.response.data.errors;
-                              }
-                          }
-                      ).then(response => {
-      
-                      if(response.status === 200){
-                         return true;
-                      }});*/
+      var _this6 = this;
+
+      console.log('update activity');
+      var data = {};
+      data.UStd_ID = this.UStd_ID;
+      data.Std_Id = this.Std_Id;
+      data.project_ID = this.valueOrders.id;
+      data.activity = this.valueActivity.id;
+      data.remark = this.remark;
+      data.km = this.km;
+      data.hours = this.timeToDecimal(this.hours);
+      data.bauherr = this.bauherr;
+      axios.patch('/api/v1/days_UF/' + data.UStd_ID, {
+        data: data
+      })["catch"](function (error) {
+        if (error.response.status === 422) {
+          _this6.validationErrors = error.response.data.errors;
+        }
+      });
     }
   }, {
     key: "timeToNormal",

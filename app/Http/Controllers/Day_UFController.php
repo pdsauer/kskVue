@@ -66,22 +66,9 @@ class Day_UFController extends Controller
      */
     public function store(Request $request){
 
-
         $day_UF = new Day_UF;
-
+        error_log(print_r('Store Activity', TRUE));
         //Validation
-
-        error_log(print_r($request->all(), TRUE));
-
-/*        $validatedData = $request->validate([
-            '*.Std_Id' => 'required|numeric',
-            '*.project_ID' => 'required|numeric',
-            '*.activity' => 'required|string',
-            '*.hours' => 'required|numeric',
-            '*.km' => 'numeric',
-            '*.remark' => 'string',
-            '*.bauherr' => 'string'
-        ]);*/
         $validatedData = $request->validate([
             '*.Std_Id' => 'numeric',
             '*.project_ID' => 'numeric',
@@ -91,7 +78,6 @@ class Day_UFController extends Controller
             '*.remark' => 'string',
             '*.bauherr' => 'string'
         ]);
-        error_log(print_r($validatedData['data'], TRUE));
 
         $day_UF->Std_Id = $validatedData['data']['Std_Id'];
         $day_UF->Auftrags_ID = $validatedData['data']['project_ID'];
@@ -101,15 +87,55 @@ class Day_UFController extends Controller
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
         // $day_UF->Bauherr = $validatedData['data']['bauherr'];
 
+       try{
+           $day_UF->save();
+       } catch (\Exception $e){
+           error_log(print_r($e->getMessage(), TRUE));
+       }
+
+        return response('Success', 200);
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return ResponseFactory|Response
+     */
+    public function update(Request $request)
+    {
+
+        $day_UF = new Day_UF;
+
+        error_log(print_r('update Hit Activity', TRUE));
+        //Validation
+        error_log(print_r($request->all(), TRUE));
+        $validatedData = $request->validate([
+            '*.UStd_ID' => 'numeric',
+            '*.Std_Id' => 'numeric',
+            '*.project_ID' => 'numeric',
+            '*.activity' => 'string',
+            '*.hours' => 'numeric',
+            '*.km' => 'numeric',
+            '*.remark' => 'string',
+            '*.bauherr' => 'string'
+        ]);
 
 
-        $day_UF->save();
 
-/*        try{
+        $day_UF::find($validatedData['data']['UStd_ID']);
+        $day_UF->Std_Id = $validatedData['data']['Std_Id'];
+        $day_UF->Auftrags_ID = $validatedData['data']['project_ID'];
+        $day_UF->Tkurz = $validatedData['data']['activity'];
+        $day_UF->Std = $validatedData['data']['hours'];
+        //$day_UF->km = $validatedData['data']['km'];
+        $day_UF->Bemerkungen = $validatedData['data']['remark'];
+        // $day_UF->Bauherr = $validatedData['data']['bauherr'];
+
+        try {
             $day_UF->save();
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             error_log(print_r($e->getMessage(), TRUE));
-        }*/
+        }
 
         return response('Success', 200);
     }

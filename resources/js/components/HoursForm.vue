@@ -255,6 +255,10 @@
                 );
             },
             updateDay: function(day){
+
+                // Set ACtivity ID
+                this.day.activities.forEach(activity => activity.Std_Id = this.day.id);
+
                 let daySend = {};
                 daySend.id = day.id;
                 daySend.end = this.timeToDecimal(day.end);
@@ -270,12 +274,24 @@
                             this.validationErrors = error.response.data.errors;
                         }
                     }
-                ).then(response => {
+                ).then((response)=> {
 
-                if(response.status === 200){
+                    if(response.status === 200){
+                        // Set id to day
+                        // return  response.data.insert_id;
+
+                        // save Activityies
+                        console.log('Vorbereitung Stunden speichern');
+
+                        this.day.activities.forEach(activity => activity.saveHandler());
+
+                    }
+
+                    }
+                ).finally(() => {
                     this.displayModal('Tag wurde erfolreich aktualisiert', 'OK', '', 'emptyModal');
                     // this.emptyData();
-                }});
+                });
             },
             daySelected: function (day) {
 
@@ -447,7 +463,8 @@
                 data.hours =this.timeToDecimal(this.hours);
                 data.bauherr =this.bauherr;
 
-            console.log('Save Activity' + data);
+            console.log('Save Activity');
+            console.table(data);
             axios.post('/api/v1/days_UF', {data}).catch(
                 error => {
                     if (error.response.status === 422){
@@ -458,9 +475,19 @@
             );
         }
         update(){
-            console.log('update');
-/*            axios
-                .patch('/api/v1/days_UF/' + this.UStd_ID, this)
+
+            console.log('update activity');
+            let data = {};
+            data.UStd_ID = this.UStd_ID;
+            data.Std_Id = this.Std_Id;
+            data.project_ID = this.valueOrders.id;
+            data.activity = this.valueActivity.id;
+            data.remark =this.remark;
+            data.km =this.km;
+            data.hours =this.timeToDecimal(this.hours);
+            data.bauherr =this.bauherr;
+            axios
+                .patch('/api/v1/days_UF/' + data.UStd_ID, {data})
                 .catch(
                     error => {
                         if (error.response.status === 422){
@@ -468,11 +495,7 @@
                             this.validationErrors = error.response.data.errors;
                         }
                     }
-                ).then(response => {
-
-                if(response.status === 200){
-                   return true;
-                }});*/
+                )
         }
 
 
