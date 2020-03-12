@@ -170,8 +170,8 @@
 
 
         methods: {
-            addActivity: function (UStd_ID, Std_Id) {
-                this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id));
+            addActivity: function (Std_Id, UStd_ID,) {
+                this.day.activities.push(new Activity(this.idcounter,  Std_Id, UStd_ID,));
                 this.idcounter++;
 
             },
@@ -203,7 +203,7 @@
                         axios.get('/api/v1/days_UF/list/' + this.day.id).then(
                             (response) => {
 
-                                response.data.forEach(ustd_ID => this.addActivity(ustd_ID, this.day.id));
+                                response.data.forEach(ustd_ID => this.addActivity( this.day.id, ustd_ID,));
                                 // load all Activity fields
                                 this.day.activities.forEach(activity => activity.load());
                                 return Promise.resolve('Test');
@@ -214,7 +214,7 @@
                 );
 
             },
-            saveDay: async function(day){
+            saveDay: function(day){
 
                 console.log('save Day');
                 // Fehler leeren
@@ -392,7 +392,7 @@
     class Activity {
 
 
-        constructor(id, UStd_ID, Std_Id) {
+        constructor(id,  Std_Id, UStd_ID,) {
             this.id = id;
             this.UStd_ID = UStd_ID;
             this.Std_Id = Std_Id;
@@ -430,25 +430,32 @@
             }
         }
         saveHandler(){
-            console.log(this);
+
             if(this.UStd_ID){
-                this.save()
-            } else {
                 this.update()
+            } else {
+                this.save()
             }
         }
         save(){
-            console.log('save' + ' ' +  this.UStd_ID,);
-            axios.post('/api/v1/days_UF', {
 
-                Std_Id: this.Std_Id,
-                project_ID: this.valueOrders.id,
-                actvitiy: this.valueActivity.id,
-                remark : this.remark,
-                km: this.km,
-                hours: this.timeToDecimal(this.hours),
-                bauherr: this.bauherr
-            })
+            let data = {};
+                data.Std_Id = this.Std_Id;
+                data.project_ID = this.valueOrders.id;
+                data.activity = this.valueActivity.id, data.remark =this.remark;
+                data.km =this.km;
+                data.hours =this.timeToDecimal(this.hours);
+                data.bauherr =this.bauherr;
+
+            console.log('Save Activity' + data);
+            axios.post('/api/v1/days_UF', {data}).catch(
+                error => {
+                    if (error.response.status === 422){
+
+                        this.validationErrors = error.response.data.errors;
+                    }
+                }
+            );
         }
         update(){
             console.log('update');

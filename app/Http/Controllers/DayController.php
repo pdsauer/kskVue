@@ -48,7 +48,7 @@ class DayController extends Controller
      */
     public function store(Request $request)
     {
-
+        // error_log(print_r($request->all(), TRUE));
         //Validation
         $day = new Day;
         // TODO: add comparison end > start
@@ -104,6 +104,8 @@ class DayController extends Controller
         /*Rule::unique('tblStunden')->where(
             function($query) {$query->where('PersNr', auth()->user()->PersNr);
             })*/
+
+
         $validatedData = $request->validate([
             '*.id' => 'required|numeric',
             '*.date' => [

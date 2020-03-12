@@ -65,7 +65,7 @@ class Day_UF extends Model
     ];
 
     /**
-     * Get the user asoociated with the post.
+     * Get the Day associated to the DAY_UF
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function Day()

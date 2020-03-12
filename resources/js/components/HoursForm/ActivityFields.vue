@@ -44,7 +44,7 @@
                             v-model="activity.valueActivity"
                             :options="activities"
                             :custom-label="formatActivity"
-                            placeholder="Tätigkeit Auswählen"
+                            placeholder="Tätigkeit"
                             deselectLabel="Klicken zum Abwählen"
                             selectLabel=""
                             track-by="id"
@@ -152,7 +152,6 @@
                     return {order: order.Auftrags_Nr, id: order.Auftrags_ID}
                 })
             }).finally(() => {
-                console.log('load components');
                this.loadDropdowns()
             });
 
