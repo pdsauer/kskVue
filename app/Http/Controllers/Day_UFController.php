@@ -87,11 +87,13 @@ class Day_UFController extends Controller
         error_log(print_r($day_UF, TRUE));
        try{
            $day_UF->save();
+           return response('Success', 200);
        } catch (\Exception $e){
            error_log(print_r($e->getMessage(), TRUE));
+           return response('Error', 500);
        }
 
-        return response('Success', 200);
+        
     }
     /**
      * Store a newly created resource in storage.
@@ -102,11 +104,7 @@ class Day_UFController extends Controller
     public function update(Request $request)
     {
 
-
-
-
         //Validation
-        error_log(print_r($request->all(), TRUE));
         $validatedData = $request->validate([
             '*.UStd_ID' => 'numeric',
             '*.Std_Id' => 'numeric',
@@ -116,8 +114,6 @@ class Day_UFController extends Controller
             '*.remark' => 'string',
         ]);
 
-
-        error_log(print_r('validation done', TRUE));
         $day_UF = Day_UF::find((float) $validatedData['data']['UStd_ID']);
         //$day_UF::where('UStd_ID', $validatedData['data']['Std_Id']);
         $day_UF->Std_Id = $validatedData['data']['Std_Id'];
@@ -128,13 +124,17 @@ class Day_UFController extends Controller
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
         // $day_UF->Bauherr = $validatedData['data']['bauherr'];
         error_log(print_r($day_UF->Std, TRUE));
-        $day_UF->save();
-/*        try {
+        
+        try {
+            $day_UF->save();
+            return response('Success', 200);
+        } 
+        catch (\Exception $e) {
 
-        } catch (\Exception $e) {
             error_log(print_r($e->getMessage(), TRUE));
-        }*/
+            return response('Error', 500);
+        }
 
-        return response('Success', 200);
+        
     }
 }

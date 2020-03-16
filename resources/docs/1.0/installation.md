@@ -7,6 +7,9 @@ Für die Installation von KSK-Vue wird Folgendes benötigt:
     - Node-JS
     - MSSQL-Server
 
+
+Weiterhin funtioniert die Eingabe momentan nur in der Deutschen lokalisation, wegen des `<input type="time">` fields
+
 ## Installationsvorgang
 
 Zuerst muss das git-repository gecloned werden

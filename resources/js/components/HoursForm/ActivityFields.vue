@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-lg-2 col-sm-12 col-md-6">
                     <div class="form-group">
-                        <label for="stundenanzahl">Stundenanzahl</label>
+                        <label for="stundenanzahl">Dauer [HH:MM]</label>
                         <input type="time" class="form-control" id="stundenanzahl" v-model="activity.hours">
                     </div>
                 </div>

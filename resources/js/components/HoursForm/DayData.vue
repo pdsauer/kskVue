@@ -21,14 +21,14 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="start">Von</label>
-                            <input name="von" type="time" class="form-control" id="start" value="" v-model="day.start">
+                            <input name="von" type="time" class="form-control" id="start" value="" v-model="day.start" pattern="[0-9]{2}:[0-9]{2}">
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="form-group">
                             <label for="ende">Bis</label>
-                            <input name="bis" type="time" class="form-control" id="ende" value="" v-model="day.end">
+                            <input name="bis" type="time" class="form-control" id="ende" value="" v-model="day.end" pattern="[0-9]{2}:[0-9]{2}">
                         </div>
                     </div>
 
@@ -36,7 +36,7 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="pause">Pause (h)</label>
-                            <input name="pause" type="time" class="form-control" id="pause" value="" v-model="day.pause">
+                            <input name="pause" type="time" class="form-control" id="pause" value="" v-model="day.pause" pattern="[0-9]{2}:[0-9]{2}">
                             <!-- <input name="pause" type="number" step="0.01" min="0" class="form-control" id="pause" value="0.0"> -->
                         </div>
                     </div>

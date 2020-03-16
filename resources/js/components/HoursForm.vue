@@ -219,7 +219,6 @@
 
             },
             saveDay: function(day){
-                console.log('save Day');
                 // Fehler leeren
                 this.validationErrors = '';
                 // Zum abschicken vorbereiten
@@ -233,15 +232,16 @@
                     .post('/api/v1/days', {daySend})
                     .catch(
                         error => {
-                            if (error.response.status === 422){
+                            if ( error && error.response.status === 422){
 
                                 this.validationErrors = error.response.data.errors;
+                            } else {
+                                console.log('Es gab einen Fehler bei der Validierung');
                             }
                         }
                     )
                     .then((response) => {
-
-                        if(response.status === 200){
+                        if(response && response.status === 200){
                             // Set id to day
                             // return  response.data.insert_id;
                             this.day.id = response.data.insert_id;
@@ -250,9 +250,14 @@
                             console.log('Vorbereitung Stunden speichern');
                             this.day.activities.forEach(activity => activity.Std_Id = this.day.id);
                             this.day.activities.forEach(activity => activity.saveHandler());
+
+                            this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+
+                        } else {
+                            this.displayModal('Es gab einen Fehler beim Speichern', 'OK', 'btn-outline-danger', 'emptyModal');
                         }
                     }).finally(() => {
-                        this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+                        // this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
                         // this.emptyData();
                 }
                 );
@@ -455,14 +460,15 @@
             this.id = id;
             this.UStd_ID = UStd_ID;
             this.Std_Id = Std_Id;
+            this.valueOrders = {id: null, order: null };
+            this.valueActivity = {id: null, activity: null};
             let project_ID ;
             let activity;
             let remark;
             let km;
             let hours;
             let bauherr;
-            this.valueOrders = {id: null, order: null };
-            this.valueActivity = {id: null, activity: null};
+
         }
         load(){
 
@@ -510,12 +516,18 @@
             console.table(data);
             axios.post('/api/v1/days_UF', {data}).catch(
                 error => {
-                    if (error.response.status === 422){
+                    if (error && error.response.status === 422){
 
                         this.validationErrors = error.response.data.errors;
                     }
                 }
-            );
+            ).then(response => {
+                if (response && response.data.status === 200){
+                    console.log('Aktivitäten erfolgreich gespeichert')
+                } else {
+                    console.log('Aktivitäten nicht erfolreich gespeichert')
+                }
+            });
         }
         update(){
 

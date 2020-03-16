@@ -51,7 +51,8 @@ class DayController extends Controller
         // error_log(print_r($request->all(), TRUE));
         //Validation
         $day = new Day;
-        // TODO: add comparison end > start
+
+        // TODO: add comparison end > start; Check if Date is younger than 3 months
         $validatedData = $request->validate([
             '*.date' => ['required', 'date'],
             '*.start' => 'required|numeric',
@@ -71,11 +72,12 @@ class DayController extends Controller
         // Store Day in DB
         try{
             $day->save();
+            return response(array('success' => true, 'insert_id' => $day->Std_ID), 200);
         } catch (\Exception $e){
             error_log(print_r($e->getMessage(), TRUE));
+            return response('error', 500);
         }
 
-        return response(array('success' => true, 'insert_id' => $day->Std_ID), 200);
     }
 
     /**
@@ -87,7 +89,6 @@ class DayController extends Controller
     public function show(Day $day)
     {
         // Bestimmten Tag anzeigen
-
         return $day;
     }
 
@@ -124,8 +125,14 @@ class DayController extends Controller
         $day->Pause = $validatedData['daySend']['pause'];
         $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause));
 
-        $day->save();
-        return response('Success', 200);
+        try {
+            $day->save();
+            return response('Success', 200);
+        } catch (\Exception $e){
+            error_log(print_r($e->getMessage(), TRUE));
+            return response('Error', 500);
+        }
+
 
     }
 

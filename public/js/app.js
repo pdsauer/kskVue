@@ -2130,8 +2130,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     saveDay: function saveDay(day) {
       var _this2 = this;
 
-      console.log('save Day'); // Fehler leeren
-
+      // Fehler leeren
       this.validationErrors = ''; // Zum abschicken vorbereiten
 
       var daySend = {};
@@ -2142,11 +2141,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       axios.post('/api/v1/days', {
         daySend: daySend
       })["catch"](function (error) {
-        if (error.response.status === 422) {
+        if (error && error.response.status === 422) {
           _this2.validationErrors = error.response.data.errors;
+        } else {
+          console.log('Es gab einen Fehler bei der Validierung');
         }
       }).then(function (response) {
-        if (response.status === 200) {
+        if (response && response.status === 200) {
           // Set id to day
           // return  response.data.insert_id;
           _this2.day.id = response.data.insert_id; // save Activityies
@@ -2160,10 +2161,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           _this2.day.activities.forEach(function (activity) {
             return activity.saveHandler();
           });
-        }
-      })["finally"](function () {
-        _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal'); // this.emptyData();
 
+          _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+        } else {
+          _this2.displayModal('Es gab einen Fehler beim Speichern', 'OK', 'btn-outline-danger', 'emptyModal');
+        }
+      })["finally"](function () {// this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+        // this.emptyData();
       });
     },
     updateDay: function updateDay(day) {
@@ -2340,12 +2344,6 @@ var Activity = /*#__PURE__*/function () {
     this.id = id;
     this.UStd_ID = UStd_ID;
     this.Std_Id = Std_Id;
-    var project_ID;
-    var activity;
-    var remark;
-    var km;
-    var hours;
-    var bauherr;
     this.valueOrders = {
       id: null,
       order: null
@@ -2354,6 +2352,12 @@ var Activity = /*#__PURE__*/function () {
       id: null,
       activity: null
     };
+    var project_ID;
+    var activity;
+    var remark;
+    var km;
+    var hours;
+    var bauherr;
   }
 
   _createClass(Activity, [{
@@ -2408,8 +2412,14 @@ var Activity = /*#__PURE__*/function () {
       axios.post('/api/v1/days_UF', {
         data: data
       })["catch"](function (error) {
-        if (error.response.status === 422) {
+        if (error && error.response.status === 422) {
           _this6.validationErrors = error.response.data.errors;
+        }
+      }).then(function (response) {
+        if (response && response.data.status === 200) {
+          console.log('Aktivitäten erfolgreich gespeichert');
+        } else {
+          console.log('Aktivitäten nicht erfolreich gespeichert');
         }
       });
     }
@@ -39486,7 +39496,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-2 col-sm-12 col-md-6" }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "stundenanzahl" } }, [
-              _vm._v("Stundenanzahl")
+              _vm._v("Dauer [HH:MM]")
             ]),
             _vm._v(" "),
             _c("input", {
@@ -39700,7 +39710,13 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { name: "von", type: "time", id: "start", value: "" },
+                attrs: {
+                  name: "von",
+                  type: "time",
+                  id: "start",
+                  value: "",
+                  pattern: "[0-9]{2}:[0-9]{2}"
+                },
                 domProps: { value: _vm.day.start },
                 on: {
                   input: function($event) {
@@ -39728,7 +39744,13 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { name: "bis", type: "time", id: "ende", value: "" },
+                attrs: {
+                  name: "bis",
+                  type: "time",
+                  id: "ende",
+                  value: "",
+                  pattern: "[0-9]{2}:[0-9]{2}"
+                },
                 domProps: { value: _vm.day.end },
                 on: {
                   input: function($event) {
@@ -39756,7 +39778,13 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { name: "pause", type: "time", id: "pause", value: "" },
+                attrs: {
+                  name: "pause",
+                  type: "time",
+                  id: "pause",
+                  value: "",
+                  pattern: "[0-9]{2}:[0-9]{2}"
+                },
                 domProps: { value: _vm.day.pause },
                 on: {
                   input: function($event) {
@@ -52443,15 +52471,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************************!*\
   !*** ./resources/js/components/HoursForm/ControlBar.vue ***!
   \**********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ControlBar_vue_vue_type_template_id_cbc346c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ControlBar.vue?vue&type=template&id=cbc346c6& */ "./resources/js/components/HoursForm/ControlBar.vue?vue&type=template&id=cbc346c6&");
 /* harmony import */ var _ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ControlBar.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ControlBar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -52481,7 +52508,7 @@ component.options.__file = "resources/js/components/HoursForm/ControlBar.vue"
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/HoursForm/ControlBar.vue?vue&type=script&lang=js& ***!
   \***********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52823,8 +52850,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

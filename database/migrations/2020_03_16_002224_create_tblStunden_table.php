@@ -16,7 +16,7 @@ class CreateTblStundenTable extends Migration {
 		{
 			$table->integer('Std_ID', true);
 			$table->string('Dat_Kuerz', 50);
-			$table->dateTime('Datum');
+			$table->date('Datum');
 			$table->decimal('Von', 18)->nullable();
 			$table->decimal('Bis', 18)->nullable();
 			$table->decimal('Pause', 18)->nullable();
