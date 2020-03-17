@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDay;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -43,22 +44,15 @@ class DayController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreDay $request
      * @return ResponseFactory|Response
      */
-    public function store(Request $request)
+    public function store(StoreDay $request)
     {
         // error_log(print_r($request->all(), TRUE));
         //Validation
+        $validatedData = $request->validated();
         $day = new Day;
-
-        // TODO: add comparison end > start; Check if Date is younger than 3 months
-        $validatedData = $request->validate([
-            '*.date' => ['required', 'date'],
-            '*.start' => 'required|numeric',
-            '*.end' => 'required|numeric|gt:daySend.start',
-            '*.pause' => 'required|numeric'
-        ]);
 
         $day->Datum = $validatedData['daySend']['date'];
         $day->Von = $validatedData['daySend']['start'];
@@ -107,16 +101,17 @@ class DayController extends Controller
             })*/
 
 
-        $validatedData = $request->validate([
+ /*       $validatedData = $request->validate([
             '*.id' => 'required|numeric',
             '*.date' => [
                 'required',
                 'date',
-],
+            ],
             '*.start' => 'required|numeric',
             '*.end' => 'required|numeric|gt:daySend.start',
             '*.pause' => 'required|numeric'
-        ]);
+        ]); */
+
         $day = Day::find($validatedData['daySend']['id']);
 
         $day->Datum = $validatedData['daySend']['date'];

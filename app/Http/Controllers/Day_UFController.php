@@ -75,15 +75,17 @@ class Day_UFController extends Controller
             '*.activity' => 'string',
             '*.hours' => 'numeric',
             '*.remark' => 'string',
+            '*.km' => 'nullable|numeric',
+            'bauherr' => 'nullable|string'
         ]);
 
         $day_UF->Std_Id = $validatedData['data']['Std_Id'];
         $day_UF->Auftrags_ID = $validatedData['data']['project_ID'];
         $day_UF->Tkurz = $validatedData['data']['activity'];
         $day_UF->Std = $validatedData['data']['hours'];
-        //$day_UF->km = $validatedData['data']['km'];
+        $day_UF->km = $validatedData['data']['km'];
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
-        // $day_UF->Bauherr = $validatedData['data']['bauherr'];
+        $day_UF->Bauherr = $validatedData['data']['bauherr'];
         error_log(print_r($day_UF, TRUE));
        try{
            $day_UF->save();
@@ -93,7 +95,7 @@ class Day_UFController extends Controller
            return response('Error', 500);
        }
 
-        
+
     }
     /**
      * Store a newly created resource in storage.
@@ -111,7 +113,7 @@ class Day_UFController extends Controller
             '*.project_ID' => 'numeric',
             '*.activity' => 'string',
             '*.hours' => 'numeric',
-            '*.remark' => 'string',
+            '*.remark' => 'nullable|string',
         ]);
 
         $day_UF = Day_UF::find((float) $validatedData['data']['UStd_ID']);
@@ -124,17 +126,17 @@ class Day_UFController extends Controller
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
         // $day_UF->Bauherr = $validatedData['data']['bauherr'];
         error_log(print_r($day_UF->Std, TRUE));
-        
+
         try {
             $day_UF->save();
             return response('Success', 200);
-        } 
+        }
         catch (\Exception $e) {
 
             error_log(print_r($e->getMessage(), TRUE));
             return response('Error', 500);
         }
 
-        
+
     }
 }
