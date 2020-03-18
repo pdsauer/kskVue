@@ -1914,12 +1914,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HoursForm_ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HoursForm/ControlBar.vue */ "./resources/js/components/HoursForm/ControlBar.vue");
 /* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modal */ "./resources/js/components/modal.vue");
 /* harmony import */ var _HoursForm_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./HoursForm/ValidationErrors */ "./resources/js/components/HoursForm/ValidationErrors.vue");
+/* harmony import */ var _Loading_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Loading.vue */ "./resources/js/components/Loading.vue");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+//
+//
 //
 //
 //
@@ -2058,6 +2061,7 @@ Date.prototype.addHours = function (h) {
 
 
 
+
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["default"];
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2072,6 +2076,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         activities: []
       },
       idcounter: 1,
+      loading: false,
       modal: {
         Message: '',
         BtnText: '',
@@ -2088,7 +2093,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     DayData: _HoursForm_DayData_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     ControlBar: _HoursForm_ControlBar_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     Modal: _modal__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ValidationErrors: _HoursForm_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__["default"]
+    ValidationErrors: _HoursForm_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Loading: _Loading_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   methods: {
     addActivity: function addActivity(Std_Id, UStd_ID, project_ID, activity, remark, km, hours, bauherr) {
@@ -2106,6 +2112,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     loadDay: function loadDay(id) {
       var _this = this;
 
+      //set laod status
+      this.loading = true;
       this.emptyData(); // TODO use and Check for 404
 
       axios.get('/api/v1/days/' + id).then(function (response) {
@@ -2118,11 +2126,16 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
         axios.get('/api/v1/days_UF/list/' + _this.day.id).then(function (response) {
           if (response && response.status === 200) {
-            response.data.forEach(function (response) {
-              return _this.addActivity(_this.day.id, response.data.ustd_ID, response.data.Auftrags_ID, response.data.Tkurz, response.data.Bemerkung, response.data.km, response.data.Std, response.data.Bauherr);
+            response.data.forEach(function (data) {
+              return _this.addActivity(_this.day.id, data.ustd_ID, data.Auftrags_ID, data.Tkurz, data.Bemerkung, data.km, data.Std, data.Bauherr);
             });
-          } else {// TODO: display Error MSG
+          } else {
+            // TODO: display Error MSG
+            console.log('Could not fetch Day_UF API');
           }
+        })["finally"]( // set loading false
+        function () {
+          _this.loading = false;
         });
       });
     },
@@ -7428,6 +7441,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.activity[data-v-357c3562]{\n    border-top: 1px solid #1c1c1c;\n}\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.container[data-v-6ca9e6be]{\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 10;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\n}\n.lds-grid[data-v-6ca9e6be] {\r\n  display: inline-block;\r\n  position: relative;\r\n  width: 80px;\r\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\r\n  position: absolute;\r\n  width: 16px;\r\n  height: 16px;\r\n  border-radius: 50%;\r\n  background: #3490dc;\r\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\r\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\r\n  top: 8px;\r\n  left: 8px;\r\n  -webkit-animation-delay: 0s;\r\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\r\n  top: 8px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\r\n  top: 8px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\r\n  top: 32px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\r\n  top: 32px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\r\n  top: 32px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\r\n  top: 56px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\r\n  top: 56px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\r\n  top: 56px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.6s;\r\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -38326,6 +38358,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/modal.vue?vue&type=style&index=0&id=478d961c&scoped=true&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/modal.vue?vue&type=style&index=0&id=478d961c&scoped=true&lang=css& ***!
@@ -39014,232 +39076,241 @@ var render = function() {
                 "div",
                 { staticClass: "card-body" },
                 [
-                  _c("div", { staticClass: "container bg-white" }, [
-                    _c("div", [
-                      _c("form", { attrs: { method: "POST" } }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "form-row col-lg-4 col-md-6 col-sm-12"
-                            },
-                            [
-                              _c("div", { staticClass: "col" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "datum" } }, [
-                                    _vm._v("Datum")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "datum",
-                                      type: "date",
-                                      id: "datum"
-                                    },
-                                    domProps: {
-                                      value:
-                                        _vm.day.date &&
-                                        _vm.day.date.toISOString().split("T")[0]
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        _vm.day.date = $event.target.valueAsDate
-                                      }
-                                    }
-                                  })
-                                ])
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "form-row col-lg-4 col-md-6 col-sm-12"
-                            },
-                            [
-                              _c("div", { staticClass: "col" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "start" } }, [
-                                    _vm._v("Von")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.day.start,
-                                        expression: "day.start"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "von",
-                                      type: "time",
-                                      id: "start",
-                                      value: ""
-                                    },
-                                    domProps: { value: _vm.day.start },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
+                  _vm.loading ? _c("Loading") : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.loading
+                    ? _c("div", { staticClass: "container bg-white" }, [
+                        _c("div", [
+                          _c("form", [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "form-row col-lg-4 col-md-6 col-sm-12"
+                                },
+                                [
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", { attrs: { for: "datum" } }, [
+                                        _vm._v("Datum")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          name: "datum",
+                                          type: "date",
+                                          id: "datum"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.day.date &&
+                                            _vm.day.date
+                                              .toISOString()
+                                              .split("T")[0]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            _vm.day.date =
+                                              $event.target.valueAsDate
+                                          }
                                         }
-                                        _vm.$set(
-                                          _vm.day,
-                                          "start",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ])
-                              ]),
+                                      })
+                                    ])
+                                  ])
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "ende" } }, [
-                                    _vm._v("Bis")
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "form-row col-lg-4 col-md-6 col-sm-12"
+                                },
+                                [
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", { attrs: { for: "start" } }, [
+                                        _vm._v("Von")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.day.start,
+                                            expression: "day.start"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          name: "von",
+                                          type: "time",
+                                          id: "start",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.day.start },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.day,
+                                              "start",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
                                   ]),
                                   _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.day.end,
-                                        expression: "day.end"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "bis",
-                                      type: "time",
-                                      id: "ende",
-                                      value: ""
-                                    },
-                                    domProps: { value: _vm.day.end },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", { attrs: { for: "ende" } }, [
+                                        _vm._v("Bis")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.day.end,
+                                            expression: "day.end"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          name: "bis",
+                                          type: "time",
+                                          id: "ende",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.day.end },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.day,
+                                              "end",
+                                              $event.target.value
+                                            )
+                                          }
                                         }
-                                        _vm.$set(
-                                          _vm.day,
-                                          "end",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ])
-                              ]),
+                                      })
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("label", { attrs: { for: "pause" } }, [
+                                        _vm._v("Pause (h)")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.day.pause,
+                                            expression: "day.pause"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          name: "pause",
+                                          type: "time",
+                                          id: "pause",
+                                          value: ""
+                                        },
+                                        domProps: { value: _vm.day.pause },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.day,
+                                              "pause",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  ])
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "pause" } }, [
-                                    _vm._v("Pause (h)")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.day.pause,
-                                        expression: "day.pause"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "pause",
-                                      type: "time",
-                                      id: "pause",
-                                      value: ""
-                                    },
-                                    domProps: { value: _vm.day.pause },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "form-row col-lg-4 col-md-6 col-sm-12"
+                                },
+                                [
+                                  _c("div", { staticClass: "col" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "label",
+                                        { attrs: { for: "gesamt" } },
+                                        [_vm._v("Std-gesamt")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.calcTotal,
+                                            expression: "calcTotal"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          name: "std_gesamt",
+                                          type: "text",
+                                          id: "gesamt",
+                                          disabled: ""
+                                        },
+                                        domProps: { value: _vm.calcTotal },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.calcTotal = $event.target.value
+                                          }
                                         }
-                                        _vm.$set(
-                                          _vm.day,
-                                          "pause",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  })
-                                ])
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "form-row col-lg-4 col-md-6 col-sm-12"
-                            },
-                            [
-                              _c("div", { staticClass: "col" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c("label", { attrs: { for: "gesamt" } }, [
-                                    _vm._v("Std-gesamt")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.calcTotal,
-                                        expression: "calcTotal"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: {
-                                      name: "std_gesamt",
-                                      type: "text",
-                                      id: "gesamt",
-                                      disabled: ""
-                                    },
-                                    domProps: { value: _vm.calcTotal },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.calcTotal = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "small",
-                                    {
-                                      staticClass: "form-text text-muted",
-                                      attrs: { id: "emailHelp" }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "Die Gesamtstundenzahl wird automatisch errechnet."
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "small",
+                                        {
+                                          staticClass: "form-text text-muted",
+                                          attrs: { id: "emailHelp" }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "Die Gesamtstundenzahl wird automatisch errechnet."
+                                          )
+                                        ]
                                       )
-                                    ]
-                                  )
-                                ])
-                              ])
-                            ]
-                          )
+                                    ])
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
                         ])
                       ])
-                    ])
-                  ]),
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
                     _vm._m(0),
@@ -39939,6 +40010,57 @@ var render = function() {
     : _vm._e()
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Loading.vue?vue&type=template&id=6ca9e6be&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Loading.vue?vue&type=template&id=6ca9e6be&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "lds-grid" }, [
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div"),
+        _vm._v(" "),
+        _c("div")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -52740,6 +52862,77 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Loading.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Loading.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Loading_vue_vue_type_template_id_6ca9e6be_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Loading.vue?vue&type=template&id=6ca9e6be&scoped=true& */ "./resources/js/components/Loading.vue?vue&type=template&id=6ca9e6be&scoped=true&");
+/* harmony import */ var _Loading_vue_vue_type_style_index_0_id_6ca9e6be_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true& */ "./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  script,
+  _Loading_vue_vue_type_template_id_6ca9e6be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Loading_vue_vue_type_template_id_6ca9e6be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6ca9e6be",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Loading.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true& ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_style_index_0_id_6ca9e6be_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Loading.vue?vue&type=style&index=0&id=6ca9e6be&lang=css&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_style_index_0_id_6ca9e6be_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_style_index_0_id_6ca9e6be_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_style_index_0_id_6ca9e6be_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_style_index_0_id_6ca9e6be_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_style_index_0_id_6ca9e6be_lang_css_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Loading.vue?vue&type=template&id=6ca9e6be&scoped=true&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/Loading.vue?vue&type=template&id=6ca9e6be&scoped=true& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_template_id_6ca9e6be_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Loading.vue?vue&type=template&id=6ca9e6be&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Loading.vue?vue&type=template&id=6ca9e6be&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_template_id_6ca9e6be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Loading_vue_vue_type_template_id_6ca9e6be_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/modal.vue":
 /*!*******************************************!*\
   !*** ./resources/js/components/modal.vue ***!
@@ -52845,8 +53038,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

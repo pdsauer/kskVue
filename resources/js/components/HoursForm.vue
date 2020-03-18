@@ -2,7 +2,7 @@
     <div>
 
         <Modal v-if="modal.show" :btn-class="modal.BtnClass" :modal-text="modal.Message" :modal-btn-text="modal.BtnText" @modalConfirm="modalFunction" @modalClose="emptyModal"></Modal>
-
+        
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col">
@@ -14,15 +14,17 @@
                         </div>
 
                         <div class="card-body">
+
+                            <Loading v-if="loading"></Loading>
                             <!-- Suche eines Tages  -->
-                            <div class="container bg-white">
+                            <div v-if="!loading" class="container bg-white">
 
                                 <!-- Allgemeine-Tagesdaten-Eingbae   -->
                                <!-- <DayData :dayData="day" :calcTotal="calcTotal"></DayData>-->
                                 <div>
-
+                                    
                                     <!-- Allgemeine-Tagesdaten-Eingbae   -->
-                                    <form method="POST">
+                                    <form>
 
                                         <div class="row">
 
@@ -136,6 +138,7 @@
     import ControlBar from './HoursForm/ControlBar.vue';
     import Modal from './modal';
     import ValidationErrors from './HoursForm/ValidationErrors';
+    import Loading from './Loading.vue';
 
     const axios = require('axios').default;
 
@@ -152,6 +155,7 @@
                     activities: []
                 },
                 idcounter: 1,
+                loading: false,
                 modal: {
                     Message: '',
                     BtnText: '',
@@ -169,7 +173,8 @@
             DayData: DayData,
             ControlBar: ControlBar,
             Modal: Modal,
-            ValidationErrors: ValidationErrors
+            ValidationErrors: ValidationErrors,
+            Loading: Loading
         },
 
 
@@ -188,6 +193,8 @@
             },
 
             loadDay: function (id){
+                //set laod status
+                this.loading = true;
                 this.emptyData();
                 // TODO use and Check for 404
                 axios.get('/api/v1/days/' + id).then(
@@ -207,21 +214,27 @@
 
                                 if(response && response.status === 200){
                                     response.data.forEach(
-                                        response => this.addActivity(
+                                        data => this.addActivity(
                                             this.day.id,
-                                            response.data.ustd_ID,
-                                            response.data.Auftrags_ID,
-                                            response.data.Tkurz,
-                                            response.data.Bemerkung,
-                                            response.data.km,
-                                            response.data.Std,
-                                            response.data.Bauherr
+                                            data.ustd_ID,
+                                            data.Auftrags_ID,
+                                            data.Tkurz,
+                                            data.Bemerkung,
+                                            data.km,
+                                            data.Std,
+                                            data.Bauherr
                                         )
                                     );
                                 } else {
                                     // TODO: display Error MSG
+                                    console.log('Could not fetch Day_UF API');
                                 }
-
+                            }
+                        )
+                        .finally(
+                            // set loading false
+                            () => {
+                                this.loading = false;
                             }
                         )
                     }
