@@ -142,7 +142,6 @@
 
     const axios = require('axios').default;
 
-
     export default {
         data () {
             return {
@@ -203,9 +202,9 @@
                         console.log('New Day Selected');
                         this.day.id = response.data.Std_ID;
                         this.day.date = new Date(response.data.Datum).addHours(2);
-                        this.day.start = this.timeToNormal(response.data.Von) ;
-                        this.day.end = this.timeToNormal(response.data.Bis);
-                        this.day.pause = this.timeToNormal(response.data.Pause);
+                        this.day.start = Helper.timeToNormal(response.data.Von) ;
+                        this.day.end = Helper.timeToNormal(response.data.Bis);
+                        this.day.pause = Helper.timeToNormal(response.data.Pause);
 
                         // load activities by Std_ID
                         axios
@@ -246,9 +245,9 @@
                 this.validationErrors = '';
                 // Zum abschicken vorbereiten
                 let daySend = {};
-                daySend.end = this.timeToDecimal(this.day.end);
-                daySend.start = this.timeToDecimal(this.day.start);
-                daySend.pause = this.timeToDecimal(this.day.pause);
+                daySend.end = Helper.timeToDecimal(this.day.end);
+                daySend.start = Helper.timeToDecimal(this.day.start);
+                daySend.pause = Helper.timeToDecimal(this.day.pause);
                 daySend.date = this.day.date;
 
                 axios
@@ -289,9 +288,9 @@
 
                 let daySend = {};
                 daySend.id = this.day.id;
-                daySend.end = this.timeToDecimal(this.day.end);
-                daySend.start = this.timeToDecimal(this.day.start);
-                daySend.pause = this.timeToDecimal(this.day.pause);
+                daySend.end = Helper.timeToDecimal(this.day.end);
+                daySend.start = Helper.timeToDecimal(this.day.start);
+                daySend.pause = Helper.timeToDecimal(this.day.pause);
                 daySend.date = this.day.date;
                 axios
                     .patch('/api/v1/days/' + this.day.id, {daySend})
@@ -333,8 +332,6 @@
                     // activitiy.Std_Id = null;
                     activitiy.UStd_ID = null;
                 });
-
-
             },
             daySelected: function (day) {
 
@@ -359,32 +356,8 @@
                 this.day.pause = '';
                 this.day.activities = [];
             },
-            timeToDecimal: function (time) {
-                if(time){
-                    let data = time.split(':');
-                    let hours = data[0] * 100;
-                    let minutes = data[1] * (5/3);
-                    return (hours + minutes) / 100
-                }
 
-            },
-            timeToNormal: function (time){
 
-                let data = time.split('.');
-                let hours = data[0];
-                let minutes = Math.floor((Math.abs(data[1])) * 3/5);
-                if (hours === 0 || hours === ''){
-                    hours = '00';
-                }
-                else if(hours < 10){
-                    hours = '0' + hours;
-                }
-
-                if(minutes.toString().length === 1){
-                    minutes += '0';
-                }
-                return hours + ':' + minutes;
-            },
             saveHandler: function(day) {
 
                 if (this.checkData() ){
@@ -398,8 +371,6 @@
                         console.log('Tag updaten');
                         this.updateDay();
                     }
-
-                    //
                 } else {
                     this.displayModal('Die Stundensumme muss stimmen, oder die Stundendauer wurde nicht korrekt eingegeben!', 'OK', '', 'emptyModal');
                 }
@@ -437,7 +408,7 @@
             },
             calcTotalActivity(){
                 let sum = 0;
-                this.day.activities.forEach(activity => {sum += this.timeToDecimal(activity.hours)});
+                this.day.activities.forEach(activity => {sum += Helper.timeToDecimal(activity.hours)});
                 return (!isNaN(sum)? sum : '');
             },
             checkData: function () {
@@ -452,7 +423,7 @@
                 }  else if(this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
                     console.log('Felder leer');
                     status =  false;
-                } else if(this.timeToDecimal(this.day.start) > this.timeToDecimal(this.day.end)){
+                } else if(Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)){
                     console.log('Richtung Falsch');
                     status = false;
                 }
@@ -464,7 +435,7 @@
         },
         computed: {
             calcTotal(){
-                let result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
+                let result = Helper.timeToDecimal(this.day.end) - Helper.timeToDecimal(this.day.start) - Helper.timeToDecimal(this.day.pause);
                 return (!isNaN(result)? result : '');
             },
         }
@@ -496,7 +467,7 @@
                         this.project_ID = response.data.Auftrags_ID;
                         this.remark = response.data.Bemerkungen;
                         this.activity = response.data.Tkurz;
-                        this.hours = this.timeToNormal(response.data.Std);
+                        this.hours = Helper.timeToNormal(response.data.Std);
                         this.km = response.data.Km;
                         this.bauherr = response.data.Bauherr;
                         this.valueOrders.id = response.data.Auftrags_ID;
@@ -526,7 +497,7 @@
                 data.project_ID = this.valueOrders.id;
                 data.activity = this.valueActivity.id, data.remark =this.remark;
                 data.km =this.km;
-                data.hours =this.timeToDecimal(this.hours);
+                data.hours =Helper.timeToDecimal(this.hours);
                 data.bauherr =this.bauherr;
 
             console.log('Save Activity');
@@ -554,9 +525,9 @@
             data.Std_Id = this.Std_Id;
             data.project_ID = this.valueOrders.id;
             data.activity = this.valueActivity.id;
-            data.remark =this.remark;
-            data.km =this.km;
-            data.hours =this.timeToDecimal(this.hours);
+            data.remark = this.remark;
+            data.km = this.km;
+            data.hours = Helper.timeToDecimal(this.hours);
             data.bauherr =this.bauherr;
             axios
                 .patch('/api/v1/days_UF/' + data.UStd_ID, {data})
@@ -569,9 +540,10 @@
                     }
                 )
         }
+    }
 
-
-        timeToNormal(time){
+    class Helper {
+        static timeToNormal(time){
             let data = time.split('.');
             let hours = data[0];
             let minutes = Math.floor((Math.abs(data[1])) * 3/5);
@@ -587,7 +559,7 @@
             }
             return hours + ':' + minutes;
         }
-        timeToDecimal(time) {
+        static timeToDecimal(time) {
             let data = time.split(':');
             let hours = data[0] * 100;
             let minutes = data[1] * (5/3);
