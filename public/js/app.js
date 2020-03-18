@@ -2072,11 +2072,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         activities: []
       },
       idcounter: 1,
-      showModal: false,
-      modalMessage: '',
-      modalBtnText: '',
-      modalFunctionOnConfirm: '',
-      modalBtnClass: '',
+      modal: {
+        Message: '',
+        BtnText: '',
+        FunctionOnConfirm: '',
+        BtnClass: '',
+        show: false
+      },
       validationErrors: ''
     };
   },
@@ -2089,8 +2091,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     ValidationErrors: _HoursForm_ValidationErrors__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   methods: {
-    addActivity: function addActivity(Std_Id, UStd_ID) {
-      this.day.activities.push(new Activity(this.idcounter, Std_Id, UStd_ID));
+    addActivity: function addActivity(Std_Id, UStd_ID, project_ID, activity, remark, km, hours, bauherr) {
+      this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr));
       this.idcounter++;
     },
     activityDelete: function activityDelete(id) {
@@ -2115,29 +2117,26 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         _this.day.pause = _this.timeToNormal(response.data.Pause); // load activities by Std_ID
 
         axios.get('/api/v1/days_UF/list/' + _this.day.id).then(function (response) {
-          response.data.forEach(function (ustd_ID) {
-            return _this.addActivity(_this.day.id, ustd_ID);
-          }); // load all Activity fields
-
-          _this.day.activities.forEach(function (activity) {
-            return activity.load();
-          });
-
-          return Promise.resolve('Test');
+          if (response && response.status === 200) {
+            response.data.forEach(function (response) {
+              return _this.addActivity(_this.day.id, response.data.ustd_ID, response.data.Auftrags_ID, response.data.Tkurz, response.data.Bemerkung, response.data.km, response.data.Std, response.data.Bauherr);
+            });
+          } else {// TODO: display Error MSG
+          }
         });
       });
     },
-    saveDay: function saveDay(day) {
+    saveDay: function saveDay() {
       var _this2 = this;
 
       // Fehler leeren
       this.validationErrors = ''; // Zum abschicken vorbereiten
 
       var daySend = {};
-      daySend.end = this.timeToDecimal(day.end);
-      daySend.start = this.timeToDecimal(day.start);
-      daySend.pause = this.timeToDecimal(day.pause);
-      daySend.date = day.date;
+      daySend.end = this.timeToDecimal(this.day.end);
+      daySend.start = this.timeToDecimal(this.day.start);
+      daySend.pause = this.timeToDecimal(this.day.pause);
+      daySend.date = this.day.date;
       axios.post('/api/v1/days', {
         daySend: daySend
       })["catch"](function (error) {
@@ -2162,27 +2161,26 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
             return activity.saveHandler();
           });
 
-          _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+          _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal'); // this.emptyData();
+
         } else {
           _this2.displayModal('Es gab einen Fehler beim Speichern', 'OK', 'btn-outline-danger', 'emptyModal');
         }
-      })["finally"](function () {// this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
-        // this.emptyData();
       });
     },
-    updateDay: function updateDay(day) {
+    updateDay: function updateDay() {
       var _this3 = this;
 
-      // Set ACtivity ID
+      // Set Activity ID
       this.day.activities.forEach(function (activity) {
         return activity.Std_Id = _this3.day.id;
       });
       var daySend = {};
-      daySend.id = day.id;
-      daySend.end = this.timeToDecimal(day.end);
-      daySend.start = this.timeToDecimal(day.start);
-      daySend.pause = this.timeToDecimal(day.pause);
-      daySend.date = day.date;
+      daySend.id = this.day.id;
+      daySend.end = this.timeToDecimal(this.day.end);
+      daySend.start = this.timeToDecimal(this.day.start);
+      daySend.pause = this.timeToDecimal(this.day.pause);
+      daySend.date = this.day.date;
       axios.patch('/api/v1/days/' + this.day.id, {
         daySend: daySend
       })["catch"](function (error) {
@@ -2190,7 +2188,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           _this3.validationErrors = error.response.data.errors;
         }
       }).then(function (response) {
-        if (response.status === 200) {
+        if (response && response.status === 200) {
           // Set id to day
           // return  response.data.insert_id;
           // save Activityies
@@ -2261,11 +2259,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     saveHandler: function saveHandler(day) {
       if (this.checkData()) {
         if (day.id === "" || day.id === null) {
-          this.saveDay(this.day);
+          this.saveDay();
         } else {
           // Tag ist gefüllt -> update Tag
           console.log('Tag updaten');
-          this.updateDay(this.day);
+          this.updateDay();
         } //
 
       } else {
@@ -2284,23 +2282,20 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         axios["delete"]('/api/v1/days/' + this.day.id).then(this.emptyData);
       }
     },
-    say: function say(msg) {
-      alert(msg);
-    },
     emptyModal: function emptyModal() {
-      this.showModal = false;
-      this.modalMessage = '';
-      this.modalBtnText = '';
+      this.modal.show = false;
+      this.modal.Message = '';
+      this.modal.BtnText = '';
     },
     displayModal: function displayModal(message, btnText, modalBtnClass, functionOnConfirm) {
-      this.modalMessage = message;
-      this.modalBtnText = btnText;
-      this.modalFunctionOnConfirm = functionOnConfirm;
-      this.modalBtnClass = modalBtnClass;
-      this.showModal = true;
+      this.modal.Message = message;
+      this.modal.BtnText = btnText;
+      this.modal.FunctionOnConfirm = functionOnConfirm;
+      this.modal.BtnClass = modalBtnClass;
+      this.modal.show = true;
     },
     modalFunction: function modalFunction() {
-      this[this.modalFunctionOnConfirm]();
+      this[this.modal.FunctionOnConfirm]();
       this.emptyModal();
     },
     calcTotalActivity: function calcTotalActivity() {
@@ -2338,12 +2333,18 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 });
 
 var Activity = /*#__PURE__*/function () {
-  function Activity(id, Std_Id, UStd_ID) {
+  function Activity(id, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr) {
     _classCallCheck(this, Activity);
 
     this.id = id;
     this.UStd_ID = UStd_ID;
     this.Std_Id = Std_Id;
+    this.project_ID = project_ID;
+    this.activity = activity;
+    this.remark = remark;
+    this.km = km;
+    this.hours = hours;
+    this.bauherr = bauherr;
     this.valueOrders = {
       id: null,
       order: null
@@ -2352,12 +2353,6 @@ var Activity = /*#__PURE__*/function () {
       id: null,
       activity: null
     };
-    var project_ID;
-    var activity;
-    var remark;
-    var km;
-    var hours;
-    var bauherr;
   }
 
   _createClass(Activity, [{
@@ -38993,12 +38988,12 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.showModal
+      _vm.modal.show
         ? _c("Modal", {
             attrs: {
-              "btn-class": this.modalBtnClass,
-              "modal-text": _vm.modalMessage,
-              "modal-btn-text": _vm.modalBtnText
+              "btn-class": _vm.modal.BtnClass,
+              "modal-text": _vm.modal.Message,
+              "modal-btn-text": _vm.modal.BtnText
             },
             on: { modalConfirm: _vm.modalFunction, modalClose: _vm.emptyModal }
           })

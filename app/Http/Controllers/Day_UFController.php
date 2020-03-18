@@ -29,7 +29,7 @@ class Day_UFController extends Controller
      */
     public function index(?int $id)
     {
-        return Day_UF::where('Std_Id', $id)->pluck('UStd_ID');
+        return Day_UF::where('Std_Id', $id)->get();
     }
 
     /**

@@ -1,7 +1,7 @@
 <template>
     <div>
 
-        <Modal v-if="showModal" :btn-class="this.modalBtnClass" :modal-text="modalMessage" :modal-btn-text="modalBtnText" @modalConfirm="modalFunction" @modalClose="emptyModal"></Modal>
+        <Modal v-if="modal.show" :btn-class="modal.BtnClass" :modal-text="modal.Message" :modal-btn-text="modal.BtnText" @modalConfirm="modalFunction" @modalClose="emptyModal"></Modal>
 
         <div class="container">
             <div class="row justify-content-center">
@@ -152,13 +152,14 @@
                     activities: []
                 },
                 idcounter: 1,
-                showModal: false,
-                modalMessage: '',
-                modalBtnText: '',
-                modalFunctionOnConfirm: '',
-                modalBtnClass: '',
+                modal: {
+                    Message: '',
+                    BtnText: '',
+                    FunctionOnConfirm: '',
+                    BtnClass: '',
+                    show: false,
+                },
                 validationErrors: '',
-
             }
         },
 
@@ -169,15 +170,13 @@
             ControlBar: ControlBar,
             Modal: Modal,
             ValidationErrors: ValidationErrors
-
         },
 
 
         methods: {
-            addActivity: function (Std_Id, UStd_ID,) {
-                this.day.activities.push(new Activity(this.idcounter,  Std_Id, UStd_ID,));
+            addActivity: function (Std_Id, UStd_ID, project_ID, activity, remark, km, hours, bauherr) {
+                this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr));
                 this.idcounter++;
-
             },
             activityDelete: function (id){
                 // console.log(this.day.activities.forEach(act => console.log(act.remark)));
@@ -186,14 +185,12 @@
                 }).indexOf(id);
                 this.day.activities[index].delete();
                 this.day.activities.splice(index, 1);
-
             },
 
             loadDay: function (id){
                 this.emptyData();
                 // TODO use and Check for 404
                 axios.get('/api/v1/days/' + id).then(
-
 
                     response => {
                         console.log('New Day Selected');
@@ -204,13 +201,26 @@
                         this.day.pause = this.timeToNormal(response.data.Pause);
 
                         // load activities by Std_ID
-                        axios.get('/api/v1/days_UF/list/' + this.day.id).then(
-                            (response) => {
+                        axios
+                            .get('/api/v1/days_UF/list/' + this.day.id)
+                            .then( response => {
 
-                                response.data.forEach(ustd_ID => this.addActivity( this.day.id, ustd_ID,));
-                                // load all Activity fields
-                                this.day.activities.forEach(activity => activity.load());
-                                return Promise.resolve('Test');
+                                if(response && response.status === 200){
+                                    response.data.forEach(
+                                        response => this.addActivity(
+                                            this.day.id,
+                                            response.data.ustd_ID,
+                                            response.data.Auftrags_ID,
+                                            response.data.Tkurz,
+                                            response.data.Bemerkung,
+                                            response.data.km,
+                                            response.data.Std,
+                                            response.data.Bauherr
+                                        )
+                                    );
+                                } else {
+                                    // TODO: display Error MSG
+                                }
 
                             }
                         )
@@ -218,15 +228,15 @@
                 );
 
             },
-            saveDay: function(day){
+            saveDay: function(){
                 // Fehler leeren
                 this.validationErrors = '';
                 // Zum abschicken vorbereiten
                 let daySend = {};
-                daySend.end = this.timeToDecimal(day.end);
-                daySend.start = this.timeToDecimal(day.start);
-                daySend.pause = this.timeToDecimal(day.pause);
-                daySend.date = day.date;
+                daySend.end = this.timeToDecimal(this.day.end);
+                daySend.start = this.timeToDecimal(this.day.start);
+                daySend.pause = this.timeToDecimal(this.day.pause);
+                daySend.date = this.day.date;
 
                 axios
                     .post('/api/v1/days', {daySend})
@@ -252,27 +262,24 @@
                             this.day.activities.forEach(activity => activity.saveHandler());
 
                             this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+                            // this.emptyData();
 
                         } else {
                             this.displayModal('Es gab einen Fehler beim Speichern', 'OK', 'btn-outline-danger', 'emptyModal');
                         }
-                    }).finally(() => {
-                        // this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
-                        // this.emptyData();
-                }
-                );
+                    });
             },
-            updateDay: function(day){
+            updateDay: function(){
 
-                // Set ACtivity ID
+                // Set Activity ID
                 this.day.activities.forEach(activity => activity.Std_Id = this.day.id);
 
                 let daySend = {};
-                daySend.id = day.id;
-                daySend.end = this.timeToDecimal(day.end);
-                daySend.start = this.timeToDecimal(day.start);
-                daySend.pause = this.timeToDecimal(day.pause);
-                daySend.date = day.date;
+                daySend.id = this.day.id;
+                daySend.end = this.timeToDecimal(this.day.end);
+                daySend.start = this.timeToDecimal(this.day.start);
+                daySend.pause = this.timeToDecimal(this.day.pause);
+                daySend.date = this.day.date;
                 axios
                     .patch('/api/v1/days/' + this.day.id, {daySend})
                     .catch(
@@ -284,7 +291,7 @@
                     }
                 ).then((response)=> {
 
-                    if(response.status === 200){
+                    if(response && response.status === 200){
                         // Set id to day
                         // return  response.data.insert_id;
 
@@ -371,12 +378,12 @@
 
                     if (day.id === "" || day.id === null){
 
-                      this.saveDay(this.day);
+                      this.saveDay();
 
                     } else {
                         // Tag ist gefüllt -> update Tag
                         console.log('Tag updaten');
-                        this.updateDay(this.day);
+                        this.updateDay();
                     }
 
                     //
@@ -399,23 +406,20 @@
                         this.emptyData
                     );}
             },
-            say: function (msg) {
-                alert(msg);
-            },
             emptyModal: function () {
-                this.showModal = false;
-                this.modalMessage = '';
-                this.modalBtnText = '';
+                this.modal.show = false;
+                this.modal.Message = '';
+                this.modal.BtnText = '';
             },
             displayModal: function (message, btnText, modalBtnClass, functionOnConfirm){
-                this.modalMessage = message;
-                this.modalBtnText = btnText;
-                this.modalFunctionOnConfirm = functionOnConfirm;
-                this.modalBtnClass = modalBtnClass;
-                this.showModal = true;
+                this.modal.Message = message;
+                this.modal.BtnText = btnText;
+                this.modal.FunctionOnConfirm = functionOnConfirm;
+                this.modal.BtnClass = modalBtnClass;
+                this.modal.show = true;
             },
             modalFunction: function () {
-                this[this.modalFunctionOnConfirm]();
+                this[this.modal.FunctionOnConfirm]();
                 this.emptyModal();
             },
             calcTotalActivity(){
@@ -456,18 +460,18 @@
     class Activity {
 
 
-        constructor(id,  Std_Id, UStd_ID,) {
+        constructor(id, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr) {
             this.id = id;
             this.UStd_ID = UStd_ID;
             this.Std_Id = Std_Id;
+            this.project_ID = project_ID;
+            this.activity = activity;
+            this.remark = remark;
+            this.km = km;
+            this.hours = hours;
+            this.bauherr = bauherr
             this.valueOrders = {id: null, order: null };
             this.valueActivity = {id: null, activity: null};
-            let project_ID ;
-            let activity;
-            let remark;
-            let km;
-            let hours;
-            let bauherr;
 
         }
         load(){
