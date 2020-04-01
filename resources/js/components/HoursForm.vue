@@ -233,7 +233,8 @@
                         .finally(
                             // set loading false
                             () => {
-                                this.loading = false;
+                                setTimeout(() => {this.loading = false;}, 500)
+                                
                             }
                         )
                     }

@@ -2120,9 +2120,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         console.log('New Day Selected');
         _this.day.id = response.data.Std_ID;
         _this.day.date = new Date(response.data.Datum).addHours(2);
-        _this.day.start = _this.timeToNormal(response.data.Von);
-        _this.day.end = _this.timeToNormal(response.data.Bis);
-        _this.day.pause = _this.timeToNormal(response.data.Pause); // load activities by Std_ID
+        _this.day.start = Helper.timeToNormal(response.data.Von);
+        _this.day.end = Helper.timeToNormal(response.data.Bis);
+        _this.day.pause = Helper.timeToNormal(response.data.Pause); // load activities by Std_ID
 
         axios.get('/api/v1/days_UF/list/' + _this.day.id).then(function (response) {
           if (response && response.status === 200) {
@@ -2135,7 +2135,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           }
         })["finally"]( // set loading false
         function () {
-          _this.loading = false;
+          setTimeout(function () {
+            _this.loading = false;
+          }, 500);
         });
       });
     },
@@ -2146,9 +2148,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.validationErrors = ''; // Zum abschicken vorbereiten
 
       var daySend = {};
-      daySend.end = this.timeToDecimal(this.day.end);
-      daySend.start = this.timeToDecimal(this.day.start);
-      daySend.pause = this.timeToDecimal(this.day.pause);
+      daySend.end = Helper.timeToDecimal(this.day.end);
+      daySend.start = Helper.timeToDecimal(this.day.start);
+      daySend.pause = Helper.timeToDecimal(this.day.pause);
       daySend.date = this.day.date;
       axios.post('/api/v1/days', {
         daySend: daySend
@@ -2190,9 +2192,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       });
       var daySend = {};
       daySend.id = this.day.id;
-      daySend.end = this.timeToDecimal(this.day.end);
-      daySend.start = this.timeToDecimal(this.day.start);
-      daySend.pause = this.timeToDecimal(this.day.pause);
+      daySend.end = Helper.timeToDecimal(this.day.end);
+      daySend.start = Helper.timeToDecimal(this.day.start);
+      daySend.pause = Helper.timeToDecimal(this.day.pause);
       daySend.date = this.day.date;
       axios.patch('/api/v1/days/' + this.day.id, {
         daySend: daySend
@@ -2244,31 +2246,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.pause = '';
       this.day.activities = [];
     },
-    timeToDecimal: function timeToDecimal(time) {
-      if (time) {
-        var data = time.split(':');
-        var hours = data[0] * 100;
-        var minutes = data[1] * (5 / 3);
-        return (hours + minutes) / 100;
-      }
-    },
-    timeToNormal: function timeToNormal(time) {
-      var data = time.split('.');
-      var hours = data[0];
-      var minutes = Math.floor(Math.abs(data[1]) * 3 / 5);
-
-      if (hours === 0 || hours === '') {
-        hours = '00';
-      } else if (hours < 10) {
-        hours = '0' + hours;
-      }
-
-      if (minutes.toString().length === 1) {
-        minutes += '0';
-      }
-
-      return hours + ':' + minutes;
-    },
     saveHandler: function saveHandler(day) {
       if (this.checkData()) {
         if (day.id === "" || day.id === null) {
@@ -2277,8 +2254,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           // Tag ist gefüllt -> update Tag
           console.log('Tag updaten');
           this.updateDay();
-        } //
-
+        }
       } else {
         this.displayModal('Die Stundensumme muss stimmen, oder die Stundendauer wurde nicht korrekt eingegeben!', 'OK', '', 'emptyModal');
       }
@@ -2312,11 +2288,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.emptyModal();
     },
     calcTotalActivity: function calcTotalActivity() {
-      var _this4 = this;
-
       var sum = 0;
       this.day.activities.forEach(function (activity) {
-        sum += _this4.timeToDecimal(activity.hours);
+        sum += Helper.timeToDecimal(activity.hours);
       });
       return !isNaN(sum) ? sum : '';
     },
@@ -2329,7 +2303,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       } else if (this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
         console.log('Felder leer');
         status = false;
-      } else if (this.timeToDecimal(this.day.start) > this.timeToDecimal(this.day.end)) {
+      } else if (Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)) {
         console.log('Richtung Falsch');
         status = false;
       }
@@ -2339,7 +2313,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
   },
   computed: {
     calcTotal: function calcTotal() {
-      var result = this.timeToDecimal(this.day.end) - this.timeToDecimal(this.day.start) - this.timeToDecimal(this.day.pause);
+      var result = Helper.timeToDecimal(this.day.end) - Helper.timeToDecimal(this.day.start) - Helper.timeToDecimal(this.day.pause);
       return !isNaN(result) ? result : '';
     }
   }
@@ -2371,19 +2345,19 @@ var Activity = /*#__PURE__*/function () {
   _createClass(Activity, [{
     key: "load",
     value: function load() {
-      var _this5 = this;
+      var _this4 = this;
 
       if (this.UStd_ID) {
         // load by UStd_ID
         axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
-          _this5.project_ID = response.data.Auftrags_ID;
-          _this5.remark = response.data.Bemerkungen;
-          _this5.activity = response.data.Tkurz;
-          _this5.hours = _this5.timeToNormal(response.data.Std);
-          _this5.km = response.data.Km;
-          _this5.bauherr = response.data.Bauherr;
-          _this5.valueOrders.id = response.data.Auftrags_ID;
-          _this5.valueActivity.id = response.data.Tkurz;
+          _this4.project_ID = response.data.Auftrags_ID;
+          _this4.remark = response.data.Bemerkungen;
+          _this4.activity = response.data.Tkurz;
+          _this4.hours = Helper.timeToNormal(response.data.Std);
+          _this4.km = response.data.Km;
+          _this4.bauherr = response.data.Bauherr;
+          _this4.valueOrders.id = response.data.Auftrags_ID;
+          _this4.valueActivity.id = response.data.Tkurz;
         });
       }
     }
@@ -2406,14 +2380,14 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "save",
     value: function save() {
-      var _this6 = this;
+      var _this5 = this;
 
       var data = {};
       data.Std_Id = this.Std_Id;
       data.project_ID = this.valueOrders.id;
       data.activity = this.valueActivity.id, data.remark = this.remark;
       data.km = this.km;
-      data.hours = this.timeToDecimal(this.hours);
+      data.hours = Helper.timeToDecimal(this.hours);
       data.bauherr = this.bauherr;
       console.log('Save Activity');
       console.table(data);
@@ -2421,7 +2395,7 @@ var Activity = /*#__PURE__*/function () {
         data: data
       })["catch"](function (error) {
         if (error && error.response.status === 422) {
-          _this6.validationErrors = error.response.data.errors;
+          _this5.validationErrors = error.response.data.errors;
         }
       }).then(function (response) {
         if (response && response.data.status === 200) {
@@ -2434,7 +2408,7 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update() {
-      var _this7 = this;
+      var _this6 = this;
 
       console.log('update activity');
       var data = {};
@@ -2444,17 +2418,27 @@ var Activity = /*#__PURE__*/function () {
       data.activity = this.valueActivity.id;
       data.remark = this.remark;
       data.km = this.km;
-      data.hours = this.timeToDecimal(this.hours);
+      data.hours = Helper.timeToDecimal(this.hours);
       data.bauherr = this.bauherr;
       axios.patch('/api/v1/days_UF/' + data.UStd_ID, {
         data: data
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this7.validationErrors = error.response.data.errors;
+          _this6.validationErrors = error.response.data.errors;
         }
       });
     }
-  }, {
+  }]);
+
+  return Activity;
+}();
+
+var Helper = /*#__PURE__*/function () {
+  function Helper() {
+    _classCallCheck(this, Helper);
+  }
+
+  _createClass(Helper, null, [{
     key: "timeToNormal",
     value: function timeToNormal(time) {
       var data = time.split('.');
@@ -2483,7 +2467,7 @@ var Activity = /*#__PURE__*/function () {
     }
   }]);
 
-  return Activity;
+  return Helper;
 }();
 
 /***/ }),
@@ -7459,7 +7443,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-6ca9e6be]{\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 10;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\n}\n.lds-grid[data-v-6ca9e6be] {\r\n  display: inline-block;\r\n  position: relative;\r\n  width: 80px;\r\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\r\n  position: absolute;\r\n  width: 16px;\r\n  height: 16px;\r\n  border-radius: 50%;\r\n  background: #3490dc;\r\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\r\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\r\n  top: 8px;\r\n  left: 8px;\r\n  -webkit-animation-delay: 0s;\r\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\r\n  top: 8px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\r\n  top: 8px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\r\n  top: 32px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\r\n  top: 32px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\r\n  top: 32px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\r\n  top: 56px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\r\n  top: 56px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\r\n  top: 56px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.6s;\r\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.container[data-v-6ca9e6be]{\r\n    position: absolute;\r\n    top: 65px;\r\n    left: 0px;\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 10;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    background-color: #ffffff;\n}\n.lds-grid[data-v-6ca9e6be] {\r\n  display: inline-block;\r\n  position: relative;\r\n  width: 80px;\r\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\r\n  position: absolute;\r\n  width: 16px;\r\n  height: 16px;\r\n  border-radius: 50%;\r\n  background: #3490dc;\r\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\r\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\r\n  top: 8px;\r\n  left: 8px;\r\n  -webkit-animation-delay: 0s;\r\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\r\n  top: 8px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\r\n  top: 8px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\r\n  top: 32px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\r\n  top: 32px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\r\n  top: 32px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\r\n  top: 56px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\r\n  top: 56px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\r\n  top: 56px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.6s;\r\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\r\n", ""]);
 
 // exports
 
