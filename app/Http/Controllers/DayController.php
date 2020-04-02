@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDay;
+use App\Http\Requests\UpdateDay;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -49,9 +50,12 @@ class DayController extends Controller
      */
     public function store(StoreDay $request)
     {
+        // error_log(print_r('Hit Store Function', TRUE));
         // error_log(print_r($request->all(), TRUE));
         //Validation
         $validatedData = $request->validated();
+        // error_log(print_r($validatedData, TRUE));
+
         $day = new Day;
 
         $day->Datum = $validatedData['daySend']['date'];
@@ -92,25 +96,10 @@ class DayController extends Controller
      * @param Request $request
      * @return ResponseFactory|Response
      */
-    public function update(Request $request)
+    public function update(UpdateDay $request)
     {
         // Validate
-
-        /*Rule::unique('tblStunden')->where(
-            function($query) {$query->where('PersNr', auth()->user()->PersNr);
-            })*/
-
-
- /*       $validatedData = $request->validate([
-            '*.id' => 'required|numeric',
-            '*.date' => [
-                'required',
-                'date',
-            ],
-            '*.start' => 'required|numeric',
-            '*.end' => 'required|numeric|gt:daySend.start',
-            '*.pause' => 'required|numeric'
-        ]); */
+        $validatedData = $request->validated();
 
         $day = Day::find($validatedData['daySend']['id']);
 

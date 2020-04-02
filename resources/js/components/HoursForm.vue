@@ -2,7 +2,7 @@
     <div>
 
         <Modal v-if="modal.show" :btn-class="modal.BtnClass" :modal-text="modal.Message" :modal-btn-text="modal.BtnText" @modalConfirm="modalFunction" @modalClose="emptyModal"></Modal>
-        
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col">
@@ -22,7 +22,7 @@
                                 <!-- Allgemeine-Tagesdaten-Eingbae   -->
                                <!-- <DayData :dayData="day" :calcTotal="calcTotal"></DayData>-->
                                 <div>
-                                    
+
                                     <!-- Allgemeine-Tagesdaten-Eingbae   -->
                                     <form>
 
@@ -178,8 +178,8 @@
 
 
         methods: {
-            addActivity: function (Std_Id, UStd_ID, project_ID, activity, remark, km, hours, bauherr) {
-                this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr));
+            addActivity: function (Std_Id, UStd_ID, project_ID, activity, remark, km, hours, bauherr, valueOrderID, valueActivityID) {
+                this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr, valueOrderID, valueActivityID));
                 this.idcounter++;
             },
             activityDelete: function (id){
@@ -210,18 +210,21 @@
                         axios
                             .get('/api/v1/days_UF/list/' + this.day.id)
                             .then( response => {
-
+                                console.table(response.data);
                                 if(response && response.status === 200){
                                     response.data.forEach(
                                         data => this.addActivity(
                                             this.day.id,
-                                            data.ustd_ID,
+                                            data.UStd_ID,
                                             data.Auftrags_ID,
                                             data.Tkurz,
-                                            data.Bemerkung,
+                                            data.Bemerkungen,
                                             data.km,
-                                            data.Std,
-                                            data.Bauherr
+                                            Helper.timeToNormal(data.Std),
+                                            data.Bauherr,
+                                            data.Auftrags_ID,
+                                            data.Tkurz,
+
                                         )
                                     );
                                 } else {
@@ -234,7 +237,7 @@
                             // set loading false
                             () => {
                                 setTimeout(() => {this.loading = false;}, 500)
-                                
+
                             }
                         )
                     }
@@ -260,6 +263,7 @@
                                 this.validationErrors = error.response.data.errors;
                             } else {
                                 console.log('Es gab einen Fehler bei der Validierung');
+                                console.log(error);
                             }
                         }
                     )
@@ -309,7 +313,7 @@
                         // return  response.data.insert_id;
 
                         // save Activityies
-                        console.log('Vorbereitung Stunden speichern');
+                        console.log('Vorbereitung Stunden speichern - UPDATE');
 
                         this.day.activities.forEach(activity => activity.saveHandler());
 
@@ -418,7 +422,7 @@
 
                 // Überprüfen, ob Stunden übereinstimmen
                 if(this.calcTotal !== this.calcTotalActivity()){
-                    console.log('Total Falsch');
+                    console.log('Total Falsch:' + this.calcTotalActivity() + 'gegen ' + this.calcTotal);
                     status = false;
                     // Stunden sind nicht gleich
                 }  else if(this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
@@ -428,6 +432,8 @@
                     console.log('Richtung Falsch');
                     status = false;
                 }
+
+                // TODO: Überprüfen, ob alle Tätigkeiten und Aufträge ausgewählt wurden
 
                 return status;
 
@@ -445,7 +451,7 @@
     class Activity {
 
 
-        constructor(id, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr) {
+        constructor(id, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr, valueOrdersID = null, valueActivityID = null) {
             this.id = id;
             this.UStd_ID = UStd_ID;
             this.Std_Id = Std_Id;
@@ -455,16 +461,18 @@
             this.km = km;
             this.hours = hours;
             this.bauherr = bauherr
-            this.valueOrders = {id: null, order: null };
-            this.valueActivity = {id: null, activity: null};
+            this.valueOrders = {id: parseInt(valueOrdersID, 10), order: null };
+            this.valueActivity = {id: valueActivityID, activity: null};
 
         }
         load(){
 
             if(this.UStd_ID){
                 // load by UStd_ID
+                console.log('Load test');
                 axios.get('/api/v1/days_UF/' + this.UStd_ID).then(
                     (response) => {
+                        console.table(response.data);
                         this.project_ID = response.data.Auftrags_ID;
                         this.remark = response.data.Bemerkungen;
                         this.activity = response.data.Tkurz;
@@ -473,9 +481,10 @@
                         this.bauherr = response.data.Bauherr;
                         this.valueOrders.id = response.data.Auftrags_ID;
                         this.valueActivity.id = response.data.Tkurz;
-
                     }
                 )
+            } else {
+                console.log('Didnt load UStd_ID');
             }
         }
         delete(){
@@ -486,9 +495,12 @@
         saveHandler(){
 
             if(this.UStd_ID){
+                console.log('Update sinlge activity');
                 this.update()
             } else {
+                console.log('Save sinlge activity');
                 this.save()
+
             }
         }
         save(){
@@ -511,7 +523,7 @@
                     }
                 }
             ).then(response => {
-                if (response && response.data.status === 200){
+                if (response && response.status === 200){
                     console.log('Aktivitäten erfolgreich gespeichert')
                 } else {
                     console.log('Aktivitäten nicht erfolreich gespeichert')
@@ -530,12 +542,21 @@
             data.km = this.km;
             data.hours = Helper.timeToDecimal(this.hours);
             data.bauherr =this.bauherr;
+            console.table(data);
             axios
                 .patch('/api/v1/days_UF/' + data.UStd_ID, {data})
+                .then( response => {
+                    console.table(response);
+                    if(response && response.status === 200){
+                        console.log('Aktivität erfolreich aktualisiert')
+                    } else {
+                        console.log('Aktivität nicht erfolreich aktualisiert')
+                    }
+                    }
+                )
                 .catch(
                     error => {
                         if (error.response.status === 422){
-
                             this.validationErrors = error.response.data.errors;
                         }
                     }

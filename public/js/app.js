@@ -2097,8 +2097,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     Loading: _Loading_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   methods: {
-    addActivity: function addActivity(Std_Id, UStd_ID, project_ID, activity, remark, km, hours, bauherr) {
-      this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr));
+    addActivity: function addActivity(Std_Id, UStd_ID, project_ID, activity, remark, km, hours, bauherr, valueOrderID, valueActivityID) {
+      this.day.activities.push(new Activity(this.idcounter, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr, valueOrderID, valueActivityID));
       this.idcounter++;
     },
     activityDelete: function activityDelete(id) {
@@ -2125,9 +2125,11 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         _this.day.pause = Helper.timeToNormal(response.data.Pause); // load activities by Std_ID
 
         axios.get('/api/v1/days_UF/list/' + _this.day.id).then(function (response) {
+          console.table(response.data);
+
           if (response && response.status === 200) {
             response.data.forEach(function (data) {
-              return _this.addActivity(_this.day.id, data.ustd_ID, data.Auftrags_ID, data.Tkurz, data.Bemerkung, data.km, data.Std, data.Bauherr);
+              return _this.addActivity(_this.day.id, data.UStd_ID, data.Auftrags_ID, data.Tkurz, data.Bemerkungen, data.km, Helper.timeToNormal(data.Std), data.Bauherr, data.Auftrags_ID, data.Tkurz);
             });
           } else {
             // TODO: display Error MSG
@@ -2159,6 +2161,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           _this2.validationErrors = error.response.data.errors;
         } else {
           console.log('Es gab einen Fehler bei der Validierung');
+          console.log(error);
         }
       }).then(function (response) {
         if (response && response.status === 200) {
@@ -2207,7 +2210,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           // Set id to day
           // return  response.data.insert_id;
           // save Activityies
-          console.log('Vorbereitung Stunden speichern');
+          console.log('Vorbereitung Stunden speichern - UPDATE');
 
           _this3.day.activities.forEach(function (activity) {
             return activity.saveHandler();
@@ -2298,7 +2301,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       var status = true; // Überprüfen, ob Stunden übereinstimmen
 
       if (this.calcTotal !== this.calcTotalActivity()) {
-        console.log('Total Falsch');
+        console.log('Total Falsch:' + this.calcTotalActivity() + 'gegen ' + this.calcTotal);
         status = false; // Stunden sind nicht gleich
       } else if (this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
         console.log('Felder leer');
@@ -2306,7 +2309,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       } else if (Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)) {
         console.log('Richtung Falsch');
         status = false;
-      }
+      } // TODO: Überprüfen, ob alle Tätigkeiten und Aufträge ausgewählt wurden
+
 
       return status;
     }
@@ -2321,6 +2325,9 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
 var Activity = /*#__PURE__*/function () {
   function Activity(id, UStd_ID, Std_Id, project_ID, activity, remark, km, hours, bauherr) {
+    var valueOrdersID = arguments.length > 9 && arguments[9] !== undefined ? arguments[9] : null;
+    var valueActivityID = arguments.length > 10 && arguments[10] !== undefined ? arguments[10] : null;
+
     _classCallCheck(this, Activity);
 
     this.id = id;
@@ -2333,11 +2340,11 @@ var Activity = /*#__PURE__*/function () {
     this.hours = hours;
     this.bauherr = bauherr;
     this.valueOrders = {
-      id: null,
+      id: parseInt(valueOrdersID, 10),
       order: null
     };
     this.valueActivity = {
-      id: null,
+      id: valueActivityID,
       activity: null
     };
   }
@@ -2349,7 +2356,9 @@ var Activity = /*#__PURE__*/function () {
 
       if (this.UStd_ID) {
         // load by UStd_ID
+        console.log('Load test');
         axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
+          console.table(response.data);
           _this4.project_ID = response.data.Auftrags_ID;
           _this4.remark = response.data.Bemerkungen;
           _this4.activity = response.data.Tkurz;
@@ -2359,6 +2368,8 @@ var Activity = /*#__PURE__*/function () {
           _this4.valueOrders.id = response.data.Auftrags_ID;
           _this4.valueActivity.id = response.data.Tkurz;
         });
+      } else {
+        console.log('Didnt load UStd_ID');
       }
     }
   }, {
@@ -2372,8 +2383,10 @@ var Activity = /*#__PURE__*/function () {
     key: "saveHandler",
     value: function saveHandler() {
       if (this.UStd_ID) {
+        console.log('Update sinlge activity');
         this.update();
       } else {
+        console.log('Save sinlge activity');
         this.save();
       }
     }
@@ -2398,7 +2411,7 @@ var Activity = /*#__PURE__*/function () {
           _this5.validationErrors = error.response.data.errors;
         }
       }).then(function (response) {
-        if (response && response.data.status === 200) {
+        if (response && response.status === 200) {
           console.log('Aktivitäten erfolgreich gespeichert');
         } else {
           console.log('Aktivitäten nicht erfolreich gespeichert');
@@ -2420,8 +2433,17 @@ var Activity = /*#__PURE__*/function () {
       data.km = this.km;
       data.hours = Helper.timeToDecimal(this.hours);
       data.bauherr = this.bauherr;
+      console.table(data);
       axios.patch('/api/v1/days_UF/' + data.UStd_ID, {
         data: data
+      }).then(function (response) {
+        console.table(response);
+
+        if (response && response.status === 200) {
+          console.log('Aktivität erfolreich aktualisiert');
+        } else {
+          console.log('Aktivität nicht erfolreich aktualisiert');
+        }
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this6.validationErrors = error.response.data.errors;

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Day_UF;
+use App\Http\Requests\StoreDay_UF;
+use App\Http\Requests\UpdateDay_UF;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -61,60 +63,48 @@ class Day_UFController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param StoreDay_UF $request
      * @return ResponseFactory|Response
      */
-    public function store(Request $request){
+    public function store(StoreDay_UF $request){
 
         $day_UF = new Day_UF;
         error_log(print_r('Store Activity', TRUE));
         //Validation
-        $validatedData = $request->validate([
-            '*.Std_Id' => 'numeric',
-            '*.project_ID' => 'numeric',
-            '*.activity' => 'string',
-            '*.hours' => 'numeric',
-            '*.remark' => 'string',
-            '*.km' => 'nullable|numeric',
-            'bauherr' => 'nullable|string'
-        ]);
+        $validatedData = $request->validated();
+
+        error_log(print_r($validatedData, TRUE));
 
         $day_UF->Std_Id = $validatedData['data']['Std_Id'];
         $day_UF->Auftrags_ID = $validatedData['data']['project_ID'];
         $day_UF->Tkurz = $validatedData['data']['activity'];
         $day_UF->Std = $validatedData['data']['hours'];
-        $day_UF->km = $validatedData['data']['km'];
+         $day_UF->km = $validatedData['data']['km'] ?? null;
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
-        $day_UF->Bauherr = $validatedData['data']['bauherr'];
-        error_log(print_r($day_UF, TRUE));
+        $day_UF->Bauherr = $validatedData['data']['bauherr'] ?? null;
+
        try{
            $day_UF->save();
+           error_log(print_r('Aktivitäten eingetragen', TRUE));
            return response('Success', 200);
        } catch (\Exception $e){
            error_log(print_r($e->getMessage(), TRUE));
            return response('Error', 500);
        }
 
-
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param UpdateDay_UF $request
      * @return ResponseFactory|Response
      */
-    public function update(Request $request)
+    public function update(UpdateDay_UF $request)
     {
-
+        error_log(print_r('update Activity', TRUE));
         //Validation
-        $validatedData = $request->validate([
-            '*.UStd_ID' => 'numeric',
-            '*.Std_Id' => 'numeric',
-            '*.project_ID' => 'numeric',
-            '*.activity' => 'string',
-            '*.hours' => 'numeric',
-            '*.remark' => 'nullable|string',
-        ]);
+        $validatedData = $request->validated();
 
         $day_UF = Day_UF::find((float) $validatedData['data']['UStd_ID']);
         //$day_UF::where('UStd_ID', $validatedData['data']['Std_Id']);
@@ -122,9 +112,9 @@ class Day_UFController extends Controller
         $day_UF->Auftrags_ID = $validatedData['data']['project_ID'];
         $day_UF->Tkurz = $validatedData['data']['activity'];
         $day_UF->Std = $validatedData['data']['hours'];
-        //$day_UF->km = $validatedData['data']['km'];
+        $day_UF->km = $validatedData['data']['km'] ?? null;
         $day_UF->Bemerkungen = $validatedData['data']['remark'];
-        // $day_UF->Bauherr = $validatedData['data']['bauherr'];
+        $day_UF->Bauherr = $validatedData['data']['bauherr'] ?? null;
         error_log(print_r($day_UF->Std, TRUE));
 
         try {

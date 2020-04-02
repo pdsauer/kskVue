@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\ThreeMonthRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDay extends FormRequest
+class UpdateDay extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,14 @@ class StoreDay extends FormRequest
     public function rules()
     {
 
-        // TODO: add comparison end > start; Check if Date already exists for this user
+
         return [
             '*.date' => [
                 'required',
                 'date',
                 new ThreeMonthRule()
             ],
+            '*.id' => 'required|numeric',
             '*.start' => 'required|numeric',
             '*.end' => 'required|numeric|gt:daySend.start',
             '*.pause' => 'required|numeric'
