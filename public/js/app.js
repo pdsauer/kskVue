@@ -2409,15 +2409,17 @@ var Activity = /*#__PURE__*/function () {
       console.table(data);
       axios.post('/api/v1/days_UF', {
         data: data
-      })["catch"](function (error) {
-        if (error && error.response.status === 422) {
-          _this5.validationErrors = error.response.data.errors;
-        }
       }).then(function (response) {
         if (response && response.status === 200) {
           console.log('Aktivitäten erfolgreich gespeichert');
         } else {
           console.log('Aktivitäten nicht erfolreich gespeichert');
+        }
+      })["catch"](function (error) {
+        if (error && error.response.status === 422) {
+          _this5.validationErrors = error.response.data.errors;
+        } else {
+          console.log(error);
         }
       });
     }
@@ -2450,6 +2452,8 @@ var Activity = /*#__PURE__*/function () {
       })["catch"](function (error) {
         if (error.response.status === 422) {
           _this6.validationErrors = error.response.data.errors;
+        } else {
+          console.log(error);
         }
       });
     }
@@ -7446,7 +7450,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-6ca9e6be]{\r\n    position: absolute;\r\n    top: 65px;\r\n    left: 0px;\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 10;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    background-color: #ffffff;\n}\n.lds-grid[data-v-6ca9e6be] {\r\n  display: inline-block;\r\n  position: relative;\r\n  width: 80px;\r\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\r\n  position: absolute;\r\n  width: 16px;\r\n  height: 16px;\r\n  border-radius: 50%;\r\n  background: #3490dc;\r\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\r\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\r\n  top: 8px;\r\n  left: 8px;\r\n  -webkit-animation-delay: 0s;\r\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\r\n  top: 8px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\r\n  top: 8px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\r\n  top: 32px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\r\n  top: 32px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\r\n  top: 32px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\r\n  top: 56px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\r\n  top: 56px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\r\n  top: 56px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.6s;\r\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n.container[data-v-6ca9e6be]{\n    position: absolute;\n    top: 65px;\n    left: 0px;\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    background-color: #ffffff;\n}\n.lds-grid[data-v-6ca9e6be] {\n  display: inline-block;\n  position: relative;\n  width: 80px;\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border-radius: 50%;\n  background: #3490dc;\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\n  top: 8px;\n  left: 8px;\n  -webkit-animation-delay: 0s;\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\n  top: 8px;\n  left: 32px;\n  -webkit-animation-delay: -0.4s;\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\n  top: 8px;\n  left: 56px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\n  top: 32px;\n  left: 8px;\n  -webkit-animation-delay: -0.4s;\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\n  top: 32px;\n  left: 32px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\n  top: 32px;\n  left: 56px;\n  -webkit-animation-delay: -1.2s;\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\n  top: 56px;\n  left: 8px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\n  top: 56px;\n  left: 32px;\n  -webkit-animation-delay: -1.2s;\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\n  top: 56px;\n  left: 56px;\n  -webkit-animation-delay: -1.6s;\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\n    opacity: 1;\n}\n50% {\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\n    opacity: 1;\n}\n50% {\n    opacity: 0.5;\n}\n}\n", ""]);
 
 // exports
 
@@ -52414,15 +52418,14 @@ if (token) {
 /*!***********************************************!*\
   !*** ./resources/js/components/HoursForm.vue ***!
   \***********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HoursForm_vue_vue_type_template_id_0deb3dd0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true& */ "./resources/js/components/HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true&");
 /* harmony import */ var _HoursForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HoursForm.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _HoursForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _HoursForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -52454,7 +52457,7 @@ component.options.__file = "resources/js/components/HoursForm.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/HoursForm.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53021,8 +53024,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -95,7 +95,7 @@ class Day_UFController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * update a resource in storage.
      *
      * @param UpdateDay_UF $request
      * @return ResponseFactory|Response

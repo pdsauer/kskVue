@@ -518,20 +518,25 @@
 
             console.log('Save Activity');
             console.table(data);
-            axios.post('/api/v1/days_UF', {data}).catch(
-                error => {
-                    if (error && error.response.status === 422){
-
-                        this.validationErrors = error.response.data.errors;
-                    }
-                }
-            ).then(response => {
+            axios
+            .post('/api/v1/days_UF', {data})
+            .then(response => {
                 if (response && response.status === 200){
                     console.log('Aktivitäten erfolgreich gespeichert')
                 } else {
                     console.log('Aktivitäten nicht erfolreich gespeichert')
                 }
-            });
+            })
+            .catch(
+                error => {
+                    if (error && error.response.status === 422){
+
+                        this.validationErrors = error.response.data.errors;
+                    } else {
+                        console.log(error);
+                    }
+                }
+            );
         }
         update(){
 
@@ -561,6 +566,8 @@
                     error => {
                         if (error.response.status === 422){
                             this.validationErrors = error.response.data.errors;
+                        } else {
+                            console.log(error)
                         }
                     }
                 )

@@ -61,7 +61,7 @@ class DayController extends Controller
 
         $day = new Day;
 
-        $day->Datum = $validatedData['daySend']['date'];
+        $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date']);
         $day->Von = $validatedData['daySend']['start'];
         $day->Bis = $validatedData['daySend']['end'];
         $day->Pause = $validatedData['daySend']['pause'];
@@ -106,7 +106,7 @@ class DayController extends Controller
 
         $day = Day::find($validatedData['daySend']['id']);
 
-        $day->Datum = $validatedData['daySend']['date'];
+        // $day->Datum = $validatedData['daySend']['date']; Datum darf nicht geändert werden
         $day->Von = $validatedData['daySend']['start'];
         $day->Bis = $validatedData['daySend']['end'];
         $day->Pause = $validatedData['daySend']['pause'];
