@@ -27,6 +27,12 @@ class DayController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Die Reichweite, in der die Tage der mitarbeiter ausgegeben werden können
+     * @var int
+     */
+    private $datumRange = 12;
+
 
     /**
      * Fetch all Days belonging to the user
@@ -35,13 +41,12 @@ class DayController extends Controller
      */
     public function index()
     {
-        // TODO nur die Tage der letzen 3 Monatebereitstellen
-
-        return (\auth()->user()->days);
-        //return  Day::where('PersNr', auth()->user()->PersNr)->get();
+        return  Day
+            ::where('PersNr', auth()->user()->PersNr)
+            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)) /* Nur Daten der Letzen 3 Monate anzeigen*/
+            ->orderBy('Datum', 'desc')
+            ->get();
     }
-
-
     /**
      * Store a newly created resource in storage.
      *
@@ -50,11 +55,9 @@ class DayController extends Controller
      */
     public function store(StoreDay $request)
     {
-        // error_log(print_r('Hit Store Function', TRUE));
-        // error_log(print_r($request->all(), TRUE));
+
         //Validation
         $validatedData = $request->validated();
-        // error_log(print_r($validatedData, TRUE));
 
         $day = new Day;
 
