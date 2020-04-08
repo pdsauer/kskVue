@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <style>
+
+    /*
+    TO FIX SIZING ISSUE WITH THE JUMBOTRON
+    */
+        @media (min-width: 800px){
+            .jumbotron{
+                min-width: 420px;
+            }
+        }
+    </style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="">
@@ -18,7 +30,7 @@
 
                         <div class="col-lg-6 col-md-12 col-sm-12">
 
-                            <div class="jumbotron" style="min-width: 420px">
+                            <div class="jumbotron">
                                 <h1 class="display-6">Stunden</h1>
                                 <hr class="my-4">
 
@@ -31,7 +43,7 @@
 
                         <div class="col-lg-6 col-md-12 col-sm-12">
 
-                            <div class="jumbotron" style="min-width: 420px">
+                            <div class="jumbotron">
                                 <h1 class="display-6">Nachrichten</h1>
                                 <hr class="my-4">
 

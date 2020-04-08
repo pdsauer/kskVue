@@ -1,40 +1,18 @@
 <template>
   <div class="row">
 
-    <div class="col text-right">
-<!--        <div class="form-group pb-0 mb-0 row">
-
-                <label for="DatumSelect" class="col-sm-5 col-form-label col-form-label-sm">Suche Stunden von Datum</label>
-                <select id="DatumSelect" class="col-sm-3 form-control form-control-sm">
-
-                    <option disabled selected value> Datum auswählen </option>
-
-
-
-                </select>
-            <a class="col-md-auto mt-1" href="/stunden">Neuen Tag hinzufügen</a>
-        </div>-->
-
-        <div class="form-group pb-0 mb-0 row">
-
-            <label for="DatumSelect" class="col-sm-5 col-form-label col-form-label-sm pt-3">Suche Stunden von Datum</label>
-            <multiselect
-                class="col-md-4 col-sm-12 col-4"
-                id="DatumSelect"
-                v-model="value"
-                :options="days"
-                :custom-label="formatDate"
-                placeholder="Stunden Auswählen"
-                selectLabel=""
-                deselectLabel="Klicken zum Abwählen"
-                @input="onSelect"
-            ></multiselect>
-
-        </div>
-
-
-    </div>
-
+    <multiselect
+        class="col-md-auto"
+        id="DatumSelect"
+        v-model="value"
+        :options="days"
+        :custom-label="formatDate"
+        placeholder="Stunden Auswählen"
+        selectLabel=""
+        deselectLabel="Klicken zum Abwählen"
+        @input="onSelect"
+        style="box-sizing: border-box"
+    ></multiselect>
 
   </div>
 </template>
@@ -80,8 +58,6 @@
     }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style scoped>
-
 </style>

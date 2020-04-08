@@ -9,7 +9,10 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <DaySelector @daySelected="daySelected"></DaySelector>
+                            <div class="row d-flex justify-content-center">
+                                <DaySelector class ="col-sm-12 col-md-6 " @daySelected="daySelected"></DaySelector>
+                            </div>
+
 
                         </div>
 
@@ -589,7 +592,7 @@
         }
     }
 </script>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
 
 </style>

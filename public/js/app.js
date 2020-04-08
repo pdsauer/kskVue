@@ -2048,6 +2048,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
 // To Fix JS Horrible date API - USE ON DAY LOAD TO FIX OFFSET
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000);
@@ -2824,28 +2827,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -39071,12 +39052,19 @@ var render = function() {
         _c("div", { staticClass: "row justify-content-center" }, [
           _c("div", { staticClass: "col" }, [
             _c("div", { staticClass: "card" }, [
-              _c(
-                "div",
-                { staticClass: "card-header" },
-                [_c("DaySelector", { on: { daySelected: _vm.daySelected } })],
-                1
-              ),
+              _c("div", { staticClass: "card-header" }, [
+                _c(
+                  "div",
+                  { staticClass: "row d-flex justify-content-center" },
+                  [
+                    _c("DaySelector", {
+                      staticClass: "col-sm-12 col-md-6 ",
+                      on: { daySelected: _vm.daySelected }
+                    })
+                  ],
+                  1
+                )
+              ]),
               _vm._v(" "),
               _c(
                 "div",
@@ -39940,45 +39928,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col text-right" }, [
-      _c(
-        "div",
-        { staticClass: "form-group pb-0 mb-0 row" },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "col-sm-5 col-form-label col-form-label-sm pt-3",
-              attrs: { for: "DatumSelect" }
-            },
-            [_vm._v("Suche Stunden von Datum")]
-          ),
-          _vm._v(" "),
-          _c("multiselect", {
-            staticClass: "col-md-4 col-sm-12 col-4",
-            attrs: {
-              id: "DatumSelect",
-              options: _vm.days,
-              "custom-label": _vm.formatDate,
-              placeholder: "Stunden Auswählen",
-              selectLabel: "",
-              deselectLabel: "Klicken zum Abwählen"
-            },
-            on: { input: _vm.onSelect },
-            model: {
-              value: _vm.value,
-              callback: function($$v) {
-                _vm.value = $$v
-              },
-              expression: "value"
-            }
-          })
-        ],
-        1
-      )
-    ])
-  ])
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("multiselect", {
+        staticClass: "col-md-auto",
+        staticStyle: { "box-sizing": "border-box" },
+        attrs: {
+          id: "DatumSelect",
+          options: _vm.days,
+          "custom-label": _vm.formatDate,
+          placeholder: "Stunden Auswählen",
+          selectLabel: "",
+          deselectLabel: "Klicken zum Abwählen"
+        },
+        on: { input: _vm.onSelect },
+        model: {
+          value: _vm.value,
+          callback: function($$v) {
+            _vm.value = $$v
+          },
+          expression: "value"
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52438,14 +52414,17 @@ if (token) {
 /*!***********************************************!*\
   !*** ./resources/js/components/HoursForm.vue ***!
   \***********************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HoursForm_vue_vue_type_template_id_0deb3dd0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true& */ "./resources/js/components/HoursForm.vue?vue&type=template&id=0deb3dd0&scoped=true&");
 /* harmony import */ var _HoursForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HoursForm.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _HoursForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _HoursForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -52453,7 +52432,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _HoursForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _HoursForm_vue_vue_type_template_id_0deb3dd0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _HoursForm_vue_vue_type_template_id_0deb3dd0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -52475,7 +52454,7 @@ component.options.__file = "resources/js/components/HoursForm.vue"
 /*!************************************************************************!*\
   !*** ./resources/js/components/HoursForm.vue?vue&type=script&lang=js& ***!
   \************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -52739,9 +52718,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DaySelect_vue_vue_type_template_id_8bf34e3e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DaySelect.vue?vue&type=template&id=8bf34e3e&scoped=true& */ "./resources/js/components/HoursForm/DaySelect.vue?vue&type=template&id=8bf34e3e&scoped=true&");
 /* harmony import */ var _DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DaySelect.vue?vue&type=script&lang=js& */ "./resources/js/components/HoursForm/DaySelect.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css& */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -52749,7 +52726,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _DaySelect_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _DaySelect_vue_vue_type_template_id_8bf34e3e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _DaySelect_vue_vue_type_template_id_8bf34e3e_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
