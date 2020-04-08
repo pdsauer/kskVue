@@ -396,7 +396,8 @@
                     // Wenn Day.id nicht leer ist -> DELETE Request an Server
                     axios.delete('/api/v1/days/'+ this.day.id).then(
                         this.emptyData
-                    );}
+                    );
+               }
             },
             emptyModal: function () {
                 this.modal.show = false;
@@ -533,7 +534,7 @@
 
                         this.validationErrors = error.response.data.errors;
                     } else {
-                        console.log(error);
+                        console.log(error.response);
                     }
                 }
             );
