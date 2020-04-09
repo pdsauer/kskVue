@@ -62,6 +62,7 @@ class DayController extends Controller
         $day = new Day;
 
         $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date']);
+        // $day->Datum = $validatedData['daySend']['date'];
         $day->Von = $validatedData['daySend']['start'];
         $day->Bis = $validatedData['daySend']['end'];
         $day->Pause = $validatedData['daySend']['pause'];

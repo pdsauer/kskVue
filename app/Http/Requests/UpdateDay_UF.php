@@ -13,7 +13,7 @@ class UpdateDay_UF extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
