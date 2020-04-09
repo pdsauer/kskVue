@@ -22,11 +22,11 @@
 
 
                         @foreach($posts as $post)
-                            <article class="">
+                            <article class="post-list">
                                 <h4 class="title text-dark">{{ $post->title }}</h4>
 
                                 <p>
-                                    {{ $post->inhalt }}
+                                    {{ Str::limit($post->inhalt) }}
                                     <a href="/post/{{ $post->id }}">Mehr Lesen</a>
                                 </p>
                                 <p class="text-muted">

@@ -59,12 +59,12 @@
                         <div class="card-body">
 
                             @foreach($posts as $post)
-                            <div class="row">
-                                <article class="w-100">
+                            <div class="row post-list ">
+                                <article class="w-100 ">
                                     <h4 class="title text-dark">{{ $post->title }}</h4>
 
                                     <p>
-                                        {{ $post->inhalt }}
+                                        {{ Str::limit($post->inhalt , 140)}}
                                         <a href="/post/{{ $post->id }}">Mehr Lesen</a>
                                     </p>
                                     <p class="text-muted">

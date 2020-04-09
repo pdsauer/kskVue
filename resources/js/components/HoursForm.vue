@@ -512,9 +512,9 @@
                 data.Std_Id = this.Std_Id;
                 data.project_ID = this.valueOrders.id;
                 data.activity = this.valueActivity.id, data.remark =this.remark;
-                data.km =this.km;
-                data.hours =Helper.timeToDecimal(this.hours);
-                data.bauherr =this.bauherr;
+                data.km = this.km;
+                data.hours = Helper.timeToDecimal(this.hours);
+                data.bauherr = this.bauherr;
 
             console.log('Save Activity');
             console.table(data);

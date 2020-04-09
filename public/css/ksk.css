@@ -1,0 +1,5 @@
+.post-list:nth-child(even){
+    border-top: 2px solid #eeeeee;
+    border-bottom:2px solid #eeeeee;
+    padding-top: 10px;
+}
