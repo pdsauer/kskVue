@@ -363,6 +363,9 @@
                 this.day.end = '';
                 this.day.pause = '';
                 this.day.activities = [];
+
+                // trigger reload function of child component - DaySelect
+                // this.bus.$emit('DaySelect-refresh');
             },
 
 
@@ -373,6 +376,8 @@
                     if (day.id === "" || day.id === null){
 
                       this.saveDay();
+                      // refresh dropdown
+                      this.bus.$emit('DaySelect-refresh');
 
                     } else {
                         // Tag ist gefüllt -> update Tag
@@ -395,8 +400,9 @@
                 } else {
                     // Wenn Day.id nicht leer ist -> DELETE Request an Server
                     axios.delete('/api/v1/days/'+ this.day.id).then(
-                        this.emptyData
+                        this.emptyData()
                     );
+                    this.bus.$emit('DaySelect-refresh');
                }
             },
             emptyModal: function () {

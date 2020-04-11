@@ -3,7 +3,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Achtung</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -44,6 +44,11 @@
     .modal {
         display: block;
         padding-top: 50px;
+    }
 
+    .modal-dialog{
+        -moz-box-shadow:    3px 3px 5px 6px #ccc;
+        -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+        box-shadow:         3px 3px 5px 6px #ccc;
     }
 </style>

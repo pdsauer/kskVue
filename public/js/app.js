@@ -2250,12 +2250,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.start = '';
       this.day.end = '';
       this.day.pause = '';
-      this.day.activities = [];
+      this.day.activities = []; // trigger reload function of child component - DaySelect
+      // this.bus.$emit('DaySelect-refresh');
     },
     saveHandler: function saveHandler(day) {
       if (this.checkData()) {
         if (day.id === "" || day.id === null) {
-          this.saveDay();
+          this.saveDay(); // refresh dropdown
+
+          this.bus.$emit('DaySelect-refresh');
         } else {
           // Tag ist gefüllt -> update Tag
           console.log('Tag updaten');
@@ -2274,7 +2277,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         this.emptyData();
       } else {
         // Wenn Day.id nicht leer ist -> DELETE Request an Server
-        axios["delete"]('/api/v1/days/' + this.day.id).then(this.emptyData);
+        axios["delete"]('/api/v1/days/' + this.day.id).then(this.emptyData());
+        this.bus.$emit('DaySelect-refresh');
       }
     },
     emptyModal: function emptyModal() {
@@ -2873,6 +2877,7 @@ __webpack_require__.r(__webpack_exports__);
         };
       });
     });
+    this.bus.$on('DaySelect-refresh', this.refresh);
   },
   methods: {
     onSelect: function onSelect() {
@@ -2887,6 +2892,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     empty: function empty() {
       this.value = null;
+    },
+    refresh: function refresh() {
+      var _this2 = this;
+
+      console.log('DaySelect-refresh triggered'); // deselect value
+
+      this.empty(); // new data
+
+      axios.get('/api/v1/days').then(function (response) {
+        return _this2.days = response.data.map(function (day) {
+          return {
+            date: day.Datum,
+            id: day.Std_ID
+          };
+        });
+      });
     }
   }
 });
@@ -7469,7 +7490,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal[data-v-478d961c] {\n    display: block;\n    padding-top: 50px;\n}\n", ""]);
+exports.push([module.i, "\n.modal[data-v-478d961c] {\n    display: block;\n    padding-top: 50px;\n}\n.modal-dialog[data-v-478d961c]{\n    box-shadow:         3px 3px 5px 6px #ccc;\n}\n", ""]);
 
 // exports
 
@@ -40078,7 +40099,7 @@ var render = function() {
       _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
         _c("div", { staticClass: "modal-content" }, [
           _c("div", { staticClass: "modal-header" }, [
-            _c("h5", { staticClass: "modal-title" }, [_vm._v("Modal title")]),
+            _c("h5", { staticClass: "modal-title" }, [_vm._v("Achtung")]),
             _vm._v(" "),
             _c(
               "button",

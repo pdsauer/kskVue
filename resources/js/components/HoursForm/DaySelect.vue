@@ -36,7 +36,8 @@
                 response => this.days = response.data.map(function(day) {
                     return {date: day.Datum, id: day.Std_ID}
                 } )
-                )
+            );
+            this.bus.$on('DaySelect-refresh', this.refresh)
         },
         methods:{
             onSelect: function(){
@@ -51,6 +52,19 @@
             },
             empty: function() {
                 this.value = null;
+            },
+            refresh: function(){
+                console.log('DaySelect-refresh triggered');
+                // deselect value
+                this.empty();
+                // new data
+                axios
+                    .get('/api/v1/days')
+                    .then(
+                            response => this.days = response.data.map(function(day) {
+                                return {date: day.Datum, id: day.Std_ID}
+                            } )
+                        )
             }
         }
 
