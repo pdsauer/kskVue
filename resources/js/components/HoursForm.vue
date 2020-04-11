@@ -117,7 +117,10 @@
                                 @day-save="saveHandler(day)"
                                 @day-delete="deleteHandler()"
                                 @day-new="emptyData()"
-                                @day-copy="copyDay()" ></ControlBar>
+                                @day-copy="copyDay()" 
+                                :sum="checkTotal"
+                                :status="classTotal"
+                                ></ControlBar>
 
                         </div>
                     </div>
@@ -455,6 +458,20 @@
                 let result = Helper.timeToDecimal(this.day.end) - Helper.timeToDecimal(this.day.start) - Helper.timeToDecimal(this.day.pause);
                 return (!isNaN(result)? result : '');
             },
+            checkTotal(){
+                let sum = 0;
+                if(this.day.activities){
+                    this.day.activities.forEach(activity => {sum += Helper.timeToDecimal(activity.hours)});
+                }   
+                return (!isNaN(sum)? sum : '');
+            },
+            classTotal(){
+                let status = false;
+                if(this.calcTotal === this.checkTotal){
+                    status = true;
+                }
+                return status;
+            }
         }
     }
 
@@ -583,26 +600,30 @@
 
     class Helper {
         static timeToNormal(time){
-            let data = time.split('.');
-            let hours = data[0];
-            let minutes = Math.floor((Math.abs(data[1])) * 3/5);
-            if (hours === 0 || hours === ''){
-                hours = '00';
-            }
-            else if(hours < 10){
-                hours = '0' + hours;
-            }
+            if(time){
+                let data = time.split('.');
+                let hours = data[0];
+                let minutes = Math.floor((Math.abs(data[1])) * 3/5);
+                if (hours === 0 || hours === ''){
+                    hours = '00';
+                }
+                else if(hours < 10){
+                    hours = '0' + hours;
+                }
 
-            if(minutes.toString().length === 1){
-                minutes += '0';
+                if(minutes.toString().length === 1){
+                    minutes += '0';
+                }
+                return hours + ':' + minutes;
             }
-            return hours + ':' + minutes;
         }
         static timeToDecimal(time) {
-            let data = time.split(':');
-            let hours = data[0] * 100;
-            let minutes = data[1] * (5/3);
-            return (hours + minutes) / 100
+            if(time){
+                let data = time.split(':');
+                let hours = data[0] * 100;
+                let minutes = data[1] * (5/3);
+                return (hours + minutes) / 100
+            }
         }
     }
 </script>

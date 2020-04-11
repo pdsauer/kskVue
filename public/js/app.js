@@ -2051,6 +2051,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
 // To Fix JS Horrible date API - USE ON DAY LOAD TO FIX OFFSET
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000);
@@ -2326,6 +2329,26 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     calcTotal: function calcTotal() {
       var result = Helper.timeToDecimal(this.day.end) - Helper.timeToDecimal(this.day.start) - Helper.timeToDecimal(this.day.pause);
       return !isNaN(result) ? result : '';
+    },
+    checkTotal: function checkTotal() {
+      var sum = 0;
+
+      if (this.day.activities) {
+        this.day.activities.forEach(function (activity) {
+          sum += Helper.timeToDecimal(activity.hours);
+        });
+      }
+
+      return !isNaN(sum) ? sum : '';
+    },
+    classTotal: function classTotal() {
+      var status = false;
+
+      if (this.calcTotal === this.checkTotal) {
+        status = true;
+      }
+
+      return status;
     }
   }
 });
@@ -2474,29 +2497,33 @@ var Helper = /*#__PURE__*/function () {
   _createClass(Helper, null, [{
     key: "timeToNormal",
     value: function timeToNormal(time) {
-      var data = time.split('.');
-      var hours = data[0];
-      var minutes = Math.floor(Math.abs(data[1]) * 3 / 5);
+      if (time) {
+        var data = time.split('.');
+        var hours = data[0];
+        var minutes = Math.floor(Math.abs(data[1]) * 3 / 5);
 
-      if (hours === 0 || hours === '') {
-        hours = '00';
-      } else if (hours < 10) {
-        hours = '0' + hours;
+        if (hours === 0 || hours === '') {
+          hours = '00';
+        } else if (hours < 10) {
+          hours = '0' + hours;
+        }
+
+        if (minutes.toString().length === 1) {
+          minutes += '0';
+        }
+
+        return hours + ':' + minutes;
       }
-
-      if (minutes.toString().length === 1) {
-        minutes += '0';
-      }
-
-      return hours + ':' + minutes;
     }
   }, {
     key: "timeToDecimal",
     value: function timeToDecimal(time) {
-      var data = time.split(':');
-      var hours = data[0] * 100;
-      var minutes = data[1] * (5 / 3);
-      return (hours + minutes) / 100;
+      if (time) {
+        var data = time.split(':');
+        var hours = data[0] * 100;
+        var minutes = data[1] * (5 / 3);
+        return (hours + minutes) / 100;
+      }
     }
   }]);
 
@@ -2713,9 +2740,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    sum: ''
+    sum: '',
+    status: false
   }
 });
 
@@ -39365,6 +39400,7 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   _c("ControlBar", {
+                    attrs: { sum: _vm.checkTotal, status: _vm.classTotal },
                     on: {
                       "day-save": function($event) {
                         return _vm.saveHandler(_vm.day)
@@ -39674,7 +39710,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row mt-4" }, [
-    _c("div", { staticClass: "col-lg-6 col-md-8 col-sm-12 mt-2" }, [
+    _c("div", { staticClass: "col-lg-6 col-md-12 col-sm-12 mt-2" }, [
       _c(
         "button",
         {
@@ -39715,9 +39751,34 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4 col-md-1 col-sm-0 mt-2" }),
+    _c("div", { staticClass: "col-lg-4 col-md-8 mt-2" }, [
+      _c("div", { staticClass: "form-group row" }, [
+        _c(
+          "label",
+          {
+            staticClass: "col-6 col-form-label",
+            attrs: { for: "inputEmail3" }
+          },
+          [_vm._v("Kontrollsumme")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-4" }, [
+          _c("input", {
+            staticClass: " form-control",
+            class: { "text-success": _vm.status, "text-danger": !_vm.status },
+            attrs: {
+              type: "text",
+              id: "inputEmail3",
+              placeholder: "Konstrollsumme",
+              disabled: ""
+            },
+            domProps: { value: _vm.sum }
+          })
+        ])
+      ])
+    ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-2 col-md-3 col-sm-12 mt-2" }, [
+    _c("div", { staticClass: "col-lg-2 col-md-4 col-sm-12 mt-2" }, [
       _c(
         "button",
         {
