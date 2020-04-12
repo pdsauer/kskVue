@@ -63,7 +63,7 @@
             </div>
 
             <div class="form-row">
-                <div class="col-5 col-lg-6 col-md-6">
+                <div class="col-lg-6 col-sm-12 col-md-6 ">
                     <div class="form-group">
                         <label for="bemerkung">Bemerkung</label>
                         <input type="text" class="form-control" id="bemerkung" v-model="activity.remark">

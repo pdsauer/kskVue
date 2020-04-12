@@ -2319,9 +2319,28 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       } else if (Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)) {
         console.log('Richtung Falsch');
         status = false;
-      } // TODO: Überprüfen, ob alle Tätigkeiten und Aufträge ausgewählt wurden
+      } // Check if times (start, end) have the correct format
 
 
+      if (!this.day.start.match(/\d{2}:\d{2}/) || !this.day.end.match(/\d{2}:\d{2}/)) {
+        console.log('doesnt match regex - day');
+        status = false;
+      } // Überprüfen, ob alle Tätigkeiten und das richtige Zeitformat haben
+
+
+      this.day.activities.forEach(function (activity) {
+        if (!activity.hours.match(/\d{2}:\d{2}/)) {
+          console.log('doesnt match regex - activity');
+          status = false;
+        }
+      }); // Überprüfen, ob alle Tätigkeiten und Aufträge ausgewählt wurden
+
+      this.day.activities.forEach(function (activity) {
+        if (!activity.valueActivity.activity || activity.valueActivity.activity === null || !activity.valueOrders.order || activity.valueOrders.order === null) {
+          console.log('check: Activity');
+          status = false;
+        }
+      });
       return status;
     }
   },
@@ -39586,7 +39605,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-row" }, [
-        _c("div", { staticClass: "col-5 col-lg-6 col-md-6" }, [
+        _c("div", { staticClass: "col-lg-6 col-sm-12 col-md-6 " }, [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { attrs: { for: "bemerkung" } }, [_vm._v("Bemerkung")]),
             _vm._v(" "),

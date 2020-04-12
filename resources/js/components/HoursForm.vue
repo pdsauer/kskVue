@@ -446,7 +446,27 @@
                     status = false;
                 }
 
-                // TODO: Überprüfen, ob alle Tätigkeiten und Aufträge ausgewählt wurden
+                // Check if times (start, end) have the correct format
+                if(!this.day.start.match(/\d{2}:\d{2}/) || !this.day.end.match(/\d{2}:\d{2}/)){
+                    console.log('doesnt match regex - day');
+                    status= false;
+                }
+
+                // Überprüfen, ob alle Tätigkeiten und das richtige Zeitformat haben
+                this.day.activities.forEach(activity => {
+                    if(!activity.hours.match(/\d{2}:\d{2}/)){
+                        console.log('doesnt match regex - activity');
+                        status = false;
+                    }
+                })
+
+                // Überprüfen, ob alle Tätigkeiten und Aufträge ausgewählt wurden
+                this.day.activities.forEach( activity => {
+                    if(!activity.valueActivity.activity || activity.valueActivity.activity === null || !activity.valueOrders.order || activity.valueOrders.order === null){
+                        console.log('check: Activity');
+                        status = false;
+                    }
+                })
 
                 return status;
 
