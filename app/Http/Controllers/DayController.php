@@ -31,7 +31,7 @@ class DayController extends Controller
      * Die Reichweite, in der die Tage der mitarbeiter ausgegeben werden können
      * @var int
      */
-    private $datumRange = 12;
+    private $datumRange = 3;
 
 
     /**
@@ -43,7 +43,7 @@ class DayController extends Controller
     {
         return  Day
             ::where('PersNr', auth()->user()->PersNr)
-            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)) /* Nur Daten der Letzen 3 Monate anzeigen*/
+            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)->format('Y/d/m')) /* Nur Daten der Letzen 3 Monate anzeigen*/
             ->orderBy('Datum', 'desc')
             ->get();
     }
@@ -56,19 +56,20 @@ class DayController extends Controller
     public function store(StoreDay $request)
     {
 
+        // TODO: Check if day already exists for user
         //Validation
         $validatedData = $request->validated();
 
         $day = new Day;
 
-        $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date']);
+        $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->format('Y/d/m');
         // $day->Datum = $validatedData['daySend']['date'];
         $day->Von = $validatedData['daySend']['start'];
         $day->Bis = $validatedData['daySend']['end'];
         $day->Pause = $validatedData['daySend']['pause'];
         $day->Dat_Kuerz = 'test';
         $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause));
-        $day->Eingabedatum = Carbon::now();
+        $day->Eingabedatum = Carbon::now()->format('Y/d/m');
         $day->PersNr = auth()->user()->PersNr;
 
         // Store Day in DB

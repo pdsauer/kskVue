@@ -432,22 +432,28 @@
             checkData: function () {
 
                 let status = true;
+                let errorMsg = "";
+                // Überprüfen, ob der User schon einen Tag mit diesem Datum hat
 
                 // Überprüfen, ob Stunden übereinstimmen
                 if(this.calcTotal !== this.calcTotalActivity()){
                     console.log('Total Falsch:' + this.calcTotalActivity() + 'gegen ' + this.calcTotal);
+                    errorMsg += "Die Stundensumme stimmt nicht überein. \n ";
                     status = false;
                     // Stunden sind nicht gleich
                 }  else if(this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
                     console.log('Felder leer');
+                    errorMsg += "Es sind nicht alle benötigten Zeitangaben getätigt wurden. \n";
                     status =  false;
                 } else if(Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)){
+                    errorMsg += "Die Anfangsuhrzeit liegt hinter der Enduhrzeit. \n";
                     console.log('Richtung Falsch');
                     status = false;
                 }
 
                 // Check if times (start, end) have the correct format
                 if(!this.day.start.match(/\d{2}:\d{2}/) || !this.day.end.match(/\d{2}:\d{2}/)){
+                    errorMsg += "Das Zeitformat der Zeiteingaben stimmt nicht";
                     console.log('doesnt match regex - day');
                     status= false;
                 }

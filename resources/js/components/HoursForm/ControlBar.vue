@@ -14,7 +14,13 @@
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-6 col-form-label">Kontrollsumme</label>
                     <div class="col-4">
-                        <input type="text" :value="sum" class=" form-control" :class=" {'text-success': status, 'text-danger': !status }"  id="inputEmail3" placeholder="Konstrollsumme" disabled>
+                        <input 
+                        type="text" 
+                        :value="sum" 
+                        class=" form-control" 
+                        :class=" {'text-success': status, 'text-danger': !status }"  
+                        id="inputEmail3" 
+                        placeholder="0" disabled>
                     </div>
                 </div>
         </div>

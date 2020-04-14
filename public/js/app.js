@@ -2308,21 +2308,27 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       return !isNaN(sum) ? sum : '';
     },
     checkData: function checkData() {
-      var status = true; // Überprüfen, ob Stunden übereinstimmen
+      var status = true;
+      var errorMsg = ""; // Überprüfen, ob der User schon einen Tag mit diesem Datum hat
+      // Überprüfen, ob Stunden übereinstimmen
 
       if (this.calcTotal !== this.calcTotalActivity()) {
         console.log('Total Falsch:' + this.calcTotalActivity() + 'gegen ' + this.calcTotal);
+        errorMsg += "Die Stundensumme stimmt nicht überein. \n ";
         status = false; // Stunden sind nicht gleich
       } else if (this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
         console.log('Felder leer');
+        errorMsg += "Es sind nicht alle benötigten Zeitangaben getätigt wurden. \n";
         status = false;
       } else if (Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)) {
+        errorMsg += "Die Anfangsuhrzeit liegt hinter der Enduhrzeit. \n";
         console.log('Richtung Falsch');
         status = false;
       } // Check if times (start, end) have the correct format
 
 
       if (!this.day.start.match(/\d{2}:\d{2}/) || !this.day.end.match(/\d{2}:\d{2}/)) {
+        errorMsg += "Das Zeitformat der Zeiteingaben stimmt nicht";
         console.log('doesnt match regex - day');
         status = false;
       } // Überprüfen, ob alle Tätigkeiten und das richtige Zeitformat haben
@@ -2737,6 +2743,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7525,7 +7537,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-6ca9e6be]{\n    position: absolute;\n    top: 65px;\n    left: 0px;\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    background-color: #ffffff;\n}\n.lds-grid[data-v-6ca9e6be] {\n  display: inline-block;\n  position: relative;\n  width: 80px;\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border-radius: 50%;\n  background: #3490dc;\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\n  top: 8px;\n  left: 8px;\n  -webkit-animation-delay: 0s;\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\n  top: 8px;\n  left: 32px;\n  -webkit-animation-delay: -0.4s;\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\n  top: 8px;\n  left: 56px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\n  top: 32px;\n  left: 8px;\n  -webkit-animation-delay: -0.4s;\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\n  top: 32px;\n  left: 32px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\n  top: 32px;\n  left: 56px;\n  -webkit-animation-delay: -1.2s;\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\n  top: 56px;\n  left: 8px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\n  top: 56px;\n  left: 32px;\n  -webkit-animation-delay: -1.2s;\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\n  top: 56px;\n  left: 56px;\n  -webkit-animation-delay: -1.6s;\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\n    opacity: 1;\n}\n50% {\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\n    opacity: 1;\n}\n50% {\n    opacity: 0.5;\n}\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-6ca9e6be]{\r\n    position: absolute;\r\n    top: 65px;\r\n    left: 0px;\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 10;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    background-color: #ffffff;\n}\n.lds-grid[data-v-6ca9e6be] {\r\n  display: inline-block;\r\n  position: relative;\r\n  width: 80px;\r\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\r\n  position: absolute;\r\n  width: 16px;\r\n  height: 16px;\r\n  border-radius: 50%;\r\n  background: #3490dc;\r\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\r\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\r\n  top: 8px;\r\n  left: 8px;\r\n  -webkit-animation-delay: 0s;\r\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\r\n  top: 8px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\r\n  top: 8px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\r\n  top: 32px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\r\n  top: 32px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\r\n  top: 32px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\r\n  top: 56px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\r\n  top: 56px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\r\n  top: 56px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.6s;\r\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -39788,7 +39800,7 @@ var render = function() {
             attrs: {
               type: "text",
               id: "inputEmail3",
-              placeholder: "Konstrollsumme",
+              placeholder: "0",
               disabled: ""
             },
             domProps: { value: _vm.sum }
@@ -53125,8 +53137,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
