@@ -2961,7 +2961,7 @@ __webpack_require__.r(__webpack_exports__);
     formatDate: function formatDate(date) {
       var format = new Date(date.date);
       var day = format.getDate();
-      var month = format.getMonth() + 1;
+      var month = format.getMonth() + 1 > 9 ? format.getMonth() + 1 : "0" + (format.getMonth() + 1);
       var year = format.getFullYear();
       return day + '.' + month + '.' + year;
     },

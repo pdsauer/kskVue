@@ -46,7 +46,7 @@
             formatDate: function(date) {
                 let format = new Date(date.date);
                 let day = format.getDate();
-                let month = format.getMonth() + 1;
+                let month = (format.getMonth() + 1) > 9 ? (format.getMonth() + 1) : "0" + (format.getMonth() + 1);
                 let year = format.getFullYear();
                 return day + '.'+ month + '.' + year;
             },
