@@ -56,7 +56,6 @@ class DayController extends Controller
     public function store(StoreDay $request)
     {
 
-        // TODO: Check if day already exists for user
         //Validation
         $validatedData = $request->validated();
 
