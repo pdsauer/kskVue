@@ -2257,7 +2257,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.start = '';
       this.day.end = '';
       this.day.pause = '';
-      this.day.activities = []; // trigger reload function of child component - DaySelect
+      this.day.activities = [];
+      this.checkForErrorsString = ""; // trigger reload function of child component - DaySelect
       // this.bus.$emit('DaySelect-refresh');
     },
     saveHandler: function saveHandler(day) {
@@ -2272,7 +2273,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           this.updateDay();
         }
       } else {
-        this.displayModal('Die Stundensumme muss stimmen, oder die Stundendauer wurde nicht korrekt eingegeben!', 'OK', '', 'emptyModal');
+        this.displayModal(this.checkForErrorsString, 'OK', '', 'emptyModal');
       }
     },
     deleteHandler: function deleteHandler() {
@@ -2318,41 +2319,51 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       return !isNaN(sum) ? sum : '';
     },
     checkData: function checkData() {
+      var _this5 = this;
+
       var status = true;
-      var errorMsg = ""; // Überprüfen, ob der User schon einen Tag mit diesem Datum hat
-      // Überprüfen, ob Stunden übereinstimmen
+      this.checkForErrorsString = ""; // Überprüfen, ob der User schon einen Tag mit diesem Datum hat
+      // Überprüfen, ob Datum ausgewählt wurde
+
+      if (!this.day.date || typeof this.day.date.getMonth !== 'function') {
+        status = false;
+        this.checkForErrorsString += "Bitte wählen Sie ein Datum aus. ";
+      } // Überprüfen, ob Stunden übereinstimmen
+
 
       if (this.calcTotal !== this.calcTotalActivity()) {
         console.log('Total Falsch:' + this.calcTotalActivity() + 'gegen ' + this.calcTotal);
-        errorMsg += "Die Stundensumme stimmt nicht überein. \n ";
+        this.checkForErrorsString += "Die Stundensumme stimmt nicht überein. ";
         status = false; // Stunden sind nicht gleich
       } else if (this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
         console.log('Felder leer');
-        errorMsg += "Es sind nicht alle benötigten Zeitangaben getätigt wurden. \n";
+        this.checkForErrorsString += "Es sind nicht alle benötigten Zeitangaben getätigt wurden. ";
         status = false;
       } else if (Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)) {
-        errorMsg += "Die Anfangsuhrzeit liegt hinter der Enduhrzeit. \n";
+        this.checkForErrorsString += "Die Anfangsuhrzeit liegt hinter der Enduhrzeit. ";
         console.log('Richtung Falsch');
         status = false;
       } // Check if times (start, end) have the correct format
 
 
       if (!this.day.start.match(/\d{2}:\d{2}/) || !this.day.end.match(/\d{2}:\d{2}/)) {
-        errorMsg += "Das Zeitformat der Zeiteingaben stimmt nicht";
+        this.checkForErrorsString += "Das Zeitformat der Zeiteingaben stimmt nicht. ";
         console.log('doesnt match regex - day');
         status = false;
       } // Überprüfen, ob alle Tätigkeiten und das richtige Zeitformat haben
 
 
       this.day.activities.forEach(function (activity) {
-        if (!activity.hours.match(/\d{2}:\d{2}/)) {
+        if (!activity.hours || !activity.hours.match(/\d{2}:\d{2}/)) {
           console.log('doesnt match regex - activity');
+          _this5.checkForErrorsString += "Die Zeiten wurden nicht im korrekten Format [HH:MM] eingegeben. ";
           status = false;
         }
       }); // Überprüfen, ob alle Tätigkeiten und Aufträge ausgewählt wurden
 
       this.day.activities.forEach(function (activity) {
         if (!activity.valueActivity.activity || activity.valueActivity.activity === null || !activity.valueOrders.order || activity.valueOrders.order === null) {
+          _this5.checkForErrorsString += "Es wurde nicht zu jeder Tätigkeit eine Aktivität oder ein Auftrag ausgewählt. ";
           console.log('check: Activity');
           status = false;
         }
@@ -2417,21 +2428,21 @@ var Activity = /*#__PURE__*/function () {
   _createClass(Activity, [{
     key: "load",
     value: function load() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.UStd_ID) {
         // load by UStd_ID
         console.log('Load test');
         axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
           console.table(response.data);
-          _this5.project_ID = response.data.Auftrags_ID;
-          _this5.remark = response.data.Bemerkungen;
-          _this5.activity = response.data.Tkurz;
-          _this5.hours = Helper.timeToNormal(response.data.Std);
-          _this5.km = response.data.Km;
-          _this5.bauherr = response.data.Bauherr;
-          _this5.valueOrders.id = response.data.Auftrags_ID;
-          _this5.valueActivity.id = response.data.Tkurz;
+          _this6.project_ID = response.data.Auftrags_ID;
+          _this6.remark = response.data.Bemerkungen;
+          _this6.activity = response.data.Tkurz;
+          _this6.hours = Helper.timeToNormal(response.data.Std);
+          _this6.km = response.data.Km;
+          _this6.bauherr = response.data.Bauherr;
+          _this6.valueOrders.id = response.data.Auftrags_ID;
+          _this6.valueActivity.id = response.data.Tkurz;
         });
       } else {
         console.log('Didnt load UStd_ID');
@@ -2458,7 +2469,7 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "save",
     value: function save() {
-      var _this6 = this;
+      var _this7 = this;
 
       var data = {};
       data.Std_Id = this.Std_Id;
@@ -2479,7 +2490,7 @@ var Activity = /*#__PURE__*/function () {
         }
       })["catch"](function (error) {
         if (error && error.response.status === 422) {
-          _this6.validationErrors = error.response.data.errors;
+          _this7.validationErrors = error.response.data.errors;
         } else {
           console.log(error.response);
         }
@@ -2488,7 +2499,7 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update() {
-      var _this7 = this;
+      var _this8 = this;
 
       console.log('update activity');
       var data = {};
@@ -2513,7 +2524,7 @@ var Activity = /*#__PURE__*/function () {
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this7.validationErrors = error.response.data.errors;
+          _this8.validationErrors = error.response.data.errors;
         } else {
           console.log(error);
         }
