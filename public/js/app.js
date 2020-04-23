@@ -2090,6 +2090,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         BtnClass: '',
         show: false
       },
+      checkForErrorsString: '',
       validationErrors: ''
     };
   },
@@ -2752,6 +2753,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -39752,44 +39756,47 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row mt-4" }, [
     _c("div", { staticClass: "col-lg-6 col-md-12 col-sm-12 mt-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn  btn-success",
-          on: {
-            click: function($event) {
-              return _vm.$emit("day-save")
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn  btn-success m-1 col-lg-4 col-md-3 col-sm-12",
+            on: {
+              click: function($event) {
+                return _vm.$emit("day-save")
+              }
             }
-          }
-        },
-        [_vm._v("Tag speichern")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn  btn-primary",
-          on: {
-            click: function($event) {
-              return _vm.$emit("day-copy")
+          },
+          [_vm._v("Tag speichern")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn  btn-primary m-1 col-lg-4 col-md-3 col-sm-12",
+            on: {
+              click: function($event) {
+                return _vm.$emit("day-copy")
+              }
             }
-          }
-        },
-        [_vm._v("Tag kopieren")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn  btn-outline-primary",
-          on: {
-            click: function($event) {
-              return _vm.$emit("day-new")
+          },
+          [_vm._v("Tag kopieren")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn  btn-outline-primary  m-1 col-lg-4 col-md-3 col-sm-12",
+            on: {
+              click: function($event) {
+                return _vm.$emit("day-new")
+              }
             }
-          }
-        },
-        [_vm._v("neuer Tag")]
-      )
+          },
+          [_vm._v("neuer Tag")]
+        )
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-4 col-md-8 mt-2" }, [

@@ -168,6 +168,7 @@
                     BtnClass: '',
                     show: false,
                 },
+                checkForErrorsString: '',
                 validationErrors: '',
             }
         },
