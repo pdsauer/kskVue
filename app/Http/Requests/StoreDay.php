@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\ThreeMonthRule;
+use App\Rules\UniqueDateDayPerUser;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreDay extends FormRequest
@@ -30,7 +31,8 @@ class StoreDay extends FormRequest
             '*.date' => [
                 'required',
                 'date',
-                new ThreeMonthRule()
+                new ThreeMonthRule(),
+                new UniqueDateDayPerUser()
             ],
             '*.start' => 'required|numeric',
             '*.end' => 'required|numeric|gt:daySend.start',

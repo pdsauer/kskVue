@@ -2185,7 +2185,10 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
             return activity.saveHandler();
           });
 
-          _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal'); // this.emptyData();
+          _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal'); // DropDown aktualiseren
+
+
+          _this2.bus.$emit('DaySelect-refresh'); // this.emptyData();
 
         } else {
           _this2.displayModal('Es gab einen Fehler beim Speichern', 'OK', 'btn-outline-danger', 'emptyModal');
@@ -2275,13 +2278,19 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.displayModal('Wollen sie den Tag wirklich löschen?', 'Löschen', 'btn-outline-danger', 'deleteDay');
     },
     deleteDay: function deleteDay() {
+      var _this4 = this;
+
       if (this.day.id === "") {
         // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
         this.emptyData();
       } else {
         // Wenn Day.id nicht leer ist -> DELETE Request an Server
-        axios["delete"]('/api/v1/days/' + this.day.id).then(this.emptyData());
-        this.bus.$emit('DaySelect-refresh');
+        axios["delete"]('/api/v1/days/' + this.day.id).then(function () {
+          // wenn erfolgreich gelöscht wurde, leeren und Tag-Drop-Down aktualisieren
+          _this4.emptyData();
+
+          _this4.bus.$emit('DaySelect-refresh');
+        });
       }
     },
     emptyModal: function emptyModal() {
@@ -2407,21 +2416,21 @@ var Activity = /*#__PURE__*/function () {
   _createClass(Activity, [{
     key: "load",
     value: function load() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.UStd_ID) {
         // load by UStd_ID
         console.log('Load test');
         axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
           console.table(response.data);
-          _this4.project_ID = response.data.Auftrags_ID;
-          _this4.remark = response.data.Bemerkungen;
-          _this4.activity = response.data.Tkurz;
-          _this4.hours = Helper.timeToNormal(response.data.Std);
-          _this4.km = response.data.Km;
-          _this4.bauherr = response.data.Bauherr;
-          _this4.valueOrders.id = response.data.Auftrags_ID;
-          _this4.valueActivity.id = response.data.Tkurz;
+          _this5.project_ID = response.data.Auftrags_ID;
+          _this5.remark = response.data.Bemerkungen;
+          _this5.activity = response.data.Tkurz;
+          _this5.hours = Helper.timeToNormal(response.data.Std);
+          _this5.km = response.data.Km;
+          _this5.bauherr = response.data.Bauherr;
+          _this5.valueOrders.id = response.data.Auftrags_ID;
+          _this5.valueActivity.id = response.data.Tkurz;
         });
       } else {
         console.log('Didnt load UStd_ID');
@@ -2448,7 +2457,7 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "save",
     value: function save() {
-      var _this5 = this;
+      var _this6 = this;
 
       var data = {};
       data.Std_Id = this.Std_Id;
@@ -2469,7 +2478,7 @@ var Activity = /*#__PURE__*/function () {
         }
       })["catch"](function (error) {
         if (error && error.response.status === 422) {
-          _this5.validationErrors = error.response.data.errors;
+          _this6.validationErrors = error.response.data.errors;
         } else {
           console.log(error.response);
         }
@@ -2478,7 +2487,7 @@ var Activity = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update() {
-      var _this6 = this;
+      var _this7 = this;
 
       console.log('update activity');
       var data = {};
@@ -2503,7 +2512,7 @@ var Activity = /*#__PURE__*/function () {
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
-          _this6.validationErrors = error.response.data.errors;
+          _this7.validationErrors = error.response.data.errors;
         } else {
           console.log(error);
         }
@@ -39186,7 +39195,8 @@ var render = function() {
                                         attrs: {
                                           name: "datum",
                                           type: "date",
-                                          id: "datum"
+                                          id: "datum",
+                                          readonly: _vm.day.id ? true : false
                                         },
                                         domProps: {
                                           value:

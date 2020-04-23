@@ -42,7 +42,7 @@
                                                             class="form-control"
                                                             :value="day.date && day.date.toISOString().split('T')[0]"
                                                             @input="day.date = $event.target.valueAsDate"
-                                                            >
+                                                            :readonly="day.id ? true : false">
                                                     </div>
                                                 </div>
                                             </div>
@@ -285,6 +285,9 @@
                             this.day.activities.forEach(activity => activity.saveHandler());
 
                             this.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal');
+
+                            // DropDown aktualiseren
+                            this.bus.$emit('DaySelect-refresh');
                             // this.emptyData();
 
                         } else {
@@ -403,9 +406,13 @@
                 } else {
                     // Wenn Day.id nicht leer ist -> DELETE Request an Server
                     axios.delete('/api/v1/days/'+ this.day.id).then(
-                        this.emptyData()
+                        () => {
+                        // wenn erfolgreich gelöscht wurde, leeren und Tag-Drop-Down aktualisieren
+                        this.emptyData();
+                        this.bus.$emit('DaySelect-refresh');
+                        }
                     );
-                    this.bus.$emit('DaySelect-refresh');
+                    
                }
             },
             emptyModal: function () {
