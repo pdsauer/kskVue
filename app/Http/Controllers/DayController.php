@@ -61,16 +61,16 @@ class DayController extends Controller
 
         $day = new Day;
 
-        // $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->format('Y/d/m');
-        $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->toDateTimeString();
+        // $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->format('Y/d/m'); // MSSQL
+        $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->toDateTimeString(); // MYSQL
         // $day->Datum = $validatedData['daySend']['date'];
         $day->Von = $validatedData['daySend']['start'];
         $day->Bis = $validatedData['daySend']['end'];
         $day->Pause = $validatedData['daySend']['pause'];
         $day->Dat_Kuerz = 'test';
         $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause));
-        $day->Eingabedatum = Carbon::now()->toDateTimeString();
-        // $day->Eingabedatum = Carbon::now()->format('Y/d/m');
+        $day->Eingabedatum = Carbon::now()->toDateTimeString(); // MYSQL
+        // $day->Eingabedatum = Carbon::now()->format('Y/d/m'); // MSSQL
         $day->PersNr = auth()->user()->PersNr;
 
         // Store Day in DB
