@@ -25,7 +25,7 @@ Danach kann mit
 
 und
 
-`php artisan seed`
+`php artisan db:seed`
 
 die Datenbank mit Daten gefüllt werden.
 
