@@ -2054,6 +2054,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // To Fix JS Horrible date API - USE ON DAY LOAD TO FIX OFFSET
 Date.prototype.addHours = function (h) {
   this.setTime(this.getTime() + h * 60 * 60 * 1000);
@@ -2074,24 +2098,24 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
   data: function data() {
     return {
       day: {
-        id: '',
-        date: '',
-        start: '',
-        end: '',
-        pause: '',
+        id: "",
+        date: "",
+        start: "",
+        end: "",
+        pause: "",
         activities: []
       },
       idcounter: 1,
       loading: false,
       modal: {
-        Message: '',
-        BtnText: '',
-        FunctionOnConfirm: '',
-        BtnClass: '',
+        Message: "",
+        BtnText: "",
+        FunctionOnConfirm: "",
+        BtnClass: "",
         show: false
       },
-      checkForErrorsString: '',
-      validationErrors: ''
+      checkForErrorsString: "",
+      validationErrors: ""
     };
   },
   components: {
@@ -2123,15 +2147,15 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.loading = true;
       this.emptyData(); // TODO use and Check for 404
 
-      axios.get('/api/v1/days/' + id).then(function (response) {
-        console.log('New Day Selected');
+      axios.get("/api/v1/days/" + id).then(function (response) {
+        console.log("New Day Selected");
         _this.day.id = response.data.Std_ID;
         _this.day.date = new Date(response.data.Datum).addHours(2);
         _this.day.start = Helper.timeToNormal(response.data.Von);
         _this.day.end = Helper.timeToNormal(response.data.Bis);
         _this.day.pause = Helper.timeToNormal(response.data.Pause); // load activities by Std_ID
 
-        axios.get('/api/v1/days_UF/list/' + _this.day.id).then(function (response) {
+        axios.get("/api/v1/days_UF/list/" + _this.day.id).then(function (response) {
           console.table(response.data);
 
           if (response && response.status === 200) {
@@ -2140,7 +2164,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
             });
           } else {
             // TODO: display Error MSG
-            console.log('Could not fetch Day_UF API');
+            console.log("Could not fetch Day_UF API");
           }
         })["finally"]( // set loading false
         function () {
@@ -2154,20 +2178,20 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       var _this2 = this;
 
       // Fehler leeren
-      this.validationErrors = ''; // Zum abschicken vorbereiten
+      this.validationErrors = ""; // Zum abschicken vorbereiten
 
       var daySend = {};
       daySend.end = Helper.timeToDecimal(this.day.end);
       daySend.start = Helper.timeToDecimal(this.day.start);
       daySend.pause = Helper.timeToDecimal(this.day.pause);
       daySend.date = this.day.date;
-      axios.post('/api/v1/days', {
+      axios.post("/api/v1/days", {
         daySend: daySend
       })["catch"](function (error) {
         if (error && error.response.status === 422) {
           _this2.validationErrors = error.response.data.errors;
         } else {
-          console.log('Es gab einen Fehler bei der Validierung');
+          console.log("Es gab einen Fehler bei der Validierung");
           console.log(error);
         }
       }).then(function (response) {
@@ -2176,7 +2200,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           // return  response.data.insert_id;
           _this2.day.id = response.data.insert_id; // save Activityies
 
-          console.log('Vorbereitung Stunden speichern');
+          console.log("Vorbereitung Stunden speichern");
 
           _this2.day.activities.forEach(function (activity) {
             return activity.Std_Id = _this2.day.id;
@@ -2186,13 +2210,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
             return activity.saveHandler();
           });
 
-          _this2.displayModal('Tag wurde erfolreich gespeichert', 'OK', '', 'emptyModal'); // DropDown aktualiseren
+          _this2.displayModal("Tag wurde erfolreich gespeichert", "OK", "", "emptyModal"); // DropDown aktualiseren
 
 
-          _this2.bus.$emit('DaySelect-refresh'); // this.emptyData();
+          _this2.bus.$emit("DaySelect-refresh"); // this.emptyData();
 
         } else {
-          _this2.displayModal('Es gab einen Fehler beim Speichern', 'OK', 'btn-outline-danger', 'emptyModal');
+          _this2.displayModal("Es gab einen Fehler beim Speichern", "OK", "btn-outline-danger", "emptyModal");
         }
       });
     },
@@ -2209,7 +2233,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       daySend.start = Helper.timeToDecimal(this.day.start);
       daySend.pause = Helper.timeToDecimal(this.day.pause);
       daySend.date = this.day.date;
-      axios.patch('/api/v1/days/' + this.day.id, {
+      axios.patch("/api/v1/days/" + this.day.id, {
         daySend: daySend
       })["catch"](function (error) {
         if (error.response.status === 422) {
@@ -2220,22 +2244,24 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
           // Set id to day
           // return  response.data.insert_id;
           // save Activityies
-          console.log('Vorbereitung Stunden speichern - UPDATE');
+          console.log("Vorbereitung Stunden speichern - UPDATE");
 
           _this3.day.activities.forEach(function (activity) {
             return activity.saveHandler();
           });
         }
       })["finally"](function () {
-        _this3.displayModal('Tag wurde erfolreich aktualisiert', 'OK', '', 'emptyModal'); // this.emptyData();
+        _this3.displayModal("Tag wurde erfolreich aktualisiert", "OK", "", "emptyModal"); // this.emptyData();
 
       });
     },
     copyDay: function copyDay() {
-      console.log('copy-day'); // Stunden Datum  und Stunden ID löschen
+      console.log("copy-day"); // Stunden Datum  und Stunden ID löschen
 
       this.day.date = null;
-      this.day.id = null; // Stunden Aktivitäten id löschen
+      this.day.id = null; // empty dropdown
+
+      this.bus.$emit("DaySelect-refresh"); // Stunden Aktivitäten id löschen
 
       this.day.activities.forEach(function (activitiy) {
         // activitiy.Std_Id = null;
@@ -2252,32 +2278,36 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       }
     },
     emptyData: function emptyData() {
-      this.day.id = '';
-      this.day.date = '';
-      this.day.start = '';
-      this.day.end = '';
-      this.day.pause = '';
+      this.day.id = "";
+      this.day.date = "";
+      this.day.start = "";
+      this.day.end = "";
+      this.day.pause = "";
       this.day.activities = [];
       this.checkForErrorsString = ""; // trigger reload function of child component - DaySelect
-      // this.bus.$emit('DaySelect-refresh');
+      // this.bus.$emit("DaySelect-refresh");
+    },
+    newDay: function newDay() {
+      this.emptyData();
+      this.bus.$emit("DaySelect-refresh");
     },
     saveHandler: function saveHandler(day) {
       if (this.checkData()) {
         if (day.id === "" || day.id === null) {
           this.saveDay(); // refresh dropdown
 
-          this.bus.$emit('DaySelect-refresh');
+          this.bus.$emit("DaySelect-refresh");
         } else {
           // Tag ist gefüllt -> update Tag
-          console.log('Tag updaten');
+          console.log("Tag updaten");
           this.updateDay();
         }
       } else {
-        this.displayModal(this.checkForErrorsString, 'OK', '', 'emptyModal');
+        this.displayModal(this.checkForErrorsString, "OK", "", "emptyModal");
       }
     },
     deleteHandler: function deleteHandler() {
-      this.displayModal('Wollen sie den Tag wirklich löschen?', 'Löschen', 'btn-outline-danger', 'deleteDay');
+      this.displayModal("Wollen sie den Tag wirklich löschen?", "Löschen", "btn-outline-danger", "deleteDay");
     },
     deleteDay: function deleteDay() {
       var _this4 = this;
@@ -2287,18 +2317,18 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         this.emptyData();
       } else {
         // Wenn Day.id nicht leer ist -> DELETE Request an Server
-        axios["delete"]('/api/v1/days/' + this.day.id).then(function () {
+        axios["delete"]("/api/v1/days/" + this.day.id).then(function () {
           // wenn erfolgreich gelöscht wurde, leeren und Tag-Drop-Down aktualisieren
           _this4.emptyData();
 
-          _this4.bus.$emit('DaySelect-refresh');
+          _this4.bus.$emit("DaySelect-refresh");
         });
       }
     },
     emptyModal: function emptyModal() {
       this.modal.show = false;
-      this.modal.Message = '';
-      this.modal.BtnText = '';
+      this.modal.Message = "";
+      this.modal.BtnText = "";
     },
     displayModal: function displayModal(message, btnText, modalBtnClass, functionOnConfirm) {
       this.modal.Message = message;
@@ -2316,7 +2346,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.activities.forEach(function (activity) {
         sum += Helper.timeToDecimal(activity.hours);
       });
-      return !isNaN(sum) ? sum : '';
+      return !isNaN(sum) ? sum : "";
     },
     checkData: function checkData() {
       var _this5 = this;
@@ -2325,37 +2355,37 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.checkForErrorsString = ""; // Überprüfen, ob der User schon einen Tag mit diesem Datum hat
       // Überprüfen, ob Datum ausgewählt wurde
 
-      if (!this.day.date || typeof this.day.date.getMonth !== 'function') {
+      if (!this.day.date || typeof this.day.date.getMonth !== "function") {
         status = false;
         this.checkForErrorsString += "Bitte wählen Sie ein Datum aus. ";
       } // Überprüfen, ob Stunden übereinstimmen
 
 
       if (this.calcTotal !== this.calcTotalActivity()) {
-        console.log('Total Falsch:' + this.calcTotalActivity() + 'gegen ' + this.calcTotal);
+        console.log("Total Falsch:" + this.calcTotalActivity() + "gegen " + this.calcTotal);
         this.checkForErrorsString += "Die Stundensumme stimmt nicht überein. ";
         status = false; // Stunden sind nicht gleich
       } else if (this.day.date == "" || this.day.start == "" || this.day.end == "" || this.day.pause == "") {
-        console.log('Felder leer');
+        console.log("Felder leer");
         this.checkForErrorsString += "Es sind nicht alle benötigten Zeitangaben getätigt wurden. ";
         status = false;
       } else if (Helper.timeToDecimal(this.day.start) > Helper.timeToDecimal(this.day.end)) {
         this.checkForErrorsString += "Die Anfangsuhrzeit liegt hinter der Enduhrzeit. ";
-        console.log('Richtung Falsch');
+        console.log("Richtung Falsch");
         status = false;
       } // Check if times (start, end) have the correct format
 
 
       if (!this.day.start.match(/\d{2}:\d{2}/) || !this.day.end.match(/\d{2}:\d{2}/)) {
         this.checkForErrorsString += "Das Zeitformat der Zeiteingaben stimmt nicht. ";
-        console.log('doesnt match regex - day');
+        console.log("doesnt match regex - day");
         status = false;
       } // Überprüfen, ob alle Tätigkeiten und das richtige Zeitformat haben
 
 
       this.day.activities.forEach(function (activity) {
         if (!activity.hours || !activity.hours.match(/\d{2}:\d{2}/)) {
-          console.log('doesnt match regex - activity');
+          console.log("doesnt match regex - activity");
           _this5.checkForErrorsString += "Die Zeiten wurden nicht im korrekten Format [HH:MM] eingegeben. ";
           status = false;
         }
@@ -2364,7 +2394,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.day.activities.forEach(function (activity) {
         if (!activity.valueActivity.activity || activity.valueActivity.activity === null || !activity.valueOrders.order || activity.valueOrders.order === null) {
           _this5.checkForErrorsString += "Es wurde nicht zu jeder Tätigkeit eine Aktivität oder ein Auftrag ausgewählt. ";
-          console.log('check: Activity');
+          console.log("check: Activity");
           status = false;
         }
       });
@@ -2374,7 +2404,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
   computed: {
     calcTotal: function calcTotal() {
       var result = Helper.timeToDecimal(this.day.end) - Helper.timeToDecimal(this.day.start) - Helper.timeToDecimal(this.day.pause);
-      return !isNaN(result) ? result : '';
+      return !isNaN(result) ? result : "";
     },
     checkTotal: function checkTotal() {
       var sum = 0;
@@ -2385,7 +2415,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         });
       }
 
-      return !isNaN(sum) ? sum : '';
+      return !isNaN(sum) ? sum : "";
     },
     classTotal: function classTotal() {
       var status = false;
@@ -2432,8 +2462,8 @@ var Activity = /*#__PURE__*/function () {
 
       if (this.UStd_ID) {
         // load by UStd_ID
-        console.log('Load test');
-        axios.get('/api/v1/days_UF/' + this.UStd_ID).then(function (response) {
+        console.log("Load test");
+        axios.get("/api/v1/days_UF/" + this.UStd_ID).then(function (response) {
           console.table(response.data);
           _this6.project_ID = response.data.Auftrags_ID;
           _this6.remark = response.data.Bemerkungen;
@@ -2445,24 +2475,24 @@ var Activity = /*#__PURE__*/function () {
           _this6.valueActivity.id = response.data.Tkurz;
         });
       } else {
-        console.log('Didnt load UStd_ID');
+        console.log("Didnt load UStd_ID");
       }
     }
   }, {
     key: "delete",
     value: function _delete() {
       if (this.UStd_ID) {
-        axios["delete"]('/api/v1/days_UF/' + this.UStd_ID);
+        axios["delete"]("/api/v1/days_UF/" + this.UStd_ID);
       }
     }
   }, {
     key: "saveHandler",
     value: function saveHandler() {
       if (this.UStd_ID) {
-        console.log('Update sinlge activity');
+        console.log("Update sinlge activity");
         this.update();
       } else {
-        console.log('Save sinlge activity');
+        console.log("Save sinlge activity");
         this.save();
       }
     }
@@ -2478,15 +2508,15 @@ var Activity = /*#__PURE__*/function () {
       data.km = this.km;
       data.hours = Helper.timeToDecimal(this.hours);
       data.bauherr = this.bauherr;
-      console.log('Save Activity');
+      console.log("Save Activity");
       console.table(data);
-      axios.post('/api/v1/days_UF', {
+      axios.post("/api/v1/days_UF", {
         data: data
       }).then(function (response) {
         if (response && response.status === 200) {
-          console.log('Aktivitäten erfolgreich gespeichert');
+          console.log("Aktivitäten erfolgreich gespeichert");
         } else {
-          console.log('Aktivitäten nicht erfolreich gespeichert');
+          console.log("Aktivitäten nicht erfolreich gespeichert");
         }
       })["catch"](function (error) {
         if (error && error.response.status === 422) {
@@ -2501,7 +2531,7 @@ var Activity = /*#__PURE__*/function () {
     value: function update() {
       var _this8 = this;
 
-      console.log('update activity');
+      console.log("update activity");
       var data = {};
       data.UStd_ID = this.UStd_ID;
       data.Std_Id = this.Std_Id;
@@ -2512,15 +2542,15 @@ var Activity = /*#__PURE__*/function () {
       data.hours = Helper.timeToDecimal(this.hours);
       data.bauherr = this.bauherr;
       console.table(data);
-      axios.patch('/api/v1/days_UF/' + data.UStd_ID, {
+      axios.patch("/api/v1/days_UF/" + data.UStd_ID, {
         data: data
       }).then(function (response) {
         console.table(response);
 
         if (response && response.status === 200) {
-          console.log('Aktivität erfolreich aktualisiert');
+          console.log("Aktivität erfolreich aktualisiert");
         } else {
-          console.log('Aktivität nicht erfolreich aktualisiert');
+          console.log("Aktivität nicht erfolreich aktualisiert");
         }
       })["catch"](function (error) {
         if (error.response.status === 422) {
@@ -2544,28 +2574,28 @@ var Helper = /*#__PURE__*/function () {
     key: "timeToNormal",
     value: function timeToNormal(time) {
       if (time) {
-        var data = time.split('.');
+        var data = time.split(".");
         var hours = data[0];
         var minutes = Math.floor(Math.abs(data[1]) * 3 / 5);
 
-        if (hours === 0 || hours === '') {
-          hours = '00';
+        if (hours === 0 || hours === "") {
+          hours = "00";
         } else if (hours < 10) {
-          hours = '0' + hours;
+          hours = "0" + hours;
         }
 
         if (minutes.toString().length === 1) {
-          minutes += '0';
+          minutes += "0";
         }
 
-        return hours + ':' + minutes;
+        return hours + ":" + minutes;
       }
     }
   }, {
     key: "timeToDecimal",
     value: function timeToDecimal(time) {
       if (time) {
-        var data = time.split(':');
+        var data = time.split(":");
         var hours = data[0] * 100;
         var minutes = data[1] * (5 / 3);
         return (hours + minutes) / 100;
@@ -39444,7 +39474,7 @@ var render = function() {
                   { staticClass: "row d-flex justify-content-center" },
                   [
                     _c("DaySelector", {
-                      staticClass: "col-sm-12 col-md-6 ",
+                      staticClass: "col-sm-12 col-md-6",
                       on: { daySelected: _vm.daySelected }
                     })
                   ],
@@ -39736,7 +39766,7 @@ var render = function() {
                         return _vm.deleteHandler()
                       },
                       "day-new": function($event) {
-                        return _vm.emptyData()
+                        return _vm.newDay()
                       },
                       "day-copy": function($event) {
                         return _vm.copyDay()
