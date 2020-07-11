@@ -43,7 +43,7 @@ class DayController extends Controller
     {
         return  Day
             ::where('PersNr', auth()->user()->PersNr)
-            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)->format('Y/d/m')) /* Nur Daten der Letzen 3 Monate anzeigen*/
+            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)->format('YYYY/dd/mm')) /* Nur Daten der Letzen 3 Monate anzeigen*/
             ->orderBy('Datum', 'desc')
             ->get();
     }
@@ -61,16 +61,22 @@ class DayController extends Controller
 
         $day = new Day;
 
-        // $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->format('Y/d/m'); // MSSQL
-        $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->toDateTimeString(); // MYSQL
+        if(config('DB_CONNECTION') === 'sqlsrv'){
+            $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->format('Y/d/m'); // MSSQL
+            $day->Eingabedatum = Carbon::now()->format('Y/d/m'); // MSSQL
+        } else {
+            $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->toDateTimeString(); // MYSQL
+            $day->Eingabedatum = Carbon::now()->toDateTimeString(); // MYSQL
+        }
+
         // $day->Datum = $validatedData['daySend']['date'];
         $day->Von = $validatedData['daySend']['start'];
         $day->Bis = $validatedData['daySend']['end'];
         $day->Pause = $validatedData['daySend']['pause'];
         $day->Dat_Kuerz = 'test';
         $day->Std_gesamt = ((float)($day->Bis) - (float)($day->Von) - (float)($day->Pause));
-        $day->Eingabedatum = Carbon::now()->toDateTimeString(); // MYSQL
-        // $day->Eingabedatum = Carbon::now()->format('Y/d/m'); // MSSQL
+        
+        
         $day->PersNr = auth()->user()->PersNr;
 
         // Store Day in DB

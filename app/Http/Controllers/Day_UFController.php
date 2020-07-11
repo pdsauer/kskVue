@@ -55,6 +55,7 @@ class Day_UFController extends Controller
      */
     public function destroy(Day_UF $day_UF)
     {
+        // TODO: Check if it belongs to user
          $day_UF->delete();
 
     }
@@ -77,6 +78,7 @@ class Day_UFController extends Controller
 
         $day_UF->Std_Id = $validatedData['data']['Std_Id'];
         $day_UF->Auftrags_ID = $validatedData['data']['project_ID'];
+        // TODO: Check if primary key
         $day_UF->Tkurz = $validatedData['data']['activity'];
         $day_UF->Std = $validatedData['data']['hours'];
          $day_UF->km = $validatedData['data']['km'] ?? null;
@@ -104,6 +106,7 @@ class Day_UFController extends Controller
     {
         error_log(print_r('update Activity', TRUE));
         //Validation
+        // TODO: Check if it belongs to user
         $validatedData = $request->validated();
 
         $day_UF = Day_UF::find((float) $validatedData['data']['UStd_ID']);

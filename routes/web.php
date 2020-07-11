@@ -4,7 +4,7 @@
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
+|\textbf{Tabelle} 
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
@@ -30,11 +30,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/stunden/vue', 'StundenController@Vue');
 
+// DELETE SOON
 Route::get('/stunden', 'StundenController@index')->name('stunden');
-
-
-
-
 Route::Post('/stunden', 'StundenController@store');
 Route::get('/stunden/list', 'StundenController@showList')->name('list');
 Route::get('/stunden/{day}', 'StundenController@show');
@@ -61,13 +58,9 @@ Route::patch('/api/v1/days_UF/{day}', 'Day_UFController@update');
 Route::get('/api/v1/activities', 'ActivityController@index');
 Route::get('/api/v1/activities/{id}', 'ActivityController@show');
 
-
 // Routes for API - Order
 Route::get('/api/v1/orders', 'OrderController@index');
 Route::get('/api/v1/orders/{id}', 'OrderController@show');
-
-
-
 
 // Routen für das Schwarzebrett
 Route::get('/post/create', 'postController@create');

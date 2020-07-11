@@ -1,3 +1,6 @@
-- ## Get Started
-    - [Overview](/{{route}}/{{version}}/overview)
-    - [Installation](/{{route}}/{{version}}/installation)
+-   ## Get Started
+    -   [Overview](/{{route}}/{{version}}/overview)
+    -   [Installation](/{{route}}/{{version}}/installation)
+    -   [Installation MSSQL](/{{route}}/{{version}}/installationMSSQL)
+    -   [Bedienung](/{{route}}/{{version}}/bedienung)
+    -   [API](/{{route}}/{{version}}/api)
