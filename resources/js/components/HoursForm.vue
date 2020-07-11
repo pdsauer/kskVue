@@ -169,6 +169,8 @@ import ControlBar from "./HoursForm/ControlBar.vue";
 import Modal from "./modal";
 import ValidationErrors from "./HoursForm/ValidationErrors";
 import Loading from "./Loading.vue";
+import Helper from "../helper";
+import Activity from "../activity";
 
 const axios = require("axios").default;
 
@@ -208,6 +210,7 @@ export default {
   },
 
   methods: {
+    // Neue Tätigkeit hinzufügen
     addActivity: function(
       Std_Id,
       UStd_ID,
@@ -237,6 +240,7 @@ export default {
       );
       this.idcounter++;
     },
+    // Tätigkeit entfernen
     activityDelete: function(id) {
       // console.log(this.day.activities.forEach(act => console.log(act.remark)));
       let index = this.day.activities
@@ -247,14 +251,14 @@ export default {
       this.day.activities[index].delete();
       this.day.activities.splice(index, 1);
     },
-
+    // Tag laden
     loadDay: function(id) {
       //set laod status
       this.loading = true;
       this.emptyData();
       // TODO use and Check for 404
       axios.get("/api/v1/days/" + id).then(response => {
-        console.log("New Day Selected");
+        // console.log("New Day Selected");
         this.day.id = response.data.Std_ID;
         this.day.date = new Date(response.data.Datum).addHours(2);
         this.day.start = Helper.timeToNormal(response.data.Von);
@@ -265,7 +269,7 @@ export default {
         axios
           .get("/api/v1/days_UF/list/" + this.day.id)
           .then(response => {
-            console.table(response.data);
+            // console.table(response.data);
             if (response && response.status === 200) {
               response.data.forEach(data =>
                 this.addActivity(
@@ -283,7 +287,7 @@ export default {
               );
             } else {
               // TODO: display Error MSG
-              console.log("Could not fetch Day_UF API");
+              // console.log("Could not fetch Day_UF API");
             }
           })
           .finally(
@@ -296,6 +300,7 @@ export default {
           );
       });
     },
+    // Tag speichern
     saveDay: function() {
       // Fehler leeren
       this.validationErrors = "";
@@ -312,8 +317,8 @@ export default {
           if (error && error.response.status === 422) {
             this.validationErrors = error.response.data.errors;
           } else {
-            console.log("Es gab einen Fehler bei der Validierung");
-            console.log(error);
+            // console.log("Es gab einen Fehler bei der Validierung");
+            // console.log(error);
           }
         })
         .then(response => {
@@ -323,7 +328,7 @@ export default {
             this.day.id = response.data.insert_id;
 
             // save Activityies
-            console.log("Vorbereitung Stunden speichern");
+            // console.log("Vorbereitung Stunden speichern");
             this.day.activities.forEach(
               activity => (activity.Std_Id = this.day.id)
             );
@@ -372,7 +377,7 @@ export default {
             // return  response.data.insert_id;
 
             // save Activityies
-            console.log("Vorbereitung Stunden speichern - UPDATE");
+            // console.log("Vorbereitung Stunden speichern - UPDATE");
 
             this.day.activities.forEach(activity => activity.saveHandler());
           }
@@ -387,8 +392,9 @@ export default {
           // this.emptyData();
         });
     },
+    // Tag kopieren
     copyDay: function() {
-      console.log("copy-day");
+      //console.log("copy-day");
       // Stunden Datum  und Stunden ID löschen
       this.day.date = null;
       this.day.id = null;
@@ -411,6 +417,7 @@ export default {
         this.loadDay(day.id);
       }
     },
+    // alle daten leeren
     emptyData: function() {
       this.day.id = "";
       this.day.date = "";
@@ -419,15 +426,13 @@ export default {
       this.day.pause = "";
       this.day.activities = [];
       this.checkForErrorsString = "";
-
-      // trigger reload function of child component - DaySelect
-      // this.bus.$emit("DaySelect-refresh");
     },
+    // neuen Tag anlegen, dropdown auch leeren
     newDay: function() {
       this.emptyData();
       this.bus.$emit("DaySelect-refresh");
     },
-
+    // Überprüfen, ob geupdated oder gespeichert werden muss
     saveHandler: function(day) {
       if (this.checkData()) {
         if (day.id === "" || day.id === null) {
@@ -436,13 +441,14 @@ export default {
           this.bus.$emit("DaySelect-refresh");
         } else {
           // Tag ist gefüllt -> update Tag
-          console.log("Tag updaten");
+          // console.log("Tag updaten");
           this.updateDay();
         }
       } else {
         this.displayModal(this.checkForErrorsString, "OK", "", "emptyModal");
       }
     },
+    // Abfragen, ob Tag wirklich gelöscht werden soll
     deleteHandler: function() {
       this.displayModal(
         "Wollen sie den Tag wirklich löschen?",
@@ -451,6 +457,7 @@ export default {
         "deleteDay"
       );
     },
+    // Tag löschen
     deleteDay() {
       if (this.day.id === "") {
         // Wenn Day.id leer ist -> Tag wurde noch nicht gespeichert -> Tag leeren
@@ -480,6 +487,7 @@ export default {
       this[this.modal.FunctionOnConfirm]();
       this.emptyModal();
     },
+    // Summe der Aktivitätsstunden errechnen
     calcTotalActivity() {
       let sum = 0;
       this.day.activities.forEach(activity => {
@@ -487,6 +495,7 @@ export default {
       });
       return !isNaN(sum) ? sum : "";
     },
+    // Überprüfen, ob irgendwelche fehler vorliegen
     checkData: function() {
       let status = true;
       this.checkForErrorsString = "";
@@ -501,9 +510,9 @@ export default {
 
       // Überprüfen, ob Stunden übereinstimmen
       if (this.calcTotal !== this.calcTotalActivity()) {
-        console.log(
-          "Total Falsch:" + this.calcTotalActivity() + "gegen " + this.calcTotal
-        );
+        // console.log(
+        //   "Total Falsch:" + this.calcTotalActivity() + "gegen " + this.calcTotal
+        // );
         this.checkForErrorsString += "Die Stundensumme stimmt nicht überein. ";
         status = false;
         // Stunden sind nicht gleich
@@ -513,7 +522,7 @@ export default {
         this.day.end == "" ||
         this.day.pause == ""
       ) {
-        console.log("Felder leer");
+        // console.log("Felder leer");
         this.checkForErrorsString +=
           "Es sind nicht alle benötigten Zeitangaben getätigt wurden. ";
         status = false;
@@ -523,7 +532,7 @@ export default {
       ) {
         this.checkForErrorsString +=
           "Die Anfangsuhrzeit liegt hinter der Enduhrzeit. ";
-        console.log("Richtung Falsch");
+        // console.log("Richtung Falsch");
         status = false;
       }
 
@@ -534,14 +543,14 @@ export default {
       ) {
         this.checkForErrorsString +=
           "Das Zeitformat der Zeiteingaben stimmt nicht. ";
-        console.log("doesnt match regex - day");
+        // console.log("doesnt match regex - day");
         status = false;
       }
 
       // Überprüfen, ob alle Tätigkeiten und das richtige Zeitformat haben
       this.day.activities.forEach(activity => {
         if (!activity.hours || !activity.hours.match(/\d{2}:\d{2}/)) {
-          console.log("doesnt match regex - activity");
+          // console.log("doesnt match regex - activity");
           this.checkForErrorsString +=
             "Die Zeiten wurden nicht im korrekten Format [HH:MM] eingegeben. ";
           status = false;
@@ -558,7 +567,7 @@ export default {
         ) {
           this.checkForErrorsString +=
             "Es wurde nicht zu jeder Tätigkeit eine Aktivität oder ein Auftrag ausgewählt. ";
-          console.log("check: Activity");
+          // console.log("check: Activity");
           status = false;
         }
       });
@@ -592,153 +601,6 @@ export default {
     }
   }
 };
-
-class Activity {
-  constructor(
-    id,
-    UStd_ID,
-    Std_Id,
-    project_ID,
-    activity,
-    remark,
-    km,
-    hours,
-    bauherr,
-    valueOrdersID = null,
-    valueActivityID = null
-  ) {
-    this.id = id;
-    this.UStd_ID = UStd_ID;
-    this.Std_Id = Std_Id;
-    this.project_ID = project_ID;
-    this.activity = activity;
-    this.remark = remark;
-    this.km = km;
-    this.hours = hours;
-    this.bauherr = bauherr;
-    this.valueOrders = { id: parseInt(valueOrdersID, 10), order: null };
-    this.valueActivity = { id: valueActivityID, activity: null };
-  }
-  load() {
-    if (this.UStd_ID) {
-      // load by UStd_ID
-      console.log("Load test");
-      axios.get("/api/v1/days_UF/" + this.UStd_ID).then(response => {
-        console.table(response.data);
-        this.project_ID = response.data.Auftrags_ID;
-        this.remark = response.data.Bemerkungen;
-        this.activity = response.data.Tkurz;
-        this.hours = Helper.timeToNormal(response.data.Std);
-        this.km = response.data.Km;
-        this.bauherr = response.data.Bauherr;
-        this.valueOrders.id = response.data.Auftrags_ID;
-        this.valueActivity.id = response.data.Tkurz;
-      });
-    } else {
-      console.log("Didnt load UStd_ID");
-    }
-  }
-  delete() {
-    if (this.UStd_ID) {
-      axios.delete("/api/v1/days_UF/" + this.UStd_ID);
-    }
-  }
-  saveHandler() {
-    if (this.UStd_ID) {
-      console.log("Update sinlge activity");
-      this.update();
-    } else {
-      console.log("Save sinlge activity");
-      this.save();
-    }
-  }
-  save() {
-    let data = {};
-    data.Std_Id = this.Std_Id;
-    data.project_ID = this.valueOrders.id;
-    (data.activity = this.valueActivity.id), (data.remark = this.remark);
-    data.km = this.km;
-    data.hours = Helper.timeToDecimal(this.hours);
-    data.bauherr = this.bauherr;
-
-    console.log("Save Activity");
-    console.table(data);
-    axios
-      .post("/api/v1/days_UF", { data })
-      .then(response => {
-        if (response && response.status === 200) {
-          console.log("Aktivitäten erfolgreich gespeichert");
-        } else {
-          console.log("Aktivitäten nicht erfolreich gespeichert");
-        }
-      })
-      .catch(error => {
-        if (error && error.response.status === 422) {
-          this.validationErrors = error.response.data.errors;
-        } else {
-          console.log(error.response);
-        }
-      });
-  }
-  update() {
-    console.log("update activity");
-    let data = {};
-    data.UStd_ID = this.UStd_ID;
-    data.Std_Id = this.Std_Id;
-    data.project_ID = this.valueOrders.id;
-    data.activity = this.valueActivity.id;
-    data.remark = this.remark;
-    data.km = this.km;
-    data.hours = Helper.timeToDecimal(this.hours);
-    data.bauherr = this.bauherr;
-    console.table(data);
-    axios
-      .patch("/api/v1/days_UF/" + data.UStd_ID, { data })
-      .then(response => {
-        console.table(response);
-        if (response && response.status === 200) {
-          console.log("Aktivität erfolreich aktualisiert");
-        } else {
-          console.log("Aktivität nicht erfolreich aktualisiert");
-        }
-      })
-      .catch(error => {
-        if (error.response.status === 422) {
-          this.validationErrors = error.response.data.errors;
-        } else {
-          console.log(error);
-        }
-      });
-  }
-}
-
-class Helper {
-  static timeToNormal(time) {
-    if (time) {
-      let data = time.split(".");
-      let hours = data[0];
-      let minutes = Math.floor((Math.abs(data[1]) * 3) / 5);
-      if (hours === 0 || hours === "") {
-        hours = "00";
-      } else if (hours < 10) {
-        hours = "0" + hours;
-      }
-
-      if (minutes.toString().length === 1) {
-        minutes += "0";
-      }
-      return hours + ":" + minutes;
-    }
-  }
-  static timeToDecimal(time) {
-    if (time) {
-      let data = time.split(":");
-      let hours = data[0] * 100;
-      let minutes = data[1] * (5 / 3);
-      return (hours + minutes) / 100;
-    }
-  }
-}
 </script>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
