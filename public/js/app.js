@@ -7403,7 +7403,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-6ca9e6be]{\n    position: absolute;\n    top: 65px;\n    left: 0px;\n    width: 100%;\n    height: 100%;\n    z-index: 10;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    background-color: #ffffff;\n}\n.lds-grid[data-v-6ca9e6be] {\n  display: inline-block;\n  position: relative;\n  width: 80px;\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\n  position: absolute;\n  width: 16px;\n  height: 16px;\n  border-radius: 50%;\n  background: #3490dc;\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\n  top: 8px;\n  left: 8px;\n  -webkit-animation-delay: 0s;\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\n  top: 8px;\n  left: 32px;\n  -webkit-animation-delay: -0.4s;\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\n  top: 8px;\n  left: 56px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\n  top: 32px;\n  left: 8px;\n  -webkit-animation-delay: -0.4s;\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\n  top: 32px;\n  left: 32px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\n  top: 32px;\n  left: 56px;\n  -webkit-animation-delay: -1.2s;\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\n  top: 56px;\n  left: 8px;\n  -webkit-animation-delay: -0.8s;\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\n  top: 56px;\n  left: 32px;\n  -webkit-animation-delay: -1.2s;\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\n  top: 56px;\n  left: 56px;\n  -webkit-animation-delay: -1.6s;\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\n    opacity: 1;\n}\n50% {\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\n    opacity: 1;\n}\n50% {\n    opacity: 0.5;\n}\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-6ca9e6be]{\r\n    position: absolute;\r\n    top: 65px;\r\n    left: 0px;\r\n    width: 100%;\r\n    height: 100%;\r\n    z-index: 10;\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    background-color: #ffffff;\n}\n.lds-grid[data-v-6ca9e6be] {\r\n  display: inline-block;\r\n  position: relative;\r\n  width: 80px;\r\n  height: 80px;\n}\n.lds-grid div[data-v-6ca9e6be] {\r\n  position: absolute;\r\n  width: 16px;\r\n  height: 16px;\r\n  border-radius: 50%;\r\n  background: #3490dc;\r\n  -webkit-animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\r\n          animation: lds-grid-data-v-6ca9e6be 1.2s linear infinite;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(1) {\r\n  top: 8px;\r\n  left: 8px;\r\n  -webkit-animation-delay: 0s;\r\n          animation-delay: 0s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(2) {\r\n  top: 8px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(3) {\r\n  top: 8px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(4) {\r\n  top: 32px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.4s;\r\n          animation-delay: -0.4s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(5) {\r\n  top: 32px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(6) {\r\n  top: 32px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(7) {\r\n  top: 56px;\r\n  left: 8px;\r\n  -webkit-animation-delay: -0.8s;\r\n          animation-delay: -0.8s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(8) {\r\n  top: 56px;\r\n  left: 32px;\r\n  -webkit-animation-delay: -1.2s;\r\n          animation-delay: -1.2s;\n}\n.lds-grid div[data-v-6ca9e6be]:nth-child(9) {\r\n  top: 56px;\r\n  left: 56px;\r\n  -webkit-animation-delay: -1.6s;\r\n          animation-delay: -1.6s;\n}\n@-webkit-keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\n@keyframes lds-grid-data-v-6ca9e6be {\n0%, 100% {\r\n    opacity: 1;\n}\n50% {\r\n    opacity: 0.5;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -18440,7 +18440,7 @@ return jQuery;
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.15';
+  var VERSION = '4.17.19';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -22147,8 +22147,21 @@ return jQuery;
      * @returns {Array} Returns the new sorted array.
      */
     function baseOrderBy(collection, iteratees, orders) {
+      if (iteratees.length) {
+        iteratees = arrayMap(iteratees, function(iteratee) {
+          if (isArray(iteratee)) {
+            return function(value) {
+              return baseGet(value, iteratee.length === 1 ? iteratee[0] : iteratee);
+            }
+          }
+          return iteratee;
+        });
+      } else {
+        iteratees = [identity];
+      }
+
       var index = -1;
-      iteratees = arrayMap(iteratees.length ? iteratees : [identity], baseUnary(getIteratee()));
+      iteratees = arrayMap(iteratees, baseUnary(getIteratee()));
 
       var result = baseMap(collection, function(value, key, collection) {
         var criteria = arrayMap(iteratees, function(iteratee) {
@@ -22405,6 +22418,10 @@ return jQuery;
         var key = toKey(path[index]),
             newValue = value;
 
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+          return object;
+        }
+
         if (index != lastIndex) {
           var objValue = nested[key];
           newValue = customizer ? customizer(objValue, key, nested) : undefined;
@@ -22557,11 +22574,14 @@ return jQuery;
      *  into `array`.
      */
     function baseSortedIndexBy(array, value, iteratee, retHighest) {
-      value = iteratee(value);
-
       var low = 0,
-          high = array == null ? 0 : array.length,
-          valIsNaN = value !== value,
+          high = array == null ? 0 : array.length;
+      if (high === 0) {
+        return 0;
+      }
+
+      value = iteratee(value);
+      var valIsNaN = value !== value,
           valIsNull = value === null,
           valIsSymbol = isSymbol(value),
           valIsUndefined = value === undefined;
@@ -24046,10 +24066,11 @@ return jQuery;
       if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
         return false;
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(array);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var arrStacked = stack.get(array);
+      var othStacked = stack.get(other);
+      if (arrStacked && othStacked) {
+        return arrStacked == other && othStacked == array;
       }
       var index = -1,
           result = true,
@@ -24211,10 +24232,11 @@ return jQuery;
           return false;
         }
       }
-      // Assume cyclic values are equal.
-      var stacked = stack.get(object);
-      if (stacked && stack.get(other)) {
-        return stacked == other;
+      // Check that cyclic values are equal.
+      var objStacked = stack.get(object);
+      var othStacked = stack.get(other);
+      if (objStacked && othStacked) {
+        return objStacked == other && othStacked == object;
       }
       var result = true;
       stack.set(object, other);
@@ -27595,6 +27617,10 @@ return jQuery;
      * // The `_.property` iteratee shorthand.
      * _.filter(users, 'active');
      * // => objects for ['barney']
+     *
+     * // Combining several predicates using `_.overEvery` or `_.overSome`.
+     * _.filter(users, _.overSome([{ 'age': 36 }, ['age', 40]]));
+     * // => objects for ['fred', 'barney']
      */
     function filter(collection, predicate) {
       var func = isArray(collection) ? arrayFilter : baseFilter;
@@ -28344,15 +28370,15 @@ return jQuery;
      * var users = [
      *   { 'user': 'fred',   'age': 48 },
      *   { 'user': 'barney', 'age': 36 },
-     *   { 'user': 'fred',   'age': 40 },
+     *   { 'user': 'fred',   'age': 30 },
      *   { 'user': 'barney', 'age': 34 }
      * ];
      *
      * _.sortBy(users, [function(o) { return o.user; }]);
-     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 40]]
+     * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 30]]
      *
      * _.sortBy(users, ['user', 'age']);
-     * // => objects for [['barney', 34], ['barney', 36], ['fred', 40], ['fred', 48]]
+     * // => objects for [['barney', 34], ['barney', 36], ['fred', 30], ['fred', 48]]
      */
     var sortBy = baseRest(function(collection, iteratees) {
       if (collection == null) {
@@ -33227,11 +33253,11 @@ return jQuery;
 
       // Use a sourceURL for easier debugging.
       // The sourceURL gets injected into the source that's eval-ed, so be careful
-      // with lookup (in case of e.g. prototype pollution), and strip newlines if any.
-      // A newline wouldn't be a valid sourceURL anyway, and it'd enable code injection.
+      // to normalize all kinds of whitespace, so e.g. newlines (and unicode versions of it) can't sneak in
+      // and escape the comment, thus injecting code that gets evaled.
       var sourceURL = '//# sourceURL=' +
         (hasOwnProperty.call(options, 'sourceURL')
-          ? (options.sourceURL + '').replace(/[\r\n]/g, ' ')
+          ? (options.sourceURL + '').replace(/\s/g, ' ')
           : ('lodash.templateSources[' + (++templateCounter) + ']')
         ) + '\n';
 
@@ -33264,8 +33290,6 @@ return jQuery;
 
       // If `variable` is not specified wrap a with-statement around the generated
       // code to add the data object to the top of the scope chain.
-      // Like with sourceURL, we take care to not check the option's prototype,
-      // as this configuration is a code injection vector.
       var variable = hasOwnProperty.call(options, 'variable') && options.variable;
       if (!variable) {
         source = 'with (obj) {\n' + source + '\n}\n';
@@ -33972,6 +33996,9 @@ return jQuery;
      * values against any array or object value, respectively. See `_.isEqual`
      * for a list of supported value comparisons.
      *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
+     *
      * @static
      * @memberOf _
      * @since 3.0.0
@@ -33987,6 +34014,10 @@ return jQuery;
      *
      * _.filter(objects, _.matches({ 'a': 4, 'c': 6 }));
      * // => [{ 'a': 4, 'b': 5, 'c': 6 }]
+     *
+     * // Checking for several possible values
+     * _.filter(users, _.overSome([_.matches({ 'a': 1 }), _.matches({ 'a': 4 })]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matches(source) {
       return baseMatches(baseClone(source, CLONE_DEEP_FLAG));
@@ -34000,6 +34031,9 @@ return jQuery;
      * **Note:** Partial comparisons will match empty array and empty object
      * `srcValue` values against any array or object value, respectively. See
      * `_.isEqual` for a list of supported value comparisons.
+     *
+     * **Note:** Multiple values can be checked by combining several matchers
+     * using `_.overSome`
      *
      * @static
      * @memberOf _
@@ -34017,6 +34051,10 @@ return jQuery;
      *
      * _.find(objects, _.matchesProperty('a', 4));
      * // => { 'a': 4, 'b': 5, 'c': 6 }
+     *
+     * // Checking for several possible values
+     * _.filter(users, _.overSome([_.matchesProperty('a', 1), _.matchesProperty('a', 4)]));
+     * // => [{ 'a': 1, 'b': 2, 'c': 3 }, { 'a': 4, 'b': 5, 'c': 6 }]
      */
     function matchesProperty(path, srcValue) {
       return baseMatchesProperty(path, baseClone(srcValue, CLONE_DEEP_FLAG));
@@ -34240,6 +34278,10 @@ return jQuery;
      * Creates a function that checks if **all** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -34266,6 +34308,10 @@ return jQuery;
      * Creates a function that checks if **any** of the `predicates` return
      * truthy when invoked with the arguments it receives.
      *
+     * Following shorthands are possible for providing predicates.
+     * Pass an `Object` and it will be used as an parameter for `_.matches` to create the predicate.
+     * Pass an `Array` of parameters for `_.matchesProperty` and the predicate will be created using them.
+     *
      * @static
      * @memberOf _
      * @since 4.0.0
@@ -34285,6 +34331,9 @@ return jQuery;
      *
      * func(NaN);
      * // => false
+     *
+     * var matchesFunc = _.overSome([{ 'a': 1 }, { 'a': 2 }])
+     * var matchesPropertyFunc = _.overSome([['a', 1], ['a', 2]])
      */
     var overSome = createOver(arraySome);
 
@@ -53516,8 +53565,8 @@ var Helper = /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/philipp/Documents/code/kskVue/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Dokumente\code\kskVue\kskVue\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -41,11 +41,20 @@ class DayController extends Controller
      */
     public function index()
     {
-        return  Day
+        if(env('DB_CONNECTION', 'mysql') === 'sqlsrv'){
+            return  Day
+            ::where('PersNr', auth()->user()->PersNr)
+            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)->format('d/m/Y')) /* Nur Daten der Letzen 3 Monate anzeigen*/
+            ->orderBy('Datum', 'desc')
+            ->get();
+        } else {
+            return  Day
             ::where('PersNr', auth()->user()->PersNr)
             ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)->format('YYYY/dd/mm')) /* Nur Daten der Letzen 3 Monate anzeigen*/
             ->orderBy('Datum', 'desc')
             ->get();
+        }
+
     }
     /**
      * Store a newly created resource in storage.
@@ -61,7 +70,7 @@ class DayController extends Controller
 
         $day = new Day;
 
-        if(config('DB_CONNECTION') === 'sqlsrv'){
+        if(env('DB_CONNECTION', 'mysql') === 'sqlsrv'){
             $day->Datum = Carbon::createFromTimeString($validatedData['daySend']['date'])->format('Y/d/m'); // MSSQL
             $day->Eingabedatum = Carbon::now()->format('Y/d/m'); // MSSQL
         } else {
