@@ -354,6 +354,7 @@ export default {
           }
         });
     },
+    // tag aktualisieren
     updateDay: function() {
       // Set Activity ID
       this.day.activities.forEach(activity => (activity.Std_Id = this.day.id));
@@ -373,11 +374,7 @@ export default {
         })
         .then(response => {
           if (response && response.status === 200) {
-            // Set id to day
-            // return  response.data.insert_id;
-
-            // save Activityies
-            // console.log("Vorbereitung Stunden speichern - UPDATE");
+            // Tätigkeiten speichern
 
             this.day.activities.forEach(activity => activity.saveHandler());
           }
@@ -407,6 +404,7 @@ export default {
         activitiy.UStd_ID = null;
       });
     },
+    // Tag laden oder leeren, wenn dieser abgewählt wurde
     daySelected: function(day) {
       // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
       // Sonst tag füllen
@@ -471,11 +469,13 @@ export default {
         });
       }
     },
+    // empty modal
     emptyModal: function() {
       this.modal.show = false;
       this.modal.Message = "";
       this.modal.BtnText = "";
     },
+    // Show Modal, Pass function on confrirm
     displayModal: function(message, btnText, modalBtnClass, functionOnConfirm) {
       this.modal.Message = message;
       this.modal.BtnText = btnText;
@@ -483,6 +483,7 @@ export default {
       this.modal.BtnClass = modalBtnClass;
       this.modal.show = true;
     },
+    // execute passed function
     modalFunction: function() {
       this[this.modal.FunctionOnConfirm]();
       this.emptyModal();
@@ -576,6 +577,7 @@ export default {
     }
   },
   computed: {
+    // Stundensumme des Tages ausrechnen
     calcTotal() {
       let result =
         Helper.timeToDecimal(this.day.end) -
@@ -583,6 +585,7 @@ export default {
         Helper.timeToDecimal(this.day.pause);
       return !isNaN(result) ? result : "";
     },
+    // Aktivitätensumme erechnen
     checkTotal() {
       let sum = 0;
       if (this.day.activities) {
@@ -592,6 +595,7 @@ export default {
       }
       return !isNaN(sum) ? sum : "";
     },
+    // Überprüfen, ob Summen stimmen
     classTotal() {
       let status = false;
       if (this.calcTotal === this.checkTotal) {
