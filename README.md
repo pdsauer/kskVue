@@ -1,12 +1,11 @@
 # Eine Stunden-Anwedung für KSK Ingenieure
 
-Wird ohne die offizielle Datenbank nicht funktionieren
+Das Projekt clonen und in das Verzeichnis wechseln:
+
+`git clone && cd kskVue/`
 
 ## Installationsanweisungen
 
-In den dev branch wechseln
-
-`git checkout dev`
 
 Projekt installieren
 
@@ -31,3 +30,18 @@ die Datenbank mit Daten gefüllt werden.
 
 Nun sollte die Anwendung mit 
 `php artisan serve` laufen
+
+
+## Entwicklung
+
+Soll an dem Frontend der Anwendung etwas geändert werden, so müssen auch die NPM-Packages mit
+
+`npm install`
+
+installiert werden.
+
+Nach der Installation der Pakte kann mit 
+
+`npm run watch`
+
+der watch-server gestartet werden.
