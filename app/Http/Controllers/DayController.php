@@ -50,7 +50,7 @@ class DayController extends Controller
         } else {
             return  Day
             ::where('PersNr', auth()->user()->PersNr)
-            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)->format('YYYY/dd/mm')) /* Nur Daten der Letzen 3 Monate anzeigen*/
+            ->where('Datum', '>', Carbon::today()->subMonths($this->datumRange)) /* Nur Daten der Letzen 3 Monate anzeigen*/
             ->orderBy('Datum', 'desc')
             ->get();
         }

@@ -2218,6 +2218,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         }
       });
     },
+    // tag aktualisieren
     updateDay: function updateDay() {
       var _this3 = this;
 
@@ -2239,10 +2240,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         }
       }).then(function (response) {
         if (response && response.status === 200) {
-          // Set id to day
-          // return  response.data.insert_id;
-          // save Activityies
-          // console.log("Vorbereitung Stunden speichern - UPDATE");
+          // Tätigkeiten speichern
           _this3.day.activities.forEach(function (activity) {
             return activity.saveHandler();
           });
@@ -2266,6 +2264,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         activitiy.UStd_ID = null;
       });
     },
+    // Tag laden oder leeren, wenn dieser abgewählt wurde
     daySelected: function daySelected(day) {
       // Check if day is empty -> Wenn kein Tag ausgewählt, dann this.day leeren
       // Sonst tag füllen
@@ -2327,11 +2326,13 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
         });
       }
     },
+    // empty modal
     emptyModal: function emptyModal() {
       this.modal.show = false;
       this.modal.Message = "";
       this.modal.BtnText = "";
     },
+    // Show Modal, Pass function on confrirm
     displayModal: function displayModal(message, btnText, modalBtnClass, functionOnConfirm) {
       this.modal.Message = message;
       this.modal.BtnText = btnText;
@@ -2339,6 +2340,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
       this.modal.BtnClass = modalBtnClass;
       this.modal.show = true;
     },
+    // execute passed function
     modalFunction: function modalFunction() {
       this[this.modal.FunctionOnConfirm]();
       this.emptyModal();
@@ -2408,10 +2410,12 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
     }
   },
   computed: {
+    // Stundensumme des Tages ausrechnen
     calcTotal: function calcTotal() {
       var result = _helper__WEBPACK_IMPORTED_MODULE_7__["default"].timeToDecimal(this.day.end) - _helper__WEBPACK_IMPORTED_MODULE_7__["default"].timeToDecimal(this.day.start) - _helper__WEBPACK_IMPORTED_MODULE_7__["default"].timeToDecimal(this.day.pause);
       return !isNaN(result) ? result : "";
     },
+    // Aktivitätensumme erechnen
     checkTotal: function checkTotal() {
       var sum = 0;
 
@@ -2423,6 +2427,7 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["d
 
       return !isNaN(sum) ? sum : "";
     },
+    // Überprüfen, ob Summen stimmen
     classTotal: function classTotal() {
       var status = false;
 
