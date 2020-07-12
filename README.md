@@ -1,4 +1,5 @@
 # Eine Stunden-Anwedung für KSK Ingenieure
+Unter https://ksk.pdsauer.de/ steht eine Demo des Projektes bereit.
 
 Das Projekt clonen und in das Verzeichnis wechseln:
 
